@@ -9,6 +9,7 @@ public class CarControl : MonoBehaviour {
 	public Color[] colorBody; 
 	public Color[] colorBox; 
 	public Transform carRoot;
+	public GameObject car;
 	public GameObject[] bodyObj;
 	public GameObject[] boxObj;
 	public GameObject allPartObj;
@@ -23,6 +24,12 @@ public class CarControl : MonoBehaviour {
 	bool inAutoRotation;
 	Vector2 mouseDelta;
 	Vector2 mouseLastPosition;
+	float distance;
+	public float minimumDistance;
+	public float maximumDistance;
+	public float pinchSpeed;
+	float lastDist;
+	float curDist;
 
 	void Awake()
 	{
@@ -43,13 +50,14 @@ public class CarControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (inAutoRotation) {
-			transform.Rotate (Vector3.up * Time.deltaTime * rotateSpeed);
-		}
-
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			ChangeBodyPartsButton();
-		}
+//		if (inAutoRotation) {
+//			transform.Rotate (Vector3.up * Time.deltaTime * rotateSpeed);
+//		}
+//
+//		if (Input.GetKeyDown(KeyCode.Space)) {
+//			ChangeBodyPartsButton();
+//		}
+		ChangeViewDistance();
 	}
 
 	public void ChangeColor(int id)
@@ -80,6 +88,34 @@ public class CarControl : MonoBehaviour {
 		isBreak = !isBreak;
 	}
 
+	public void ChangeViewDistance()
+	{
+		if (Input.touchCount > 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
+		{
+			Touch touch1 = Input.GetTouch(0);
+			Touch touch2 = Input.GetTouch(1);
+			curDist = Vector2.Distance(touch1.position, touch2.position);
+			if(curDist > lastDist)
+			{
+				distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition)*pinchSpeed/10;
+			}
+			else
+			{
+				distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition)*pinchSpeed/10;
+			}
+			lastDist = curDist;
+			Camera.main.transform.position = Camera.main.transform.position + new Vector3 (0, 0, distance/700);
+		}
+		if(distance <= minimumDistance)
+		{
+			distance = minimumDistance;
+		}
+		if(distance >= maximumDistance)
+		{
+			distance = maximumDistance;
+		}
+	}
+
 	void OnMouseDown()
 	{
 		inAutoRotation = false;
@@ -90,7 +126,7 @@ public class CarControl : MonoBehaviour {
 	void OnMouseDrag()
 	{
 		mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-		transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
+		car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
 		carRoot.transform.Rotate (Vector3.left * Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
 		mouseLastPosition = Input.mousePosition;
 	}

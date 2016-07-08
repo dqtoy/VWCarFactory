@@ -65,6 +65,7 @@
      <Compile Include="Assets\AssetStore\ootii\MessageDispatcher\Demos\Scenes\UI.cs" />
      <Compile Include="Assets\Script\CarControl.cs" />
      <Compile Include="Assets\Script\ChangeColorButton.cs" />
+     <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Script\TitleManager.cs" />
      <Compile Include="Assets\Script\UIManager.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
