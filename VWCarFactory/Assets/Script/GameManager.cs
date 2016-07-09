@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,14 +11,25 @@ public class GameManager : MonoBehaviour {
 	public Transform car;
 	bool cameraIsInside;
 
+	public List<string> cunstomTextures;
+
+	void Awake()
+	{
+		instance = this;
+		TestData ();
+	}
+
 	// Use this for initialization
 	void Start () {
-		instance = this;
+		
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void TestData()
+	{
+		for (int i = 0; i < 2; i++) {
+			cunstomTextures.Add ("SamplePic/CAR/IconVIP512");
+		}
 	}
 
 	public void CameraChange(bool inside)
