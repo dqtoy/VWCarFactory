@@ -64,6 +64,7 @@
      <Compile Include="Assets\AssetStore\ootii\MessageDispatcher\Demos\Scenes\Sample.cs" />
      <Compile Include="Assets\AssetStore\ootii\MessageDispatcher\Demos\Scenes\UI.cs" />
      <Compile Include="Assets\Script\CarControl.cs" />
+     <Compile Include="Assets\Script\CarPrefab.cs" />
      <Compile Include="Assets\Script\ChangeColorButton.cs" />
      <Compile Include="Assets\Script\CustomButton.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />

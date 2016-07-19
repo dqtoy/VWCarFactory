@@ -18,17 +18,6 @@ public class UIManager : MonoBehaviour {
 		InitialTextureButton ();
 	}
 
-	public void BreakButton()
-	{
-		CarControl.instance.ChangeBodyPartsButton ();
-		if (breakButton.image.sprite == breakButtonImage) {
-			breakButton.image.sprite = buildButtonImage;
-		} else {
-			breakButton.image.sprite = breakButtonImage;
-		}
-		GetComponent<AudioSource> ().Play ();
-	}
-
 	public void BackToTitle()
 	{
 		GetComponent<AudioSource> ().Play ();
@@ -62,14 +51,15 @@ public class UIManager : MonoBehaviour {
 
 	public void InitialTextureButton()
 	{
-		for (int i = 0; i < GameManager.instance.cunstomTextures.Count; i++) {
+		for (int i = 0; i < GameManager.instance.customTexturesBtn.Count; i++) {
 			GameObject obj = Instantiate (Resources.Load("UI/PartButton") as GameObject,Vector3.zero,Quaternion.identity) as GameObject;
 			CustomButton btn = obj.GetComponent<CustomButton> ();
 			Image btnImg = obj.GetComponent<Image> ();
 			obj.transform.SetParent (buttonBarContent.transform, false);
-			Texture2D img = Resources.Load (GameManager.instance.cunstomTextures[i]) as Texture2D;
+			Texture2D img = Resources.Load (GameManager.instance.customTexturesBtn[i]) as Texture2D;
 			btn.ChangeImage(Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
 			btn.ChangeText ("test");
+			btn.SetID (i);
 		}
 	}
 }

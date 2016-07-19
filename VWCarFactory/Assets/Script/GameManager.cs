@@ -3,15 +3,24 @@ using System.Collections;
 using DG.Tweening;
 using System.Collections.Generic;
 
+public enum CarType
+{
+	Passart,
+	Tiguan
+}
+
 public class GameManager : MonoBehaviour {
 
 	static public GameManager instance;
+	public CarType carType;
 	public Transform camOutside;
 	public Transform camInside;
-	public Transform car;
+	public GameObject car;
+	public CarPrefab carPrefab;
 	bool cameraIsInside;
 
-	public List<string> cunstomTextures;
+	public List<string> customTexturesBtn;
+	public List<string> customTextures;
 
 	void Awake()
 	{
@@ -21,15 +30,25 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-
+		InitialCar ();
 	}
 
 	void TestData()
 	{
-		for (int i = 0; i < 2; i++) {
-			cunstomTextures.Add ("SamplePic/CAR/IconVIP512");
+		for (int i = 0; i < 4; i++) {
+			customTexturesBtn.Add ("SamplePic/CAR/IconVIP512");
+			customTextures.Add ("CarBodyTexture/Passart/tex_" + (i+1));
 		}
+	}
+
+	public void InitialCar()
+	{
+		car = Instantiate (Resources.Load ("CarBody/" + carType.ToString ()), Vector3.zero, Quaternion.identity) as GameObject;
+		carPrefab = car.GetComponent<CarPrefab> ();
+		car.transform.SetParent (CarControl.instance.transform);
+		car.transform.localPosition = Vector3.zero;
+		car.transform.localRotation = Quaternion.Euler (0,90,0);
+		car.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
 	}
 
 	public void CameraChange(bool inside)
@@ -54,6 +73,9 @@ public class GameManager : MonoBehaviour {
 		} else {
 			car.transform.DORotate (new Vector3 (0, 0, 0), 1.0f).SetEase (Ease.OutExpo);
 		}
-
+	}
+	public void ChangeCustomTexture(int id)
+	{
+		carPrefab.bodyRenderer.material.mainTexture = Resources.Load(customTextures [id]) as Texture;
 	}
 }

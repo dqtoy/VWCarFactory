@@ -12,6 +12,6 @@ public class ChangeColorButton : MonoBehaviour {
 	
 	public void ChangeColor()
 	{
-		CarControl.instance.ChangeColor (thisID);
+		//CarControl.instance.ChangeColor (thisID);
 	}
 }

@@ -9,14 +9,11 @@ public class CarControl : MonoBehaviour {
 	public Color[] colorBody; 
 	public Color[] colorBox; 
 	public Transform carRoot;
-	public GameObject car;
 	public GameObject[] bodyObj;
 	public GameObject[] boxObj;
 	public GameObject allPartObj;
-	public MeshFilter[] AnimationEndPositionZ;
 	public List<Vector3> AnimationInitialPositionZ;
 	public GameObject allEndPosition;
-	public MeshFilter[] allBodyParts;
 	public float moveXDelta;
 	public float animationTime;
 	public static CarControl instance;
@@ -40,12 +37,7 @@ public class CarControl : MonoBehaviour {
 	void Start () {
 		inAutoRotation = true;
 		mouseLastPosition = Input.mousePosition;
-		ChangeColor (0);
-		allBodyParts = allPartObj.GetComponentsInChildren<MeshFilter> ();
-		AnimationEndPositionZ = allEndPosition.GetComponentsInChildren<MeshFilter> ();
-		for (int i = 0; i < allBodyParts.Length; i++) {
-			AnimationInitialPositionZ.Add (allBodyParts [i].transform.localPosition);
-		}
+		//ChangeColor (0);
 	}
 	
 	// Update is called once per frame
@@ -53,39 +45,7 @@ public class CarControl : MonoBehaviour {
 //		if (inAutoRotation) {
 //			transform.Rotate (Vector3.up * Time.deltaTime * rotateSpeed);
 //		}
-//
-//		if (Input.GetKeyDown(KeyCode.Space)) {
-//			ChangeBodyPartsButton();
-//		}
 		ChangeViewDistance();
-	}
-
-	public void ChangeColor(int id)
-	{
-		foreach (GameObject item in bodyObj) {
-			item.GetComponent<Renderer> ().material.color = colorBody [id];
-		}
-
-		foreach (GameObject item2 in boxObj) {
-			item2.GetComponent<Renderer> ().material.color = colorBox [id];
-		}
-	}
-
-	public void ChangeBodyParts(Vector3 offsetVal,int i)
-	{
-		allBodyParts [i].transform.DOLocalMove (offsetVal, animationTime).SetEase (Ease.InOutExpo);
-	}
-
-	public void ChangeBodyPartsButton()
-	{
-		for (int i = 0; i < allBodyParts.Length; i++) {
-			if (isBreak) {
-				ChangeBodyParts (AnimationInitialPositionZ[i],i);
-			} else {
-				ChangeBodyParts (AnimationEndPositionZ[i].transform.localPosition,i);
-			}
-		}
-		isBreak = !isBreak;
 	}
 
 	public void ChangeViewDistance()
@@ -126,7 +86,7 @@ public class CarControl : MonoBehaviour {
 	void OnMouseDrag()
 	{
 		mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-		car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
+		GameManager.instance.car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
 		carRoot.transform.Rotate (Vector3.left * Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
 		mouseLastPosition = Input.mousePosition;
 	}
