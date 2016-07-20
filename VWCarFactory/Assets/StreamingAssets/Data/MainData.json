@@ -1,0 +1,51 @@
+{
+    "Name": "大众改装厂",
+    "FactoryIntroduction": "车厂介绍文字",
+    "Url": " ",
+    "CarList": [
+        "CarData1.json",
+        "CarData2.json"
+    ],
+    "Sample": {
+        "SUV": [
+            {
+                "Title": "title1 ",
+                "Tag": "tag1 ",
+                "Description": "des1 ",
+                "Image": " "
+            },
+            {
+                "Title": "title2 ",
+                "Tag": "tag2 ",
+                "Description": "des2 ",
+                "Image": " "
+            },
+            {
+                "Title": "title3 ",
+                "Tag": "tag3 ",
+                "Description": "des3 ",
+                "Image": " "
+            }
+        ],
+        "CAR": [
+            {
+                "Title": "title1 ",
+                "Tag": "tag1 ",
+                "Description": "des1 ",
+                "Image": " "
+            },
+            {
+                "Title": "title2 ",
+                "Tag": "tag2 ",
+                "Description": "des2 ",
+                "Image": " "
+            },
+            {
+                "Title": "title3 ",
+                "Tag": "tag3 ",
+                "Description": "des3 ",
+                "Image": " "
+            }
+        ]
+    }
+}
