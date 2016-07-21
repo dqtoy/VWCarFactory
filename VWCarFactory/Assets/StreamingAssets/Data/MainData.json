@@ -3,8 +3,8 @@
     "FactoryIntroduction": "车厂介绍文字",
     "Url": " ",
     "CarList": [
-        "CarData1.json",
-        "CarData2.json"
+        "Passat",
+        "Tiguan"
     ],
     "Sample": {
         "SUV": [

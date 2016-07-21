@@ -1,88 +1,107 @@
 {
-  "Name" : "Tiguan",
-  "Introduction" : "汽车介绍文字",
-  "Type" : "SUV",
-  "CarBody":"",
-  "CustumBodyTexture" : [
-    "tex_1",
-    "tex_2",
-    "tex_3",
-    "tex_4"
-  ],
-  "CustumParts":{
-      "电动踏板":
-      {
-        "ModelPath":"",
-        "CustumType":"电子设备"
-      },
-      "隐藏式行车记录仪":
-      {
-        "ModelPath":"",
-        "CustumType":"电子设备"
-      },
-      "导航仪":
-      {
-        "ModelPath":"",
-        "CustumType":"电子设备"
-      },
-      "负离子":
-      {
-        "ModelPath":"",
-        "CustumType":"内饰"
-      },
-      "碳纤维中控":
-      {
-        "ModelPath":"",
-        "CustumType":""
-      },
-      "碳纤维门把手":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "碳纤维出风口":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "碳纤维后视镜":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "CNG钢瓶":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "副反光镜":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "副喇叭":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "副刹车":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "副离合":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      },
-      "副油门":
-      {
-        "ModelPath":"",
-        "CustumType":"外饰"
-      }
-  },
-  "CustumCar" : [
-    "警车",
-    "出租车"
-  ]
+    "Name": "Tiguan",
+    "Introduction": "  ",
+    "Type": "SUV",
+    "CustumParts": [
+        {
+            "Name": "警车涂装",
+            "Icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "涂装"
+        },
+        {
+            "Name": "出租车涂装",
+            "Icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "涂装"
+        },
+        {
+            "Name": "红色涂装",
+            "Icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "涂装"
+        },
+        {
+            "Name": "电动踏板",
+            "Icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "电子设备"
+        },
+        {
+            "Name": "隐藏式行车记录仪",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "电子设备"
+        },
+        {
+            "Name": "导航仪",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "电子设备"
+        },
+        {
+            "Name": "负离子",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "电子设备"
+        },
+        {
+            "Name": "碳纤维中控",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "内饰"
+        },
+        {
+            "Name": "碳纤维门把手",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "外饰"
+        },
+        {
+            "Name": "碳纤维出风口",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "内饰"
+        },
+        {
+            "Name": "碳纤维后视镜",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "外饰"
+        },
+        {
+            "Name": "副反光镜",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "外饰"
+        },
+        {
+            "Name": "副喇叭",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "外饰"
+        },
+        {
+            "Name": "副刹车",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "内饰"
+        },
+        {
+            "Name": "副离合",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "内饰"
+        },
+        {
+            "Name": "副油门",
+            "icon": " ",
+            "ModelPath": "  ",
+            "CustumType": "内饰"
+        }
+    ],
+    "CustumCar": [
+        "警车",
+        "出租车"
+    ]
 }

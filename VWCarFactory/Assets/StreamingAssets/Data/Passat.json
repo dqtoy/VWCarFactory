@@ -1,7 +1,7 @@
 {
-    "Name": "test",
+    "Name": "Passat",
     "Introduction": "  ",
-    "Type": "SUV",
+    "Type": "CAR",
     "CustumParts": [
         {
             "Name": "警车涂装",
@@ -10,7 +10,7 @@
             "CustumType": "涂装"
         },
         {
-            "Name": "出租车",
+            "Name": "出租车涂装",
             "Icon": " ",
             "ModelPath": "  ",
             "CustumType": "涂装"
