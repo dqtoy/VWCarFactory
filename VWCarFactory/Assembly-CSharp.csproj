@@ -45,6 +45,37 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AssetStore\ColorPicker\Demos\DefaultColorPicker\DefaultColorPicker\GradientBoxSwitcher.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Demos\DefaultColorPicker\DefaultColorPicker\PopupWindow.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Demos\DefaultColorPicker\DefaultColorPicker\WindowDragger.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Demos\DefaultColorPicker\DefaultColorPicker\WindowOrderer.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Demos\DefaultColorPicker\DefaultColorPickerDemo.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Demos\Demo2\ColorPickerDemo2.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\Enums\ColorType.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\AbstractClasses\ColorComponent.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\AbstractClasses\ColorTypeComponent.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\AbstractClasses\GraphicalColorComponent.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\AbstractClasses\GraphicalColorTypeComponent.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorEyedropper.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorEyedropperPreview.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorHexField.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorInput.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorLabel.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorPicker.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\ColorSlider.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\GradientBackground.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\GradientBackground2D.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\GradientBox.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\GradientCircle.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\PreviewGraphic.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UI\PreviewRenderer.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\ColorPickerUtils.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\HSLColor.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\HSVColor.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\InputBlocker.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\RGBColor.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\Slider2D.cs" />
+     <Compile Include="Assets\AssetStore\ColorPicker\Scripts\UtilityScripts\SliderCircle2D.cs" />
      <Compile Include="Assets\AssetStore\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
      <Compile Include="Assets\AssetStore\ootii\Framework_v1\Code\Collections\ObjectPool.cs" />
      <Compile Include="Assets\AssetStore\ootii\Framework_v1\Code\Helpers\EditorHelper.cs" />
@@ -67,6 +98,10 @@
      <Compile Include="Assets\Script\CarPrefab.cs" />
      <Compile Include="Assets\Script\ChangeColorButton.cs" />
      <Compile Include="Assets\Script\CustomButton.cs" />
+     <Compile Include="Assets\Script\DataSystem\AppData.cs" />
+     <Compile Include="Assets\Script\DataSystem\FileExtend.cs" />
+     <Compile Include="Assets\Script\DataSystem\Test\ExampleTest.cs" />
+     <Compile Include="Assets\Script\DataSystem\Test\Test.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Script\TitleManager.cs" />
      <Compile Include="Assets\Script\UIManager.cs" />
@@ -146,6 +181,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Adaptation.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrain.shader" />
      <None Include="Assets\AssetStore\Res\Cars\AE_CARS\SAMOCHODY\Car_56\readme.txt" />
+     <None Include="Assets\AssetStore\ColorPicker\ChangeLog.txt" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\VignettingShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
@@ -172,22 +208,25 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="DemiLib">
- <HintPath>/Volumes/EX/UnityProject/VWCarFactory/Assets/AssetStore/Demigiant/DemiLib/DemiLib.dll</HintPath>
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/AssetStore/Demigiant/DemiLib/DemiLib.dll</HintPath>
  </Reference>
  <Reference Include="DOTween">
- <HintPath>/Volumes/EX/UnityProject/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween.dll</HintPath>
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="DOTween43">
- <HintPath>/Volumes/EX/UnityProject/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween43.dll</HintPath>
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween43.dll</HintPath>
  </Reference>
  <Reference Include="DOTween46">
- <HintPath>/Volumes/EX/UnityProject/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween46.dll</HintPath>
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween46.dll</HintPath>
  </Reference>
  <Reference Include="DOTween50">
- <HintPath>/Volumes/EX/UnityProject/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween50.dll</HintPath>
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/AssetStore/Demigiant/DOTween/DOTween50.dll</HintPath>
  </Reference>
  <Reference Include="DOTweenPro">
- <HintPath>/Volumes/EX/UnityProject/VWCarFactory/Assets/AssetStore/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/AssetStore/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+ </Reference>
+ <Reference Include="LitJson">
+ <HintPath>/Users/yuanwei/VWCarFactory/VWCarFactory/Assets/Plugins/LitJson.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

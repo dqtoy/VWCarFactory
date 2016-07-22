@@ -17,15 +17,19 @@ public class GameManager : MonoBehaviour {
 	public Transform camInside;
 	public GameObject car;
 	public CarPrefab carPrefab;
+	public int selectedCarID;
+	public int nowSelectedCustomType;
 	bool cameraIsInside;
 
 	public List<string> customTexturesBtn;
 	public List<string> customTextures;
 
+	public List<GameObject> allButtonIcon;
+
 	void Awake()
 	{
 		instance = this;
-		TestData ();
+		InitData ();
 	}
 
 	// Use this for initialization
@@ -33,10 +37,10 @@ public class GameManager : MonoBehaviour {
 		InitialCar ();
 	}
 
-	void TestData()
+	void InitData()
 	{
-		for (int i = 0; i < 4; i++) {
-			customTexturesBtn.Add ("SamplePic/CAR/IconVIP512");
+		for (int i = 0; i < AppData.GetCarPaintingByName (AppData.CarList [GameManager.instance.selectedCarID]).Count; i++) {
+			customTexturesBtn.Add (AppData.GetCarPaintingByName (AppData.CarList [GameManager.instance.selectedCarID])[i].Icon);
 			customTextures.Add ("CarBodyTexture/Passart/tex_" + (i+1));
 		}
 	}
