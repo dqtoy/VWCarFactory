@@ -2,106 +2,113 @@
     "Name": "Tiguan",
     "Introduction": "  ",
     "Type": "SUV",
+    "CarBody": "TestPrefabs/Capsule",
     "CustumParts": [
         {
-            "Name": "警车涂装",
-            "Icon": " ",
-            "ModelPath": "  ",
+            "Name": "Default",
+            "Icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/black",
             "CustumType": "涂装"
         },
         {
-            "Name": "出租车涂装",
-            "Icon": " ",
-            "ModelPath": "  ",
+            "Name": "red",
+            "Icon": "TestPrefabs/red",
+            "ModelPath": "TestPrefabs/red",
             "CustumType": "涂装"
         },
         {
-            "Name": "红色涂装",
-            "Icon": " ",
-            "ModelPath": "  ",
+            "Name": "green",
+            "Icon": "TestPrefabs/green",
+            "ModelPath": "TestPrefabs/green",
+            "CustumType": "涂装"
+        },
+        {
+            "Name": "blue",
+            "Icon": "TestPrefabs/blue",
+            "ModelPath": "TestPrefabs/blue",
             "CustumType": "涂装"
         },
         {
             "Name": "电动踏板",
-            "Icon": " ",
-            "ModelPath": "  ",
+            "Icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (1)",
             "CustumType": "电子设备"
         },
         {
             "Name": "隐藏式行车记录仪",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (2)",
             "CustumType": "电子设备"
         },
         {
             "Name": "导航仪",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (3)",
             "CustumType": "电子设备"
         },
         {
             "Name": "负离子",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (4)",
             "CustumType": "电子设备"
         },
         {
             "Name": "碳纤维中控",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (5)",
             "CustumType": "内饰"
         },
         {
             "Name": "碳纤维门把手",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (6)",
             "CustumType": "外饰"
         },
         {
             "Name": "碳纤维出风口",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (7)",
             "CustumType": "内饰"
         },
         {
             "Name": "碳纤维后视镜",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (8)",
             "CustumType": "外饰"
         },
         {
             "Name": "副反光镜",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (9)",
             "CustumType": "外饰"
         },
         {
             "Name": "副喇叭",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (10)",
             "CustumType": "外饰"
         },
         {
             "Name": "副刹车",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (11)",
             "CustumType": "内饰"
         },
         {
             "Name": "副离合",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (12)",
             "CustumType": "内饰"
         },
         {
             "Name": "副油门",
-            "icon": " ",
-            "ModelPath": "  ",
+            "icon": "TestPrefabs/black",
+            "ModelPath": "TestPrefabs/Capsule (13)",
             "CustumType": "内饰"
         }
     ],
-    "CustumCar": [
-        "警车",
-        "出租车"
+    "TemplateCar": [
+        "警车SUV",
+        "出租车SUV"
     ]
 }

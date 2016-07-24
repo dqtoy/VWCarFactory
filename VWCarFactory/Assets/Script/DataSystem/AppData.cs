@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿///0723 CarData 添加CarBody字段  车架路径
+///添加DeleteCustumCar删除自定义车型数据，GetUserCustumCarsList获取自定义车型数据
+///GetTemplateCar改成GetTemplateCarList， GetTemplateCar获取模板数据GetTemplateCarList获取模版车列表
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using LitJson;
@@ -128,15 +132,15 @@ public class AppData
     }
 
     /// <summary>
-    /// 获取所有的车涂装
+    /// 获取车的所有涂装
     /// </summary>
     /// <param name="__name"></param>
     /// <returns></returns>
-    public static List<CarPart> GetCarPaintingByName(string __name)
+    public static List<CarPart> GetCarPaintingByName(string __carName)
     {
         CarData _carData = new CarData();
         List<CarPart> _custumBodyTexture = new List<CarPart>();
-        if (m_carsData.TryGetValue(__name, out _carData))
+        if (m_carsData.TryGetValue(__carName, out _carData))
         {
             foreach (var item in _carData.CustumParts)
             {
@@ -149,7 +153,7 @@ public class AppData
         }
         else
         {
-            Debug.LogError("指定的车数据不存在：" + __name);
+            Debug.LogError("指定的车数据不存在：" + __carName);
             return _custumBodyTexture;
         }
     }
@@ -160,15 +164,15 @@ public class AppData
     /// <param name="__name"></param>
     /// <param name="__partName"></param>
     /// <returns></returns>
-    public static List<CarPart> GetCarPartsByName(string __name,string __partName)
+    public static List<CarPart> GetCarPartsByName(string __carName,string __partType)
     {
         CarData _carData = new CarData();
         List<CarPart> _custumParts = new List<CarPart>();
-        if (m_carsData.TryGetValue(__name, out _carData))
+        if (m_carsData.TryGetValue(__carName, out _carData))
         {
             foreach (var item in _carData.CustumParts)
             {
-                if (item.CustumType == __partName)
+                if (item.CustumType == __partType)
                 {
                     _custumParts.Add(item);
                 }
@@ -177,8 +181,36 @@ public class AppData
         }
         else
         {
-            Debug.LogError("指定的车数据不存在：" + __name);
+            Debug.LogError("指定的车数据不存在：" + __carName);
             return _custumParts;
+        }
+    }
+
+    /// <summary>
+    /// 找到指定的车配件
+    /// </summary>
+    /// <param name="__carType">车类型</param>
+    /// <param name="__partName">配件名</param>
+    /// <returns>没找到返回空</returns>
+    public static CarPart GetCarPartData(string __carType,string __partName)
+    {
+        CarData _carData = new CarData();
+        if (m_carsData.TryGetValue(__carType, out _carData))
+        {
+            foreach (var item in _carData.CustumParts)
+            {
+                if (item.Name == __partName)
+                {
+                    return item;
+                }
+            }
+            Debug.LogError("没找到指定的车配件");
+            return null;
+        }
+        else
+        {
+            Debug.LogError("指定的车数据不存在：" + __carType);
+            return null;
         }
     }
 
@@ -187,17 +219,58 @@ public class AppData
     /// </summary>
     /// <param name="__name"></param>
     /// <returns></returns>
-    public static List<string > GetTemplateCar(string __name)
+    public static List<string> GetTemplateCarList(string __carName)
     {
         CarData _carData = new CarData();
-        if (m_carsData.TryGetValue(__name, out _carData))
+        if (m_carsData.TryGetValue(__carName, out _carData))
         {
             return _carData.TemplateCar;
         }
         else
         {
-            Debug.LogError("指定的车数据不存在：" + __name);
+            Debug.LogError("指定的车数据不存在：" + __carName);
             return new List<string>();
+        }
+    }
+
+    /// <summary>
+    /// 获取内置的车模板
+    /// </summary>
+    /// <param name="__name"></param>
+    /// <returns></returns>
+    public static void GetTemplateCar(string __templateName)
+    {
+        CarStudio.LoadTemplate(__templateName);
+    }
+
+
+    /// <summary>
+    /// 获取所有的用户自定义车名字
+    /// </summary>
+    /// <returns></returns>
+    public static List<string> GetUserCustumCarsList()
+    {
+        List<string> _custumCars = new List<string>();
+        string[] _file = Directory.GetFiles(CustumCar.Path, "*.json");
+
+        for (int i = 0; i < _file.Length; i++)
+        {
+            _custumCars.Add(Path.GetFileNameWithoutExtension(_file[i]));
+        }
+
+        return _custumCars;
+    }
+
+    /// <summary>
+    /// 删除数据
+    /// </summary>
+    /// <param name="__name"></param>
+    public static void DeleteCustumCar(string __name)
+    {
+        string _fileName = CustumCar.Path + "/" + __name + ".json";
+        if (File.Exists(_fileName))
+        {
+            File.Delete(_fileName);
         }
     }
 
@@ -207,7 +280,7 @@ public class AppData
 #region 数据
 public class CarData
 {
-    public string Name, Introduction, Type;
+    public string Name, Introduction, Type, CarBody;
     public List<CarPart> CustumParts;
     public List<string> TemplateCar;
 }

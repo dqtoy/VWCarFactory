@@ -1,0 +1,12 @@
+{
+	"CustumCarName":"警车CAR",
+	"CarBaseModle":"Passat",
+	"CarType":"CAR",
+	"BodyTexture":"Default",
+	"Parts":[
+		"隐藏式行车记录仪",
+		"负离子",
+		"碳纤维出风口",
+		"副反光镜"
+	]
+}

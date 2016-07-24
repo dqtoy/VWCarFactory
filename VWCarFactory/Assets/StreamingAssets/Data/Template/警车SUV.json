@@ -1,0 +1,12 @@
+{
+	"CustumCarName":"警车SUV",
+	"CarBaseModle":"Tiguan",
+	"CarType":"SUV",
+	"BodyTexture":"red",
+	"Parts":[
+		"副刹车",
+		"负离子",
+		"副离合",
+		"副油门"
+	]
+}

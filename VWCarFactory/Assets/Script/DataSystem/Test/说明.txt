@@ -1,0 +1,7 @@
+CarStudio   操作添加/删除车配件，添加/删除的同时会生成/删除模型，如果你不想生成/删除模型，想要自己操作就将CarStudio.IsInitObject设置为fales
+AddPart				添加配件
+RemovePart			删除配件
+SaveCustumUserCar（name)	保存数据 name 数据名
+LoadCustum
+LoadTemplate			读取自定义数据，读取模板数据。他们的数据路径不同，用不同的函数。但都只有输入文件名就行了
+OpenStudio			新建一个新的数据基于车名字，帕萨特，途观

@@ -1,1 +1,51 @@
-{"Name":"大众改装厂","FactoryIntroduction":"车厂介绍文字","Url":" ","CarList":["Passat","Tiguan"],"Sample":{"SUV":[{"Title":"title1 ","Tag":"tag1 ","Description":"des1 ","Image":" "},{"Title":"title2 ","Tag":"tag2 ","Description":"des2 ","Image":" "},{"Title":"title3 ","Tag":"tag3 ","Description":"des3 ","Image":" "}],"CAR":[{"Title":"title1 ","Tag":"tag1 ","Description":"des1 ","Image":" "},{"Title":"title2 ","Tag":"tag2 ","Description":"des2 ","Image":" "},{"Title":"title3 ","Tag":"tag3 ","Description":"des3 ","Image":" "}]}}
+{
+    "Name": "大众改装厂",
+    "FactoryIntroduction": "车厂介绍文字",
+    "Url": " ",
+    "CarList": [
+        "Passat",
+        "Tiguan"
+    ],
+    "Sample": {
+        "SUV": [
+            {
+                "Title": "suvtitle1 ",
+                "Tag": "tag1 ",
+                "Description": "des1 ",
+                "Image": "TestPrefabs/black"
+            },
+            {
+                "Title": "suvtitle2 ",
+                "Tag": "tag2 ",
+                "Description": "des2 ",
+                "Image": "TestPrefabs/red"
+            },
+            {
+                "Title": "suvtitle3 ",
+                "Tag": "tag3 ",
+                "Description": "des3 ",
+                "Image": "TestPrefabs/green"
+            }
+        ],
+        "CAR": [
+            {
+                "Title": "cartitle1 ",
+                "Tag": "tag1 ",
+                "Description": "des1 ",
+                "Image": "TestPrefabs/black"
+            },
+            {
+                "Title": "cartitle2 ",
+                "Tag": "tag2 ",
+                "Description": "des2 ",
+                "Image": "TestPrefabs/red"
+            },
+            {
+                "Title": "cartitle3 ",
+                "Tag": "tag3 ",
+                "Description": "des3 ",
+                "Image": "TestPrefabs/green"
+            }
+        ]
+    }
+}
