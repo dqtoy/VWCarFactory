@@ -2,15 +2,15 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/UIManager.cs">
     <Files>
-      <File FileName="Assets/Script/UIManager.cs" Line="64" Column="3" />
-      <File FileName="Assets/Script/CarControl.cs" Line="48" Column="24" />
-      <File FileName="Assets/Script/TitleManager.cs" Line="15" Column="31" />
-      <File FileName="Assets/Script/GameManager.cs" Line="35" Column="31" />
-      <File FileName="Assets/Script/CustomButton.cs" Line="23" Column="2" />
-      <File FileName="Assets/Script/ChangeColorButton.cs" Line="16" Column="3" />
-      <File FileName="Assets/Script/CarPrefab.cs" Line="11" Column="3" />
-      <File FileName="Assets/Script/DataSystem/Test/ExampleTest.cs" Line="48" Column="55" />
-      <File FileName="Assets/Script/DataSystem/AppData.cs" Line="135" Column="53" />
+      <File FileName="Assets/Script/UIManager.cs" Line="86" Column="3" />
+      <File FileName="Assets/Script/CarControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/TitleManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/CustomButton.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/ChangeColorButton.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/CarPrefab.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/DataSystem/Test/ExampleTest.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/DataSystem/AppData.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

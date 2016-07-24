@@ -63,7 +63,6 @@ public class UIManager : MonoBehaviour {
 	public void ChangeButtonList(int id,bool isTexture)
 	{
 		GameManager.instance.nowSelectedCustomType = id;
-		Debug.Log (GameManager.instance.allButtonIcon.Count);
 		for (int m = 0; m < GameManager.instance.allButtonIcon.Count; m++) {
 			//GameManager.instance.allButtonIcon.Remove(GameManager.instance.allButtonIcon[m]);
 			Destroy (GameManager.instance.allButtonIcon [m]);
