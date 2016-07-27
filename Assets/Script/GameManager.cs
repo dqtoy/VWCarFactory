@@ -20,11 +20,14 @@ public class GameManager : MonoBehaviour {
 	public int selectedCarID;
 	public int nowSelectedCustomType;
 	bool cameraIsInside;
+	CameraControl camControl;
 
 	public List<string> customTexturesBtn;
 	public List<string> customTextures;
 
 	public List<GameObject> allButtonIcon;
+
+
 
 	void Awake()
 	{
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		camControl = Camera.main.GetComponent<CameraControl> ();
 		InitialCar ();
 	}
 
@@ -50,8 +54,8 @@ public class GameManager : MonoBehaviour {
 	{
 		//CarStudio.IsInitObject = false;
 		CarStudio.OpenStudio(carType.ToString ());
-		CarStudio.LoadCustum (carType.ToString ());
-		CarStudio.LoadTemplate (AppData.GetTemplateCarList(carType.ToString())[0]);
+		//CarStudio.LoadCustum ("CarDataTemplate");//carType.ToString ());
+		//CarStudio.LoadTemplate (AppData.GetTemplateCarList(carType.ToString())[0]);
 		car = CarStudio.objects[CarStudio.Car.CarBaseModle];
 		//car = Instantiate (Resources.Load ("CarBody/" + carType.ToString ()), Vector3.zero, Quaternion.identity) as GameObject;
 		carPrefab = car.GetComponent<CarPrefab> ();
@@ -66,10 +70,13 @@ public class GameManager : MonoBehaviour {
 	public void CameraChange(bool inside)
 	{
 		if (cameraIsInside != inside) {
+			
 			if (inside) {
+				camControl.enabled = false;
 				CameraGoto (camInside);
 				cameraIsInside = true;
 			} else {
+				
 				CameraGoto (camOutside);
 				cameraIsInside = false;
 			}
@@ -81,10 +88,16 @@ public class GameManager : MonoBehaviour {
 		transform.DOMove (pos.position, 1.0f).SetEase (Ease.OutExpo);
 		transform.DORotate (pos.rotation.eulerAngles, 1.0f).SetEase (Ease.OutExpo);
 		if (cameraIsInside) {
+			camControl.enabled = true;
 			car.transform.DORotate (new Vector3 (0, -90, 0), 1.0f).SetEase (Ease.OutExpo);
 		} else {
 			car.transform.DORotate (new Vector3 (0, 0, 0), 1.0f).SetEase (Ease.OutExpo);
 		}
+	}
+
+	public void CameraBackFinish()
+	{
+		camControl.enabled = true;
 	}
 
 	public void ChangeCustomTexture(int id)
@@ -95,7 +108,7 @@ public class GameManager : MonoBehaviour {
 	public void CarPartsSetting()
 	{
 		for (int i = 0; i < CarStudio.Car.Parts.Count; i++) {
-			CarStudio.objects [CarStudio.Car.Parts[i]].name = "testPartName_" + i;
+			//CarStudio.objects [CarStudio.Car.Parts[i]].name = "testPartName_" + i;
 		}
 	}
 }

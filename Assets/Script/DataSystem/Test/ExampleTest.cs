@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ExampleTest : MonoBehaviour
 {
-    System.Collections.Generic.List<string> CarPartName = new System.Collections.Generic.List<string> { "涂装", "电子设备", "内饰", "外饰" };
+	System.Collections.Generic.List<string> CarPartName = new System.Collections.Generic.List<string> { "内饰", "外饰", "电子设备","涂装" };
     Rect windowRect0 = new Rect(20, 20, 300, 300);
     Rect windowRect1 = new Rect(50, 50, 800, 800);
     Rect windowRect2 = new Rect(100, 100, 300, 300);
@@ -89,6 +89,7 @@ public class ExampleTest : MonoBehaviour
             }
         }
         GUILayout.EndHorizontal();
+		//Debug.Log (CarStudio.Car.CarBaseModle + " , " + CarPartName[selectedPart]);
         //绘制改装的具体内容 按钮
         foreach (var item in AppData.GetCarPartsByName(CarStudio.Car.CarBaseModle, CarPartName[selectedPart]))
         {

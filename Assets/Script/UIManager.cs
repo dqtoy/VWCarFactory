@@ -28,13 +28,13 @@ public class UIManager : MonoBehaviour {
 	public void ChangeTexture()
 	{
 		GameManager.instance.CameraChange (false);
-		ChangeButtonList (0,true);
+		ChangeButtonList (3,true);
 	}
 
 	public void ChangeOutParts()
 	{
 		GameManager.instance.CameraChange (false);
-		ChangeButtonList (1,false);
+		ChangeButtonList (0,false);
 	}
 
 	public void ChangeElecDevice()
@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour {
 	public void ChangeSpecialCar()
 	{
 		GameManager.instance.CameraChange (false);
-		ChangeButtonList (3,false);
+		ChangeButtonList (1,false);
 	}
 
 	public void ChangeOther()
@@ -71,18 +71,36 @@ public class UIManager : MonoBehaviour {
 			GameManager.instance.allButtonIcon.RemoveRange (0, GameManager.instance.allButtonIcon.Count);
 		}
 
-		for (int i = 0; i < GameManager.instance.customTexturesBtn.Count; i++) {
-			GameObject obj = Instantiate (Resources.Load("UI/PartButton") as GameObject,Vector3.zero,Quaternion.identity) as GameObject;
-			obj.name = "Button " + i;
+//		if (id == 3) {
+//			for (int i = 0; i < GameManager.instance.customTexturesBtn.Count; i++) {
+//				GameObject obj = Instantiate (Resources.Load ("UI/PartButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+//				obj.name = "Button " + i;
+//				GameManager.instance.allButtonIcon.Add (obj);
+//				CustomButton btn = obj.GetComponent<CustomButton> ();
+//				Image btnImg = obj.GetComponent<Image> ();
+//				obj.transform.SetParent (buttonBarContent.transform, false);
+//				Texture2D img;
+//				img = Resources.Load (GameManager.instance.customTexturesBtn [i]) as Texture2D;
+//				btn.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
+//				btn.ChangeText ("test");
+//				btn.SetID (i);
+//			}
+//		} else {
+		//Debug.Log (AppData.CarList [GameManager.instance.selectedCarID] + " , " + menuName[id]);
+		for (int j = 0; j < AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id]).Count; j++) {
+		Debug.Log (menuName[id] + " , " + AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Icon);
+			GameObject obj = Instantiate (Resources.Load ("UI/PartButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+			obj.name = "Button " + j;
 			GameManager.instance.allButtonIcon.Add (obj);
 			CustomButton btn = obj.GetComponent<CustomButton> ();
 			Image btnImg = obj.GetComponent<Image> ();
 			obj.transform.SetParent (buttonBarContent.transform, false);
 			Texture2D img;
-			img = Resources.Load (GameManager.instance.customTexturesBtn[i]) as Texture2D;
-			btn.ChangeImage(Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
-			btn.ChangeText ("test");
-			btn.SetID (i);
+			img = Resources.Load (AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Icon) as Texture2D;
+			btn.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
+			btn.ChangeText (AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Name);
+			btn.SetID (j);
 		}
+
 	}
 }

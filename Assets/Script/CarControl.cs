@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class CarControl : MonoBehaviour {
 
@@ -76,26 +77,28 @@ public class CarControl : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown()
-	{
-		inAutoRotation = false;
-		mouseLastPosition = Input.mousePosition;
-		StopCoroutine ("ChangeToAutoRotation");
-	}
-
-	void OnMouseDrag()
-	{
-		mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-		GameManager.instance.car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
-		carRoot.transform.Rotate (Vector3.left * Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
-		mouseLastPosition = Input.mousePosition;
-	}
-
-	void OnMouseUp()
-	{
-		StartCoroutine("ChangeToAutoRotation");
-		mouseLastPosition = Input.mousePosition;
-	}
+//	void OnMouseDown()
+//	{
+//		inAutoRotation = false;
+//		mouseLastPosition = Input.mousePosition;
+//		StopCoroutine ("ChangeToAutoRotation");
+//	}
+//
+//	void OnMouseDrag()
+//	{
+//		mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
+//		//GameManager.instance.car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
+//		//carRoot.transform.Rotate (Vector3.left * Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
+//		//Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.left,Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
+//		Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.up,Time.deltaTime * (-mouseDelta.x) * rotateSpeed);
+//		mouseLastPosition = Input.mousePosition;
+//	}
+//
+//	void OnMouseUp()
+//	{
+//		StartCoroutine("ChangeToAutoRotation");
+//		mouseLastPosition = Input.mousePosition;
+//	}
 
 	IEnumerator ChangeToAutoRotation()
 	{
