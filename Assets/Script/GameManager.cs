@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviour {
 		//car = Instantiate (Resources.Load ("CarBody/" + carType.ToString ()), Vector3.zero, Quaternion.identity) as GameObject;
 		carPrefab = car.GetComponent<CarPrefab> ();
 		car.transform.SetParent (CarControl.instance.transform);
-		car.transform.localPosition = Vector3.zero;
-		car.transform.localRotation = Quaternion.Euler (0,90,0);
-		car.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+//		car.transform.localPosition = Vector3.zero;
+//		car.transform.localRotation = Quaternion.Euler (0,90,0);
+//		car.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
 
 		CarPartsSetting ();
 	}

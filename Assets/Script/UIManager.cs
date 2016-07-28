@@ -101,6 +101,5 @@ public class UIManager : MonoBehaviour {
 			btn.ChangeText (AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Name);
 			btn.SetID (j);
 		}
-
 	}
 }

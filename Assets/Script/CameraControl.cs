@@ -70,35 +70,34 @@ public class CameraControl : MonoBehaviour
 	void Update ()
 	{
 
-		float h = GetXAxis ();                                                                                       //ªÒ»° ‰»Î                              
-		float v = GetYAxis ();
-		//ChangeDistance ();                                                                                            //∏ƒ±‰æ‡¿Î                              
-		//œﬁ÷∆–˝◊™
-		float xEulerAngles = transform.rotation.eulerAngles.x;
-		if (xEulerAngles <= 90) {
-			xEulerAngles += (v * Time.deltaTime * rotateSpeed);                                                      //œﬁ÷∆transform.rotation µƒx÷·
-			xEulerAngles = xEulerAngles > 90f ? 90f : xEulerAngles;                                                  //Œ™90-0-360-270                                 
-			xEulerAngles = xEulerAngles < 0 ? (360f + xEulerAngles) : xEulerAngles;
-		} else {
-			xEulerAngles += (v * Time.deltaTime * rotateSpeed);
-			xEulerAngles = xEulerAngles < 270f ? 270 : xEulerAngles;
-			xEulerAngles = xEulerAngles > 360f ? (xEulerAngles - 360f) : xEulerAngles;
-		}
+		Ray rayTest = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hitTest;
 
-
-
-		transform.Rotate (0, h * Time.deltaTime * rotateSpeed, 0, Space.World);
-		transform.rotation = Quaternion.Euler (new Vector3 (xEulerAngles, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
-
-
-		Ray ray = new Ray (target.position, transform.rotation * new Vector3 (0, 0, -distance));                            //º‡≤‚…„œÒÕ∑”Îƒø±Íº‰ «∑Ò”–’⁄µ≤
-		RaycastHit hit;
-
-		if (Physics.Raycast (ray, out hit, distance) && !canBeOcclusion)
-			transform.position = hit.distance < _mixDis ? transform.position : hit.point;
-		else
-			transform.position = ray.GetPoint (Mathf.LerpAngle (Vector3.Distance (transform.position, target.position),
+		if (Physics.Raycast(rayTest, out hitTest, 100) && hitTest.collider.name == "CarRoot") {
+			float h = GetXAxis ();                                                                                       //ªÒ»° ‰»Î                              
+			float v = GetYAxis ();
+			//ChangeDistance ();                                                                                            //∏ƒ±‰æ‡¿Î                              
+			//œﬁ÷∆–˝◊™
+			float xEulerAngles = transform.rotation.eulerAngles.x;
+			if (xEulerAngles <= 90) {
+				xEulerAngles += (v * Time.deltaTime * rotateSpeed);                                                      //œﬁ÷∆transform.rotation µƒx÷·
+				xEulerAngles = xEulerAngles > 90f ? 90f : xEulerAngles;                                                  //Œ™90-0-360-270                                 
+				xEulerAngles = xEulerAngles < 0 ? (360f + xEulerAngles) : xEulerAngles;
+			} else {
+				xEulerAngles += (v * Time.deltaTime * rotateSpeed);
+				xEulerAngles = xEulerAngles < 270f ? 270 : xEulerAngles;
+				xEulerAngles = xEulerAngles > 360f ? (xEulerAngles - 360f) : xEulerAngles;
+			}
+			transform.Rotate (0, h * Time.deltaTime * rotateSpeed, 0, Space.World);
+			transform.rotation = Quaternion.Euler (new Vector3 (xEulerAngles, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z));
+			Ray ray = new Ray (target.position, transform.rotation * new Vector3 (0, 0, -distance));                            //º‡≤‚…„œÒÕ∑”Îƒø±Íº‰ «∑Ò”–’⁄µ≤
+			RaycastHit hit;
+			if (Physics.Raycast (ray, out hit, distance) && !canBeOcclusion)
+				transform.position = hit.distance < _mixDis ? transform.position : hit.point;
+			else
+				transform.position = ray.GetPoint (Mathf.LerpAngle (Vector3.Distance (transform.position, target.position),
 				distance, Time.deltaTime * _distanceLerp));
+		}
 	}
 
 

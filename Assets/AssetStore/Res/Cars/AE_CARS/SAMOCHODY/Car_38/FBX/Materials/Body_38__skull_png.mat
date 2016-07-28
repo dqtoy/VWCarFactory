@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Body_38__skull_png
-  m_Shader: {fileID: 4800000, guid: 32e5b237318dd4b43b0ab671d9b9a02e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 69aa62c3093c26647a22772655ab5576, type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000
@@ -82,7 +82,7 @@ Material:
         first:
           name: _Cube
         second:
-          m_Texture: {fileID: 8900000, guid: 4152f2aa1467f8e41abb5bd81ae5ec7d, type: 2}
+          m_Texture: {fileID: 8900000, guid: 8678e5f3445eb4d43913080b1e0a02b8, type: 2}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
