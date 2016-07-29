@@ -4,8 +4,12 @@ using System.Collections;
 public class Test_IOS_SavePhoto : MonoBehaviour {
 
     Texture2D tex;
+    int i;
     public void Start()
     {
+
+
+
         tex = new Texture2D(2, 2);
         byte[] pngBytes = new byte[] {
             0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A,0x00,0x00,0x00,0x0D,0x49,0x48,0x44,0x52,
@@ -35,16 +39,45 @@ public class Test_IOS_SavePhoto : MonoBehaviour {
             0xC1,0x4E,0x14,0x1B,0x00,0x00,0x00,0x00,0x49,0x45,0x4E,0x44,0xAE,0x42,0x60,0x82,
         };
         tex.LoadImage(pngBytes);
+        
     }
 
     void OnGUI()
     {
-        GUILayout.Label(tex);
-        if (GUILayout.Button("保存图片", GUILayout.Width(64), GUILayout.Height(64)))
+        try
         {
-            Debug.Log(tex.format);
-            tex.SaveToAlbum();
+
+            AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+            AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+            i = jo.Call<int>("Max", new object[] { 10, 20 });
+
+
+            GUILayout.Label(tex);
+            GUILayout.Label(i.ToString());
+            if (GUILayout.Button("保存图片", GUILayout.Width(64), GUILayout.Height(64)))
+            {
+                Debug.Log(tex.format);
+                tex.SaveToAlbum();
+            }
+            if (GUILayout.Button("demo", GUILayout.Width(64), GUILayout.Height(64)))
+            {
+                Application.LoadLevel(1);
+            }
+            if (GUI.Button(new Rect(Screen.width / 2 - 20, Screen.height / 2 + 20, 100, 40), "点击震动"))
+            {
+                jo.Call("ClickShake");
+            }
+
         }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("error:" + ex.StackTrace);
+            Debug.LogError("error:" + ex.Source);
+            Debug.LogError("error:" + ex.Message);
+
+
+        }
+
 
     }
 }

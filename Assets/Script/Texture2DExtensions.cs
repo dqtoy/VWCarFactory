@@ -13,21 +13,22 @@ public static class Texture2DExtensions
     /// <param name="__tex"></param>
     public static void SaveToAlbum(this Texture2D __tex)
     {
-        
+
 #if UNITY_IOS
         string _ScreenshotPath = Application.persistentDataPath + "/Screenshot.png";
         File.WriteAllBytes(_ScreenshotPath, __tex.EncodeToPNG());
         _SavePhoto(_ScreenshotPath);
 #elif UNITY_ANDROID
-        string _ScreenshotPath = "/mnt/sdcard/DCIM/";
-        if (!Directory.Exists(_ScreenshotPath))
-        {
-            Directory.CreateDirectory(_ScreenshotPath);
-        }
-        string _Screenshot = _ScreenshotPath + System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + ".png";
-        //string _Screenshot = _ScreenshotPath  + "1.png";
+        string _fileName = System.DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+        string _ScreenshotPath = Application.persistentDataPath + "/Screenshot.png";
 
         File.WriteAllBytes(_ScreenshotPath, __tex.EncodeToPNG());
+
+        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+
+
+        jo.CallStatic("SaveToAlbum", _fileName);
 #endif
 
 

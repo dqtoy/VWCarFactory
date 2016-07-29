@@ -11,6 +11,7 @@ public class OutLog : MonoBehaviour
     private string outpath;
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         //Application.persistentDataPath Unity中只有这个路径是既可以读也可以写的。
         outpath = Application.persistentDataPath + "/outLog.txt";
         Debug.Log(outpath);
@@ -21,8 +22,6 @@ public class OutLog : MonoBehaviour
         }
         //在这里做一个Log的监听
         Application.RegisterLogCallback(HandleLog);
-        //一个输出
-        Debug.Log("xuanyusong");
     }
 
     void Update()
@@ -45,6 +44,8 @@ public class OutLog : MonoBehaviour
     void HandleLog(string logString, string stackTrace, LogType type)
     {
         mWriteTxt.Add(logString);
+        mWriteTxt.Add(stackTrace);
+
         if (type == LogType.Error || type == LogType.Exception)
         {
             Log(logString);
