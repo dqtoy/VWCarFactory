@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		camControl = Camera.main.GetComponent<CameraControl> ();
 		InitialCar ();
+		UIManager.instance.ChangeScrollBar (false);
 	}
 
 	void InitData()

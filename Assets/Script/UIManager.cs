@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
+using com.ootii.Messages;
 
 public class UIManager : MonoBehaviour {
 
@@ -12,9 +14,13 @@ public class UIManager : MonoBehaviour {
 	public Sprite buildButtonImage;
 	public GameObject buttonBarContent;
 	public string[] menuName;
+	public GameObject animationScrollBar;
+	public Vector2 scrollBounds;
+	bool isBarOpen;
 
 	// Use this for initialization
 	void Start () {
+		MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
 		instance = this;
 		InitialTextureButton ();
 	}
@@ -29,30 +35,45 @@ public class UIManager : MonoBehaviour {
 	{
 		GameManager.instance.CameraChange (false);
 		ChangeButtonList (3,true);
+		if (!isBarOpen) {
+			ChangeScrollBar (true);
+		}
 	}
 
 	public void ChangeOutParts()
 	{
 		GameManager.instance.CameraChange (false);
 		ChangeButtonList (0,false);
+		if (!isBarOpen) {
+			ChangeScrollBar (true);
+		}
 	}
 
 	public void ChangeElecDevice()
 	{
 		GameManager.instance.CameraChange (true);
 		ChangeButtonList (2,false);
+		if (!isBarOpen) {
+			ChangeScrollBar (true);
+		}
 	}
 
 	public void ChangeSpecialCar()
 	{
 		GameManager.instance.CameraChange (false);
 		ChangeButtonList (1,false);
+		if (!isBarOpen) {
+			ChangeScrollBar (true);
+		}
 	}
 
 	public void ChangeOther()
 	{
 		GameManager.instance.CameraChange (false);
 		ChangeButtonList (4,false);
+		if (!isBarOpen) {
+			ChangeScrollBar (true);
+		}
 	}
 
 	public void InitialTextureButton()
@@ -70,25 +91,8 @@ public class UIManager : MonoBehaviour {
 		if (GameManager.instance.allButtonIcon.Count > 0) {
 			GameManager.instance.allButtonIcon.RemoveRange (0, GameManager.instance.allButtonIcon.Count);
 		}
-
-//		if (id == 3) {
-//			for (int i = 0; i < GameManager.instance.customTexturesBtn.Count; i++) {
-//				GameObject obj = Instantiate (Resources.Load ("UI/PartButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
-//				obj.name = "Button " + i;
-//				GameManager.instance.allButtonIcon.Add (obj);
-//				CustomButton btn = obj.GetComponent<CustomButton> ();
-//				Image btnImg = obj.GetComponent<Image> ();
-//				obj.transform.SetParent (buttonBarContent.transform, false);
-//				Texture2D img;
-//				img = Resources.Load (GameManager.instance.customTexturesBtn [i]) as Texture2D;
-//				btn.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
-//				btn.ChangeText ("test");
-//				btn.SetID (i);
-//			}
-//		} else {
-		//Debug.Log (AppData.CarList [GameManager.instance.selectedCarID] + " , " + menuName[id]);
+			
 		for (int j = 0; j < AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id]).Count; j++) {
-		Debug.Log (menuName[id] + " , " + AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Icon);
 			GameObject obj = Instantiate (Resources.Load ("UI/PartButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
 			obj.name = "Button " + j;
 			GameManager.instance.allButtonIcon.Add (obj);
@@ -100,6 +104,27 @@ public class UIManager : MonoBehaviour {
 			btn.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
 			btn.ChangeText (AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Name);
 			btn.SetID (j);
+		}
+	}
+
+	public void ChangeScrollBar(bool bo)
+	{
+		if (bo) {
+			animationScrollBar.transform.DOLocalMoveY (scrollBounds.y, 0.5f).SetEase (Ease.OutExpo);
+			isBarOpen = true;
+		} else {
+			animationScrollBar.transform.DOLocalMoveY (scrollBounds.x, 0.5f).SetEase (Ease.OutExpo);
+			isBarOpen = false;
+		}
+	}
+
+	public void OnBarDragFinish(IMessage rMessage)
+	{
+		//Debug.Log((scrollBounds.y - scrollBounds.x)/2);
+		if (animationScrollBar.transform.localPosition.y > scrollBounds.y - (scrollBounds.y - scrollBounds.x)/2) {
+			ChangeScrollBar (true);
+		} else {
+			ChangeScrollBar (false);
 		}
 	}
 }

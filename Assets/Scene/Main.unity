@@ -336,6 +336,8 @@ MonoBehaviour:
   - "\u5185\u9970"
   - "\u7535\u5B50\u8BBE\u5907"
   - "\u6D82\u88C5"
+  animationScrollBar: {fileID: 443417586}
+  scrollBounds: {x: -40, y: 97.6}
 --- !u!82 &187018932
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3080,7 +3082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1273767321}
   canBeOcclusion: 1
-  rotateSpeed: 180
+  rotateSpeed: 300
   mouseScrollWheelSpeed: 300
   distance: 0
   _maxDis: 0
