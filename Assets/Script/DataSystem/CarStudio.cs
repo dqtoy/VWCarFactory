@@ -7,7 +7,7 @@ public class CarStudio
     public static CustumCar Car { get { return car; } }
     public static bool IsInitObject = true;
     static CustumCar car;
-    static Dictionary<string, GameObject> objects;
+	static public Dictionary<string, GameObject> objects;
 
     static CarStudio()
     {
@@ -198,7 +198,7 @@ public class CarStudio
     /// <summary>
     /// 读取模板车数据
     /// </summary>
-    /// <param name="__TemplateCarName"></param>
+    /// <param name="__fileName"></param>
     /// <returns></returns>
     public static void LoadTemplate(string __TemplateCarName)
     {
@@ -268,8 +268,8 @@ public class CarStudio
             else
             {
                 Texture2D _tex = _asset as Texture2D;
-                GameObject _carBody = objects[car.CarBaseModle];
-                _carBody.GetComponent<Renderer>().material.mainTexture = _tex;
+				GameObject _carBody = objects[car.CarBaseModle];
+				_carBody.GetComponent<CarPrefab>().bodyRenderer.material.mainTexture = _tex;
             }
 
             
@@ -323,7 +323,7 @@ public class CarStudio
 /// </summary>
 public class CustumCar
 {
-    public string CustumCarName, CarBaseModle, CarType, BodyTexture, Description;
+    public string CustumCarName, CarBaseModle, CarType, BodyTexture;
     /// <summary>
     /// 组件列表
     /// </summary>
