@@ -17,12 +17,19 @@ public class UIManager : MonoBehaviour {
 	public GameObject animationScrollBar;
 	public Vector2 scrollBounds;
 	bool isBarOpen;
+	public bool isPaintBarOut;
+	public GameObject paintBarRoot;
+	public Vector2 paintBarBound;
+	public bool isBarDraging;
+
+	public GameObject changeBGWindow;
 
 	// Use this for initialization
 	void Start () {
 		MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
 		instance = this;
 		InitialTextureButton ();
+		PaintBarAnimation (false);
 	}
 
 	public void BackToTitle()
@@ -110,10 +117,10 @@ public class UIManager : MonoBehaviour {
 	public void ChangeScrollBar(bool bo)
 	{
 		if (bo) {
-			animationScrollBar.transform.DOLocalMoveY (scrollBounds.y, 0.5f).SetEase (Ease.OutExpo);
+			animationScrollBar.transform.DOLocalMoveY (scrollBounds.y, 0.5f).SetEase (Ease.InOutExpo);
 			isBarOpen = true;
 		} else {
-			animationScrollBar.transform.DOLocalMoveY (scrollBounds.x, 0.5f).SetEase (Ease.OutExpo);
+			animationScrollBar.transform.DOLocalMoveY (scrollBounds.x, 0.5f).SetEase (Ease.InOutExpo);
 			isBarOpen = false;
 		}
 	}
@@ -126,5 +133,32 @@ public class UIManager : MonoBehaviour {
 		} else {
 			ChangeScrollBar (false);
 		}
+		isBarDraging = false;
+	}
+
+	public void PaintBarAnimation(bool bo)
+	{
+		if (bo) {
+			isPaintBarOut = true;
+			paintBarRoot.transform.DOLocalMoveX (paintBarBound.y, 0.5f).SetEase (Ease.InOutExpo);
+		} else {
+			isPaintBarOut = false;
+			paintBarRoot.transform.DOLocalMoveX (paintBarBound.x, 0.5f).SetEase (Ease.InOutExpo);
+		}
+	}
+
+	public void BGWinodowShow(bool bo)
+	{
+		changeBGWindow.SetActive (bo);
+	}
+
+	public void ChangeBG(int id)
+	{
+		GameManager.instance.ChangeBGFunc (id);
+	}
+
+	public void SaveImage()
+	{
+		GameManager.instance.SaveImage ();
 	}
 }

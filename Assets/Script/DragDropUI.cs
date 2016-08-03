@@ -9,6 +9,7 @@ public class DragDropUI : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointe
 
 	public void OnDrag(PointerEventData eventData)
 	{
+		
 		GetComponent<RectTransform>().pivot.Set(0,0);
 		if (transform.localPosition.y <= UIManager.instance.scrollBounds.y) {
 			transform.position = new Vector3 (transform.position.x, Input.mousePosition.y, transform.position.z);
@@ -17,6 +18,7 @@ public class DragDropUI : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointe
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
+		UIManager.instance.isBarDraging = true;
 		//transform.localScale=new Vector3(0.7f,0.7f,0.7f);
 	}
 

@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Body_38__skull_png
-  m_Shader: {fileID: 4800000, guid: 69aa62c3093c26647a22772655ab5576, type: 3}
+  m_Shader: {fileID: 4800000, guid: 32e5b237318dd4b43b0ab671d9b9a02e, type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 5
   m_CustomRenderQueue: 2000

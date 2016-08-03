@@ -28,6 +28,8 @@ public class CarControl : MonoBehaviour {
 	public float pinchSpeed;
 	float lastDist;
 	float curDist;
+	public Transform camTarget;
+	public Vector2 camUpDownBound;
 
 	void Awake()
 	{
@@ -37,7 +39,9 @@ public class CarControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		inAutoRotation = true;
+		camTarget = carRoot;
 		mouseLastPosition = Input.mousePosition;
+
 		//ChangeColor (0);
 	}
 	
@@ -46,7 +50,14 @@ public class CarControl : MonoBehaviour {
 //		if (inAutoRotation) {
 //			transform.Rotate (Vector3.up * Time.deltaTime * rotateSpeed);
 //		}
-		ChangeViewDistance();
+		if (!UIManager.instance.isBarDraging) {
+			ChangeViewDistance();
+		}
+
+		//if (!GameManager.instance.inGoto) {
+		Camera.main.transform.LookAt (camTarget.position );
+		//Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(camTarget.position - Camera.main.transform.position),Time.deltaTime * 10.0f);
+		//}
 	}
 
 	public void ChangeViewDistance()
@@ -77,28 +88,36 @@ public class CarControl : MonoBehaviour {
 		}
 	}
 
-//	void OnMouseDown()
-//	{
-//		inAutoRotation = false;
-//		mouseLastPosition = Input.mousePosition;
-//		StopCoroutine ("ChangeToAutoRotation");
-//	}
-//
-//	void OnMouseDrag()
-//	{
-//		mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-//		//GameManager.instance.car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
-//		//carRoot.transform.Rotate (Vector3.left * Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
-//		//Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.left,Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
-//		Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.up,Time.deltaTime * (-mouseDelta.x) * rotateSpeed);
-//		mouseLastPosition = Input.mousePosition;
-//	}
-//
-//	void OnMouseUp()
-//	{
-//		StartCoroutine("ChangeToAutoRotation");
-//		mouseLastPosition = Input.mousePosition;
-//	}
+	void OnMouseDown()
+	{
+		inAutoRotation = false;
+		mouseLastPosition = Input.mousePosition;
+		UIManager.instance.ChangeScrollBar (false);
+		//StopCoroutine ("ChangeToAutoRotation");
+	}
+
+	void OnMouseDrag()
+	{
+		if (!UIManager.instance.isBarDraging) {
+			mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
+			//GameManager.instance.car.transform.Rotate (Vector3.up * Time.deltaTime * mouseDelta.x * rotateSpeed);
+			//carRoot.transform.Rotate (Vector3.left * Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
+			//Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.left,Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
+			float tmpY = Camera.main.transform.localPosition.y;
+			if ((tmpY + (Vector3.up * Time.deltaTime * mouseDelta.y).y) < camUpDownBound.y && (tmpY + (Vector3.up * Time.deltaTime * mouseDelta.y).y) > camUpDownBound.x) {
+				Camera.main.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y,Space.World);
+			}
+			Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.up,Time.deltaTime * (-mouseDelta.x) * rotateSpeed);
+			mouseLastPosition = Input.mousePosition;
+		}
+			
+	}
+
+	void OnMouseUp()
+	{
+		StartCoroutine("ChangeToAutoRotation");
+		mouseLastPosition = Input.mousePosition;
+	}
 
 	IEnumerator ChangeToAutoRotation()
 	{

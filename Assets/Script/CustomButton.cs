@@ -17,6 +17,10 @@ public class CustomButton : MonoBehaviour {
 	public int thisID;
 	public Text thisText;
 	public Image thisImage;
+	public bool isTag;
+	public bool isPreview;
+	public bool isVideo;
+	public bool isPaint;
 
 	// Use this for initialization
 	void Start () {
@@ -40,8 +44,16 @@ public class CustomButton : MonoBehaviour {
 
 	public void ClickThisButton()
 	{
-		if (customType == CustomType.TextureColor) {
-			GameManager.instance.ChangeCustomTexture (thisID);
+		if (!isTag) {
+			if (customType == CustomType.TextureColor) {
+				GameManager.instance.ChangeCustomTexture (thisID);
+			}
+
+			if (isPaint && !UIManager.instance.isPaintBarOut) {
+				UIManager.instance.PaintBarAnimation (true);
+			} else if(UIManager.instance.isPaintBarOut) {
+				UIManager.instance.PaintBarAnimation (false);
+			}
 		}
 	}
 }
