@@ -1,0 +1,18 @@
+{
+    "Name": "保险处涂装1",
+    "Tag": "保险处涂装",
+    "Icon": "TestPrefabs/green",
+    "Type": "SUV",
+    "Description": "Tiguan05",
+    "PdfDescription":"sample1",
+    "MovieDescription": [
+    "sample1"
+    ],
+    "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+    "DefaultTexture": "Default",
+    "CarBaseModle": "Tiguan",
+    "BodyTexture": "",
+    "Parts": [
+        "出租车涂装2"
+    ]
+}

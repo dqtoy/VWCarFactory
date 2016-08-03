@@ -1,0 +1,21 @@
+{
+    "Name": "警车警车改装2",
+    "Tag": "警车改装",
+    "Icon": "TestPrefabs/red",
+    "Type": "SUV",
+    "Description": "Tiguan02",
+    "PdfDescription":"sample1",
+    "MovieDescription": [
+    "sample1"
+    ],
+    "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+    "DefaultTexture": "Default",
+    "CarBaseModle": "Tiguan",
+    "BodyTexture": "",
+    "Parts": [
+        "电动踏板",
+        "后盖开启",
+        "green",
+        "碳纤维出风口"
+    ]
+}

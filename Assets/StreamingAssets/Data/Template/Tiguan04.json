@@ -1,0 +1,19 @@
+{
+    "Name": "驾校车改装2",
+    "Tag": "驾校车改装",
+    "Icon": "TestPrefabs/green",
+    "Type": "SUV",
+    "Description": "Tiguan04",
+    "PdfDescription": null,
+    "MovieDescription": null,
+    "TextureDescription": null,
+    "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+    "DefaultTexture": "Default",
+    "CarBaseModle": "Tiguan",
+    "BodyTexture": "",
+    "Parts": [
+        "后盖开启",
+        "碳纤维后视镜",
+        "保险处涂装2"
+    ]
+}

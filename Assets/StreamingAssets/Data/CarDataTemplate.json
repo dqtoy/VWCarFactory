@@ -1,1 +1,297 @@
-{"Name":"Passat","Introduction":"  ","Type":"CAR","CarBody":"TestPrefabs/Cube","CustumParts":[{"Name":"Default","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/black","CustumType":"涂装"},{"Name":"red","Icon":"TestPrefabs/red","ModelPath":"TestPrefabs/red","CustumType":"涂装"},{"Name":"green","Icon":"TestPrefabs/green","ModelPath":"TestPrefabs/green","CustumType":"涂装"},{"Name":"blue","Icon":"TestPrefabs/blue","ModelPath":"TestPrefabs/blue","CustumType":"涂装"},{"Name":"电动踏板","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (1)","CustumType":"电子设备"},{"Name":"隐藏式行车记录仪","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (2)","CustumType":"电子设备"},{"Name":"导航仪","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (3)","CustumType":"电子设备"},{"Name":"负离子","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (4)","CustumType":"电子设备"},{"Name":"碳纤维中控","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (5)","CustumType":"内饰"},{"Name":"碳纤维门把手","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (6)","CustumType":"外饰"},{"Name":"碳纤维出风口","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (7)","CustumType":"内饰"},{"Name":"碳纤维后视镜","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (8)","CustumType":"外饰"},{"Name":"副反光镜","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (9)","CustumType":"外饰"},{"Name":"副喇叭","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (10)","CustumType":"外饰"},{"Name":"副刹车","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (11)","CustumType":"内饰"},{"Name":"副离合","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (12)","CustumType":"内饰"},{"Name":"副油门","Icon":"TestPrefabs/black","ModelPath":"TestPrefabs/Cube (13)","CustumType":"内饰"}],"CustumCar":["警车","出租车"]}
+{
+    "Name": "Tiguan",
+    "Tag": null,
+    "Icon": null,
+    "Type": "CAR",
+    "Description": null,
+    "CustumParts": [
+        {
+            "Name": "CarBody",
+            "Tag": "private",
+            "Icon": "TestPrefabs/black",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "  ",
+                    "Target": "  "
+                }
+            ],
+            "MovieDescription": [
+                "sample1"
+            ],
+            "TextureDescription": [
+                "sample2"
+            ]
+        },
+        {
+            "Name": "变色模块",
+            "Tag": "变色模块",
+            "Icon": "TestPrefabs/red",
+            "Type": null,
+            "Description": null,
+            "Assets": null,
+            "MovieDescription": null,
+            "TextureDescription": null
+        },
+        {
+            "Name": "red",
+            "Tag": "变色模块",
+            "Icon": "TestPrefabs/red",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/red",
+                    "Target": "对象011"
+                },
+                {
+                    "AssetPath": "TestPrefabs/red",
+                    "Target": "对象001"
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "green",
+            "Tag": "变色模块",
+            "Icon": "TestPrefabs/green",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/green",
+                    "Target": "对象011"
+                },
+                {
+                    "AssetPath": "TestPrefabs/green",
+                    "Target": "对象001"
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "blue",
+            "Tag": "变色模块",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/blue",
+                    "Target": "对象011"
+                },
+                {
+                    "AssetPath": "TestPrefabs/blue",
+                    "Target": "对象001"
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "blue",
+            "Tag": "变色模块",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/blue",
+                    "Target": "对象011"
+                },
+                {
+                    "AssetPath": "TestPrefabs/blue",
+                    "Target": "对象001"
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "电动踏板",
+            "Tag": "外饰改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (1)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "后盖开启",
+            "Tag": "外饰改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (2)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "碳纤维后视镜",
+            "Tag": "外饰改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (3)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "碳纤维中控",
+            "Tag": "内饰改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (4)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "碳纤维门把手",
+            "Tag": "内饰改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (5)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "碳纤维出风口",
+            "Tag": "内饰改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (6)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "导航仪",
+            "Tag": "电子功能改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (7)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "扶手箱空气净化器",
+            "Tag": "电子功能改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (8)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        },
+        {
+            "Name": "隐藏式行车记录仪 ",
+            "Tag": "电子功能改装",
+            "Icon": "TestPrefabs/blue",
+            "Type": null,
+            "Description": null,
+            "Assets": [
+                {
+                    "AssetPath": "TestPrefabs/Cube (9)",
+                    "Target": null
+                }
+            ],
+            "MovieDescription": null,
+            "TextureDescription": [
+                "sample2",
+                "sample3"
+            ]
+        }
+    ],
+    "CNG": null,
+    "TemplateCar": [
+        "asa",
+        "asaaaa"
+    ],
+    "Painting": [
+        "asda",
+        "asdaaa"
+    ]
+}

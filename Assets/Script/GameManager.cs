@@ -48,12 +48,13 @@ public class GameManager : MonoBehaviour {
 
 	void InitData()
 	{
-		for (int i = 0; i < AppData.GetCarPaintingByName (AppData.CarList [GameManager.instance.selectedCarID]).Count; i++) {
-			customTexturesBtn.Add (AppData.GetCarPaintingByName (AppData.CarList [GameManager.instance.selectedCarID])[i].Icon);
-			customTextures.Add (AppData.GetCarPaintingByName (AppData.CarList [GameManager.instance.selectedCarID])[i].ModelPath);//"CarBodyTexture/Passart/tex_" + (i+1));
-		}
+        for (int i = 0; i < AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID]).Count; i++)
+        {
+            customTexturesBtn.Add(AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID])[i].Icon);
+            customTextures.Add(AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID])[i].ModelPath);//"CarBodyTexture/Passart/tex_" + (i+1));
+        }
 
-	}
+    }
 
 	public void InitialCar()
 	{
