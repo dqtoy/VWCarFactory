@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public enum CustomType
 {
-	TextureColor,
 	OutsidePart,
-	ElecDevice,
-	InsidePart,
-	Other
+	TextureColor,
+	SpecialCar,
+	CNG,
+	PaintingCar
 }
 
 public class CustomButton : MonoBehaviour {
@@ -21,10 +21,12 @@ public class CustomButton : MonoBehaviour {
 	public bool isPreview;
 	public bool isVideo;
 	public bool isPaint;
+	public IButtonInfo thisButton;
+	IButtonInfo descriptionButton;
 
 	// Use this for initialization
 	void Start () {
-	
+		//descriptionButton = AppData.GetCarPartsByName (GameManager.instance.carType.ToString());
 	}
 
 	public void SetID(int id)
@@ -42,17 +44,60 @@ public class CustomButton : MonoBehaviour {
 		thisText.text = txt;
 	}
 
+	public void ChangeCondition(int cond)
+	{
+		switch (cond) {
+		case 0:
+			customType = CustomType.OutsidePart;
+			break;
+		case 1:
+			customType = CustomType.SpecialCar;
+			break;
+		case 2:
+			customType = CustomType.CNG;
+			break;
+		case 3:
+			customType = CustomType.PaintingCar;
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void SetThisButton(IButtonInfo button)
+	{
+		thisButton = button;
+	}
+
 	public void ClickThisButton()
 	{
 		if (!isTag) {
-			if (customType == CustomType.TextureColor) {
-				GameManager.instance.ChangeCustomTexture (thisID);
-			}
+			descriptionButton = thisButton;
 
-			if (isPaint && !UIManager.instance.isPaintBarOut) {
+			if (customType == CustomType.TextureColor && !UIManager.instance.isPaintBarOut) {
 				UIManager.instance.PaintBarAnimation (true);
-			} else if(UIManager.instance.isPaintBarOut) {
-				UIManager.instance.PaintBarAnimation (false);
+				//GameManager.instance.ChangeCustomTexture (thisID);
+			}
+			else{
+				if (UIManager.instance.isPaintBarOut) {
+					UIManager.instance.PaintBarAnimation (false);
+				}
+				if (customType == CustomType.OutsidePart) {
+					if (CarStudio.Exists(thisButton.Name)) {
+						CarStudio.RemovePart (thisButton.Name);
+					} else {
+						CarStudio.AddPart (thisButton.Name);
+					}
+				}
+				else if (customType == CustomType.SpecialCar) {
+					CarStudio.LoadTemplate (thisButton.Description);
+				}
+				else if (customType == CustomType.CNG) {
+
+				}
+				else if (customType == CustomType.PaintingCar) {
+					CarStudio.LoadTemplate (thisButton.Description);
+				}
 			}
 		}
 	}

@@ -78,6 +78,10 @@ MonoBehaviour:
   thisID: 0
   thisText: {fileID: 11498218}
   thisImage: {fileID: 11420574}
+  isTag: 1
+  isPreview: 0
+  isVideo: 0
+  isPaint: 0
 --- !u!114 &11441738
 MonoBehaviour:
   m_ObjectHideFlags: 1

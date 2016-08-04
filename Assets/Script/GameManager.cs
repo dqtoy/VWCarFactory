@@ -36,23 +36,24 @@ public class GameManager : MonoBehaviour {
 	{
 		instance = this;
 		InitData ();
+		InitialCar ();
 	}
 
 	// Use this for initialization
 	void Start () {
 		camControl = Camera.main.GetComponent<CameraControl> ();
-		InitialCar ();
+
 		UIManager.instance.ChangeScrollBar (false);
 		ChangeBGFunc (0);
 	}
 
 	void InitData()
 	{
-        for (int i = 0; i < AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID]).Count; i++)
-        {
-            customTexturesBtn.Add(AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID])[i].Icon);
-            customTextures.Add(AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID])[i].ModelPath);//"CarBodyTexture/Passart/tex_" + (i+1));
-        }
+//        for (int i = 0; i < AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID]).Count; i++)
+//        {
+//            customTexturesBtn.Add(AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID])[i].Icon);
+//            customTextures.Add(AppData.GetCarPaintingByName(AppData.CarList[GameManager.instance.selectedCarID])[i].ModelPath);//"CarBodyTexture/Passart/tex_" + (i+1));
+//        }
 
     }
 
@@ -60,15 +61,9 @@ public class GameManager : MonoBehaviour {
 	{
 		//CarStudio.IsInitObject = false;
 		CarStudio.OpenStudio(carType.ToString ());
-		//CarStudio.LoadCustum ("CarDataTemplate");//carType.ToString ());
-		//CarStudio.LoadTemplate (AppData.GetTemplateCarList(carType.ToString())[0]);
-		car = CarStudio.objects[CarStudio.Car.CarBaseModle];
-		//car = Instantiate (Resources.Load ("CarBody/" + carType.ToString ()), Vector3.zero, Quaternion.identity) as GameObject;
-		carPrefab = car.GetComponent<CarPrefab> ();
-		car.transform.SetParent (CarControl.instance.transform);
-//		car.transform.localPosition = Vector3.zero;
-//		car.transform.localRotation = Quaternion.Euler (0,90,0);
-//		car.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+		//car = CarStudio.objects[CarStudio.Car.CarBaseModle];
+		//carPrefab = car.GetComponent<CarPrefab> ();
+		//car.transform.SetParent (CarControl.instance.transform);
 
 		CarPartsSetting ();
 	}
@@ -110,7 +105,7 @@ public class GameManager : MonoBehaviour {
 
 	public void ChangeCustomTexture(int id)
 	{
-		carPrefab.bodyRenderer.material.mainTexture = Resources.Load(customTextures [id]) as Texture;
+		//carPrefab.bodyRenderer.material.mainTexture = Resources.Load(customTextures [id]) as Texture;
 	}
 
 	public void CarPartsSetting()
