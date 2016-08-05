@@ -5,9 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Script/DataSystem/Test/Test_IOS_SavePhoto.unity
-  - enabled: 0
-    path: Assets/AssetStore/EasyMovieTexture/Scene/Demo.unity
+  - enabled: 1
+    path: Assets/Scene/Title.unity
   - enabled: 1
     path: Assets/Scene/Main.unity
