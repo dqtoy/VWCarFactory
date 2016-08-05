@@ -1,0 +1,97 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.iOS;
+
+public class AutoLayoutMainPanel : MonoBehaviour {
+    public RectTransform car1, car2, tools;
+    public UnityEngine.UI.GridLayoutGroup grid;
+    public Scene1_UI sceneUI;
+	// Use this for initialization
+	void Start ()
+    {
+        int width, height;
+        width = Screen.width;
+        height = Screen.height;
+        int gcd = GCD(width, height);
+        width = width / gcd;
+        height = height / gcd;
+
+#if UNITY_IOS && !UNITY_EDITOR
+        if (width==4&& height == 3)
+        {
+
+        }
+        else if(width==16&& height == 9)
+        {
+            SixteenNine();
+        }
+        else if (Device.generation == DeviceGeneration.iPadUnknown)
+        {
+
+        }
+        else
+        {
+            SixteenNine();
+        }
+#endif
+#if UNITY_ANDROID
+
+        if (width==4&& height == 3)
+        {
+            SixteenNine();
+        }
+        else if(width==16&& height == 9)
+        {
+            SixteenNine();
+        }
+#endif
+
+        sceneUI.OpenPanel(0);
+
+    }
+
+
+
+    /// <summary>
+    /// 最大公约数
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    int GCD(int a, int b)
+    {
+        int gcd = 1;
+        int min = a > b ? b : a;
+        for (int i = min; i >= 1; i--)
+        {
+            if (a % i == 0 && b % i == 0)
+            {
+                gcd = i;
+                break;
+            }
+        }
+        return gcd;
+    }
+
+    void SixteenNine()
+    {
+        car1.anchorMin = new Vector2(0.5f, 0);
+        car1.anchorMax = new Vector2(0.5f, 0);
+        car1.anchoredPosition = new Vector2(-140.5f, 36.8f);
+        car1.sizeDelta = new Vector2(281, 108);
+
+        car2.anchorMin = new Vector2(0.5f, 0);
+        car2.anchorMax = new Vector2(0.5f, 0);
+        car2.anchoredPosition = new Vector2(151.5f, 28.8f);
+        car2.sizeDelta = new Vector2(303, 92);
+
+        tools.anchorMin = new Vector2(0.5f, 0);
+        tools.anchorMax = new Vector2(0.5f, 0);
+        tools.anchoredPosition = new Vector2(0, 183.0699f);
+        tools.sizeDelta = new Vector2(375.9f, 48.4f);
+
+        grid.cellSize = new Vector2(40, 40);
+        grid.spacing = new Vector2(26.96f, 0);
+
+    }
+}
