@@ -62,6 +62,10 @@ public class CustomButton : MonoBehaviour {
 		default:
 			break;
 		}
+
+		if (thisButton.Name == "变色模块") {
+			customType = CustomType.TextureColor;
+		}
 	}
 
 	public void SetThisButton(IButtonInfo button)
@@ -79,7 +83,7 @@ public class CustomButton : MonoBehaviour {
 				//GameManager.instance.ChangeCustomTexture (thisID);
 			}
 			else{
-				if (UIManager.instance.isPaintBarOut) {
+				if (UIManager.instance.isPaintBarOut && !isPaint) {
 					UIManager.instance.PaintBarAnimation (false);
 				}
 				if (customType == CustomType.OutsidePart) {

@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour {
 		MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
 		instance = this;
 		InitialTextureButton ();
+		InitialColorButton ();
 		PaintBarAnimation (false);
 	}
 
@@ -89,6 +90,22 @@ public class UIManager : MonoBehaviour {
 	public void InitialTextureButton()
 	{
 		ChangeButtonList (0,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
+	}
+
+	public void InitialColorButton()
+	{
+		var button = AppData.GetCarColorsByName (CarStudio.Car.CarBaseModle);
+
+		for (int i = 0; i < button.Count; i++) {
+			GameObject objSub = Instantiate (Resources.Load ("UI/PaintButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+			CustomButton btnSub = objSub.GetComponent<CustomButton> ();
+			Image btnSubImg = objSub.GetComponent<Image> ();
+			objSub.transform.SetParent (paintBarRoot.transform, false);
+			Texture2D img;
+			img = Resources.Load (button[i].Icon) as Texture2D;
+			btnSub.SetThisButton (button[i]);
+			btnSub.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
+		}
 	}
 
 	public void ChangeButtonList(int id,Dictionary<string,List<IButtonInfo>> parts)

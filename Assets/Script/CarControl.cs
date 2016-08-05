@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using com.ootii.Messages;
 
 public class CarControl : MonoBehaviour {
 
@@ -38,6 +39,9 @@ public class CarControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		MessageDispatcher.AddListener ("OnDragStart", OnDown,true);
+		MessageDispatcher.AddListener ("OnDraging", OnDrag,true);
+		MessageDispatcher.AddListener ("OnDragFinish", OnUp,true);
 		inAutoRotation = true;
 		camTarget = carRoot;
 		mouseLastPosition = Input.mousePosition;
@@ -88,15 +92,18 @@ public class CarControl : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown()
+	public void OnDown(IMessage rMessage)
 	{
 		inAutoRotation = false;
 		mouseLastPosition = Input.mousePosition;
 		UIManager.instance.ChangeScrollBar (false);
+		if (UIManager.instance.isPaintBarOut) {
+			UIManager.instance.PaintBarAnimation (false);
+		}
 		//StopCoroutine ("ChangeToAutoRotation");
 	}
 
-	void OnMouseDrag()
+	public void OnDrag(IMessage rMessage)
 	{
 		if (!UIManager.instance.isBarDraging) {
 			mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
@@ -113,7 +120,7 @@ public class CarControl : MonoBehaviour {
 			
 	}
 
-	void OnMouseUp()
+	public void OnUp(IMessage rMessage)
 	{
 		StartCoroutine("ChangeToAutoRotation");
 		mouseLastPosition = Input.mousePosition;
