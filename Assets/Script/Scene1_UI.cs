@@ -19,7 +19,7 @@ public class Scene1_UI : MonoBehaviour
         public GameObject arrow;
         public GameObject content;
     }
-
+    public GameObject Loading;
     public GameObject[] UIs;
     public Image[] MenuButtons;
 
@@ -142,7 +142,16 @@ public class Scene1_UI : MonoBehaviour
     public void SeletCar(string __name)
     {
         CarSeleted = __name;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        Loading.SetActive(true);
+
+        StartCoroutine(LoadingScene("Main"));
     }
-    
+    IEnumerator LoadingScene(string __name)
+    {
+        yield return new WaitForSeconds(1);
+        var _async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(__name);
+        yield return _async;
+    }
+
 }

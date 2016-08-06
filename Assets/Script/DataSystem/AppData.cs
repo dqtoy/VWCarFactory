@@ -449,7 +449,19 @@ public class CarPart : IButtonInfo
 
     public List<Asset> Assets;
 
-
+    public bool HasTarget(string __name)
+    {
+        if (Assets == null)
+            return false;
+        for (int i = 0; i < Assets.Count; i++)
+        {
+            if (!string.IsNullOrEmpty(Assets[i].Target) && Assets[i].Target == __name)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 

@@ -11,16 +11,18 @@ public class CarStudio
 
     static CustumCar car;
     static Dictionary<string, List<GameObject>> partObjects;
-    static Dictionary<string, List<GameObject>> oldPartObjects;
-    static Dictionary<string, List<object>> oldPartMaterials;
+    static Dictionary<string, GameObject> oldPartObjects;
+    static Dictionary<string, Material> oldPartMaterials;
+    static Dictionary<string, Texture> oldTextures;
     static string carBodyName = "CarBody";
 
     static CarStudio()
     {
         objects = new Dictionary<string, GameObject>();
         partObjects = new Dictionary<string, List<GameObject>>();
-        oldPartObjects = new Dictionary<string, List<GameObject>>();
-        oldPartMaterials = new Dictionary<string, List<object>>();
+        oldPartObjects = new Dictionary<string, GameObject>();
+        oldPartMaterials = new Dictionary<string, Material>();
+        oldTextures = new Dictionary<string, Texture>();
     }
 
     #region 公有函数
@@ -306,8 +308,7 @@ public class CarStudio
             else
             {
                 partObjects.Add(__part.Name, new List<GameObject>());
-                oldPartObjects.Add(__part.Name, new List<GameObject>());
-                oldPartMaterials.Add(__part.Name, new List<object>());
+                
                 for (int i = 0; i < __part.Assets.Count; i++)
                 {
                     Object _tempAsset = Resources.Load(__part.Assets[i].AssetPath);
@@ -319,8 +320,25 @@ public class CarStudio
                         {
                             if (objects.ContainsKey(__part.Assets[i].Target))
                             {
-                                oldPartObjects[__part.Name].Add(objects[__part.Assets[i].Target]);
-                                objects[__part.Assets[i].Target].SetActive(false);
+                                if (!oldPartObjects.ContainsKey(__part.Assets[i].Target))
+                                {
+                                    oldPartObjects.Add(__part.Assets[i].Target, objects[__part.Assets[i].Target]);
+                                    objects[__part.Assets[i].Target].SetActive(false);
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < car.Parts.Count; j++)
+                                    {
+                                        CarPart _tempPart = AppData.GetCarPartData(car.CarBaseModle, car.Parts[j]);
+                                        if (_tempPart.HasTarget(__part.Assets[i].Target))
+                                        {
+                                            RemovePart(_tempPart);
+                                            oldPartObjects.Add(__part.Assets[i].Target, objects[__part.Assets[i].Target]);
+                                            objects[__part.Assets[i].Target].SetActive(false);
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
@@ -328,7 +346,7 @@ public class CarStudio
                             }
                         }
                     }
-                    else //如果资源是材质
+                    else if(_tempAsset is Material)//如果资源是材质
                     {
                         if (!string.IsNullOrEmpty(__part.Assets[i].Target))
                         {
@@ -336,11 +354,54 @@ public class CarStudio
                             if (objects.ContainsKey(__part.Assets[i].Target))
                             {
                                 MeshRenderer _renderer = objects[__part.Assets[i].Target].GetComponent<MeshRenderer>();
-
-                                oldPartMaterials[__part.Name].Add(_renderer.gameObject.name);
-                                oldPartMaterials[__part.Name].Add(_renderer.material);
-
+                                if (!oldPartMaterials.ContainsKey(__part.Assets[i].Target))
+                                {
+                                    oldPartMaterials.Add(__part.Assets[i].Target, _renderer.material);
+                                }
+                                else
+                                {
+                                    for (int j = 0; j < car.Parts.Count; j++)
+                                    {
+                                        CarPart _tempPart = AppData.GetCarPartData(car.CarBaseModle, car.Parts[j]);
+                                        if (_tempPart.HasTarget(__part.Assets[i].Target))
+                                        {
+                                            RemovePart(_tempPart);
+                                            oldPartMaterials.Add(__part.Assets[i].Target, _renderer.material);
+                                            break;
+                                        }
+                                    }
+                                }
                                 _renderer.material = _tempAsset as Material;
+                            }
+                            else
+                            {
+                                throw new System.Exception("组件" + __part.Name + "的Asset[" + i + "]的Target不存在");
+                            }
+                        }
+                    }
+                    else if (_tempAsset is Texture2D)//如果资源是贴图
+                    {
+                        if (!string.IsNullOrEmpty(__part.Assets[i].Target))
+                        {
+
+                            if (objects.ContainsKey(__part.Assets[i].Target))
+                            {
+                                if (oldTextures.ContainsKey(__part.Assets[i].Target))
+                                {
+                                    for (int j = 0; j < car.Parts.Count; j++)
+                                    {
+                                        CarPart _tempPart = AppData.GetCarPartData(car.CarBaseModle, car.Parts[j]);
+                                        if (_tempPart.HasTarget(__part.Assets[i].Target))
+                                        {
+                                            RemovePart(_tempPart);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                MeshRenderer _renderer = objects[__part.Assets[i].Target].GetComponent<MeshRenderer>();
+                                oldTextures.Add(__part.Assets[i].Target, _renderer.material.mainTexture);
+                                _renderer.material.mainTexture = _tempAsset as Texture2D;
                             }
                             else
                             {
@@ -383,32 +444,40 @@ public class CarStudio
                 }
                 partObjects.Remove(__part.Name);
             }
-
-            if (oldPartObjects.ContainsKey(__part.Name))
+            
+            for (int i = 0; i < __part.Assets.Count; i++)
             {
+                if (string.IsNullOrEmpty(__part.Assets[i].Target))
+                    continue;
+
                 //旧的组件还原
-                for (int i = 0; i < oldPartObjects[__part.Name].Count; i++)
+                if (oldPartObjects.ContainsKey(__part.Assets[i].Target))
                 {
-                    oldPartObjects[__part.Name][i].SetActive(true);
+                    oldPartObjects[__part.Assets[i].Target].SetActive(true);
+                    oldPartObjects.Remove(__part.Assets[i].Target);
                 }
-                oldPartObjects[__part.Name].Clear();
-                oldPartObjects.Remove(__part.Name);
-            }
 
-            if (oldPartMaterials.ContainsKey(__part.Name))
-            {
-                //旧的材质还原
-                for (int i = 0; i < oldPartMaterials[__part.Name].Count; i++)
+                //材质还原
+                if (oldPartMaterials.ContainsKey(__part.Assets[i].Target))
                 {
-                    GameObject _obj = objects[oldPartMaterials[__part.Name][i] as string];
-                    i++;
+                    GameObject _obj = objects[__part.Assets[i].Target];
                     MeshRenderer _renderer = _obj.GetComponent<MeshRenderer>();
                     GameObject.Destroy(_renderer.material);
-                    _renderer.material = oldPartMaterials[__part.Name][i] as Material;
+                    _renderer.material = oldPartMaterials[__part.Assets[i].Target];
+                    oldPartMaterials.Remove(__part.Assets[i].Target);
                 }
-                oldPartMaterials[__part.Name].Clear();
-                oldPartMaterials.Remove(__part.Name);
+
+                //移除贴图
+                if (oldTextures.ContainsKey(__part.Assets[i].Target))
+                {
+                    GameObject _obj = objects[__part.Assets[i].Target];
+                    MeshRenderer _renderer = _obj.GetComponent<MeshRenderer>();
+                    _renderer.material.mainTexture = oldTextures[__part.Assets[i].Target];
+                    oldTextures.Remove(__part.Assets[i].Target);
+
+                }
             }
+            
         }
     }
 
@@ -437,23 +506,22 @@ public class CarStudio
             //删光就材质
             foreach (var _key in oldPartMaterials.Keys)
             {
-                for (int i = 0; i < oldPartMaterials[_key].Count; i++)
-                {
-                    if (oldPartMaterials[_key][i] is Material)
-                    {
-                        GameObject.Destroy(oldPartMaterials[_key][i] as Material);
-                    }
-                }
+                GameObject _obj = objects[_key];
+                MeshRenderer _renderer = _obj.GetComponent<MeshRenderer>();
+                GameObject.Destroy(_renderer.material);
+                GameObject.Destroy(oldPartMaterials[_key]);
             }
             oldPartMaterials.Clear();
 
-            foreach (var _key in oldPartObjects.Keys)
+            foreach (var _key in oldTextures.Keys)
             {
-                for (int i = 0; i < oldPartObjects[_key].Count; i++)
-                {
-                    GameObject.Destroy(oldPartObjects[_key][i]);
-                }
+                GameObject _obj = objects[_key];
+                MeshRenderer _renderer = _obj.GetComponent<MeshRenderer>();
+                GameObject.Destroy(_renderer.material.mainTexture);
+                GameObject.Destroy(oldTextures[_key]);
             }
+            oldTextures.Clear();
+
             oldPartObjects.Clear();
 
             foreach (var _key in partObjects.Keys)
