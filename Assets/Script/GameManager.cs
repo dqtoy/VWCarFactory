@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour {
 	public void InitialCar()
 	{
 		//CarStudio.IsInitObject = false;
-		CarStudio.OpenStudio(carType.ToString ());
+		CarStudio.OpenStudio(Scene1_UI.CarSeleted);
 		//car = CarStudio.objects[CarStudio.Car.CarBaseModle];
 		//carPrefab = car.GetComponent<CarPrefab> ();
 		//car.transform.SetParent (CarControl.instance.transform);

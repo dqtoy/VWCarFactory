@@ -381,6 +381,21 @@ public class AppData
         }
     }
 
+	/// <summary>
+	/// 获取CNG  如果没有CNG返回空
+	/// </summary>
+	/// <param name="__carName"></param>
+	/// <returns></returns>
+	public static IButtonInfo GetCngCar(string __carName)
+	{
+		CarData _carData = GetCarDataByName(__carName);
+
+		if (string.IsNullOrEmpty(_carData.CNG))
+			return null;
+
+		return GetTemplateCarData(_carData.CNG);
+	} 
+
     #endregion
 }
 

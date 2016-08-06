@@ -80,7 +80,7 @@ public class CarControl : MonoBehaviour {
 				distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition)*pinchSpeed/10;
 			}
 			lastDist = curDist;
-			Camera.main.transform.position = Camera.main.transform.position + new Vector3 (0, 0, distance/700);
+			Camera.main.transform.localPosition = Camera.main.transform.localPosition + new Vector3 (0, 0, distance/700);
 		}
 		if(distance <= minimumDistance)
 		{
@@ -112,7 +112,7 @@ public class CarControl : MonoBehaviour {
 			//Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.left,Time.deltaTime * (-mouseDelta.y) * rotateSpeed);
 			float tmpY = Camera.main.transform.localPosition.y;
 			if ((tmpY + (Vector3.up * Time.deltaTime * mouseDelta.y).y) < camUpDownBound.y && (tmpY + (Vector3.up * Time.deltaTime * mouseDelta.y).y) > camUpDownBound.x) {
-				Camera.main.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y,Space.World);
+				Camera.main.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y * 0.2f,Space.World);
 			}
 			Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.up,Time.deltaTime * (-mouseDelta.x) * rotateSpeed);
 			mouseLastPosition = Input.mousePosition;

@@ -86,6 +86,13 @@ public class CustomButton : MonoBehaviour {
 				if (UIManager.instance.isPaintBarOut && !isPaint) {
 					UIManager.instance.PaintBarAnimation (false);
 				}
+
+				if (!isPaint) {
+					UIManager.instance.ChangeDescriptionButtons(descriptionButton.TextureDescription!=null,descriptionButton.MovieDescription!=null,string.IsNullOrEmpty(descriptionButton.PdfDescription));
+					UIManager.instance.nowSelectedButton = thisButton;
+
+				}
+
 				if (customType == CustomType.OutsidePart) {
 					if (CarStudio.Exists(thisButton.Name)) {
 						CarStudio.RemovePart (thisButton.Name);
@@ -97,7 +104,9 @@ public class CustomButton : MonoBehaviour {
 					CarStudio.LoadTemplate (thisButton.Description);
 				}
 				else if (customType == CustomType.CNG) {
-
+//					CarData carData = AppData.GetCarAllParts().;
+//					CarStudio.LoadTemplate (carData.CNG);
+					CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
 				}
 				else if (customType == CustomType.PaintingCar) {
 					CarStudio.LoadTemplate (thisButton.Description);

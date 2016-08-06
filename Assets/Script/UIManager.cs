@@ -21,18 +21,26 @@ public class UIManager : MonoBehaviour {
 	public GameObject paintBarRoot;
 	public Vector2 paintBarBound;
 	public bool isBarDraging;
+	public GameObject[] descriptionButtons;
 
 	public GameObject changeBGWindow;
-
+	public GameObject samplePhotoWindow;
+	public GameObject largeSamplePhoto;
 	public GameObject samplePhotoContent;
+	public GameObject sampleVideoWindow;
+	public MediaPlayerCtrl videoContent;
 	List<GameObject> samplePhotoList;
+
+	public IButtonInfo nowSelectedButton;
 
 	// Use this for initialization
 	void Start () {
+		samplePhotoList = new List<GameObject> ();
 		MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
 		instance = this;
 		InitialTextureButton ();
 		InitialColorButton ();
+		//ChangeDescriptionButtons (false, false, false);
 		PaintBarAnimation (false);
 	}
 
@@ -63,7 +71,8 @@ public class UIManager : MonoBehaviour {
 	public void ChangeElecDevice()
 	{
 		GameManager.instance.CameraChange (true);
-		ChangeButtonList (2,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
+		ChangeButtonCNG (2);
+		//ChangeButtonList (2,AppData.GetCarPartsByName(Scene1_UI.CarSeleted,"CNG"));
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
 		}
@@ -106,6 +115,37 @@ public class UIManager : MonoBehaviour {
 			btnSub.SetThisButton (button[i]);
 			btnSub.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
 		}
+	}
+
+	public void ChangeButtonCNG(int id)
+	{
+		GameManager.instance.nowSelectedCustomType = id;
+		for (int m = 0; m < GameManager.instance.allButtonIcon.Count; m++) {
+			//GameManager.instance.allButtonIcon.Remove(GameManager.instance.allButtonIcon[m]);
+			Destroy (GameManager.instance.allButtonIcon [m]);
+		}
+		if (GameManager.instance.allButtonIcon.Count > 0) {
+			GameManager.instance.allButtonIcon.RemoveRange (0, GameManager.instance.allButtonIcon.Count);
+		}
+
+		IButtonInfo button = AppData.GetCngCar(Scene1_UI.CarSeleted);
+		GameObject obj = Instantiate (Resources.Load ("UI/PartTag") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+		GameManager.instance.allButtonIcon.Add (obj);
+		CustomButton btn = obj.GetComponent<CustomButton> ();
+		obj.transform.SetParent (buttonBarContent.transform, false);
+		btn.ChangeText (button.Tag);
+
+		GameObject objSub = Instantiate (Resources.Load ("UI/PartButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
+		GameManager.instance.allButtonIcon.Add (objSub);
+		CustomButton btnSub = objSub.GetComponent<CustomButton> ();
+		Image btnSubImg = objSub.GetComponent<Image> ();
+		objSub.transform.SetParent (buttonBarContent.transform, false);
+		Texture2D img;
+		img = Resources.Load (button.Icon) as Texture2D;
+		btnSub.SetThisButton (button);
+		btnSub.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
+		btnSub.ChangeText (button.Name);
+		btnSub.ChangeCondition (id);
 	}
 
 	public void ChangeButtonList(int id,Dictionary<string,List<IButtonInfo>> parts)
@@ -166,6 +206,7 @@ public class UIManager : MonoBehaviour {
 		} else {
 			animationScrollBar.transform.DOLocalMoveY (scrollBounds.x, 0.5f).SetEase (Ease.InOutExpo);
 			isBarOpen = false;
+			ChangeDescriptionButtons (false, false, false);
 		}
 	}
 
@@ -201,21 +242,49 @@ public class UIManager : MonoBehaviour {
 		GameManager.instance.ChangeBGFunc (id);
 	}
 
-	public void SamplePhotoRefresh( int id )
+	public void SamplePhotoWindowShow(bool bo)
 	{
+		samplePhotoWindow.SetActive (bo);
+		LargeSamplePhotoShow (false);
+	}
+
+	public void SampleVideoWindowShow(bool bo)
+	{
+		sampleVideoWindow.SetActive (bo);
+
+	}
+
+	public void LargeSamplePhotoShow(bool bo)
+	{
+		largeSamplePhoto.SetActive (bo);
+	}
+
+	public void SamplePhotoRefresh()
+	{
+		Debug.Log (samplePhotoList.Count);
+		for (int m = 0; m < samplePhotoList.Count; m++) {
+			Destroy (samplePhotoList[m]);
+		}
 		if (samplePhotoList.Count > 0) {
 			samplePhotoList.RemoveRange (0, samplePhotoList.Count);
 		}
-		for (int j = 0; j < AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id]).Count; j++) {
+		foreach (var item in nowSelectedButton.TextureDescription) {
 			GameObject obj = Instantiate (Resources.Load ("UI/CarSmaplePhotoButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;
 			samplePhotoList.Add (obj);
 			SamplePhotoButton btn = obj.GetComponent<SamplePhotoButton> ();
 			obj.transform.SetParent (samplePhotoContent.transform, false);
 			Texture2D img;
-			img = Resources.Load (AppData.GetCarPartsByName(AppData.CarList [GameManager.instance.selectedCarID],menuName[id])[j].Icon) as Texture2D;
-			btn.SetSamplePhoto (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)), "", "", j);
+			Debug.Log (AppData.GetSamples (item).Asset);
+			img = Resources.Load (AppData.GetSamples(item).Asset) as Texture2D;
+			btn.SetSamplePhoto (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)), AppData.GetSamples(item).Name, AppData.GetSamples(item).Description);
 		}
+	}
 
+	public void ChangeDescriptionButtons(bool bo0,bool bo1,bool bo2)
+	{
+		descriptionButtons [0].SetActive(bo0);
+		descriptionButtons [1].SetActive(bo1);
+		//descriptionButtons [2].SetActive(bo2);
 	}
 
 	public void SaveImage()

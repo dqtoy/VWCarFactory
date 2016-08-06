@@ -9,11 +9,16 @@ public class SamplePhotoButton : MonoBehaviour {
 	public Text photoName;
 	public Text description;
 
-	public void SetSamplePhoto(Sprite tex,string nam,string des,int id)
+	public void SetSamplePhoto(Sprite tex,string nam,string des)
 	{
-		thisID = id;
 		photo.sprite = tex;	
 		photoName.text = nam;
 		description.text = des;
+	}
+
+	public void ClickThisButton()
+	{
+		UIManager.instance.largeSamplePhoto.GetComponent<Image> ().sprite = photo.sprite;
+		UIManager.instance.LargeSamplePhotoShow (true);
 	}
 }

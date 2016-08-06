@@ -11,18 +11,14 @@ public enum DescriptionType
 public class DescriptionButton : MonoBehaviour {
 
 	public DescriptionType type;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	public void ClickThis()
 	{
 		if (type == DescriptionType.PhotoButton) {
-			
+			UIManager.instance.SamplePhotoWindowShow (true);
+			UIManager.instance.SamplePhotoRefresh ();
 		} else if (type == DescriptionType.VideoButton) {
-			
+			UIManager.instance.SampleVideoWindowShow (true);
 		} else {
 			
 		}
