@@ -78,6 +78,10 @@ MonoBehaviour:
   thisID: 0
   thisText: {fileID: 11498218}
   thisImage: {fileID: 11420574}
+  isTag: 0
+  isPreview: 0
+  isVideo: 0
+  isPaint: 0
 --- !u!114 &11441738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.52205884, g: 0.53741354, b: 0.53741354, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

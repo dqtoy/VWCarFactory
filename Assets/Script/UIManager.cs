@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject paintBarRoot;
 	public Vector2 paintBarBound;
 	public bool isBarDraging;
+	public Image[] typeButtons;
 	public GameObject[] descriptionButtons;
 
 	public GameObject changeBGWindow;
@@ -40,6 +41,7 @@ public class UIManager : MonoBehaviour {
 		instance = this;
 		InitialTextureButton ();
 		InitialColorButton ();
+		TypeButtonChange (0);
 		//ChangeDescriptionButtons (false, false, false);
 		PaintBarAnimation (false);
 	}
@@ -63,6 +65,7 @@ public class UIManager : MonoBehaviour {
 	{
 		GameManager.instance.CameraChange (false);
 		ChangeButtonList (0,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
+		TypeButtonChange (0);
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
 		}
@@ -72,6 +75,7 @@ public class UIManager : MonoBehaviour {
 	{
 		GameManager.instance.CameraChange (true);
 		ChangeButtonCNG (2);
+		TypeButtonChange (2);
 		//ChangeButtonList (2,AppData.GetCarPartsByName(Scene1_UI.CarSeleted,"CNG"));
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
@@ -82,6 +86,7 @@ public class UIManager : MonoBehaviour {
 	{
 		GameManager.instance.CameraChange (false);
 		ChangeButtonList (1,AppData.GetSpecialTemplateCarList(CarStudio.Car.CarBaseModle));
+		TypeButtonChange (1);
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
 		}
@@ -285,6 +290,14 @@ public class UIManager : MonoBehaviour {
 		descriptionButtons [0].SetActive(bo0);
 		descriptionButtons [1].SetActive(bo1);
 		//descriptionButtons [2].SetActive(bo2);
+	}
+
+	public void TypeButtonChange(int id)
+	{
+		foreach (Image item in typeButtons) {
+			item.color = new Color(item.color.r,item.color.g,item.color.b,0);
+		}
+		typeButtons[id].color =  new Color(typeButtons[id].color.r,typeButtons[id].color.g,typeButtons[id].color.b,1);
 	}
 
 	public void SaveImage()
