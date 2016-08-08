@@ -1,3 +1,6 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
 // Upgrade NOTE: commented out 'half4 unity_LightmapST', a built-in variable
 // Upgrade NOTE: commented out 'sampler2D unity_Lightmap', a built-in variable
 // Upgrade NOTE: replaced tex2D unity_Lightmap with UNITY_SAMPLE_TEX2D
@@ -111,16 +114,16 @@ SubShader {
          {          
             vertexOutput o;
  
-            o.posWorld = mul(_Object2World, input.vertex);
-            o.normalDir = normalize(fixed3(mul(fixed4(input.normal, 0.0), _World2Object).xyz));
-			o.worldNormal = mul(_Object2World, fixed4(input.normal, 0.0f)).xyz;
+            o.posWorld = mul(unity_ObjectToWorld, input.vertex);
+            o.normalDir = normalize(fixed3(mul(fixed4(input.normal, 0.0), unity_WorldToObject).xyz));
+			o.worldNormal = mul(unity_ObjectToWorld, fixed4(input.normal, 0.0f)).xyz;
 						   
 			o.tex.xy = input.texcoord;
             o.tex.zw = input.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
             o.pos = mul(UNITY_MATRIX_MVP, input.vertex);
-            o.viewDir = normalize(mul(_Object2World, input.vertex) - fixed4(_WorldSpaceCameraPos.xyz, 1.0)).xyz;			   			   			   
+            o.viewDir = normalize(mul(unity_ObjectToWorld, input.vertex) - fixed4(_WorldSpaceCameraPos.xyz, 1.0)).xyz;			   			   			   
 			   			   			   			   			   			   			   			   			   
-            o.tangentWorld = normalize(mul(_Object2World, fixed4(input.tangent.xyz, 0.0) ).xyz);
+            o.tangentWorld = normalize(mul(unity_ObjectToWorld, fixed4(input.tangent.xyz, 0.0) ).xyz);
    
             // Diffuse reflection by four "vertex lights"            
             o.vertexLighting = fixed3(0.0, 0.0, 0.0);

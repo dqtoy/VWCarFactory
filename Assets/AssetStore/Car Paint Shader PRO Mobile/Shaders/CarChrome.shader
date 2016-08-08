@@ -1,3 +1,6 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
 Shader "RedDotGames/Mobile/Car Chrome" {
    Properties {
    
@@ -72,12 +75,12 @@ SubShader {
          {          
             vertexOutput o;
  
-            o.posWorld = mul(_Object2World, input.vertex);
-            o.normalDir = normalize(fixed3(mul(fixed4(input.normal, 0.0), _World2Object).xyz));			   
+            o.posWorld = mul(unity_ObjectToWorld, input.vertex);
+            o.normalDir = normalize(fixed3(mul(fixed4(input.normal, 0.0), unity_WorldToObject).xyz));			   
 			   
 			o.tex = input.texcoord;
             o.pos = mul(UNITY_MATRIX_MVP, input.vertex);
-            o.viewDir = normalize(mul(_Object2World, input.vertex) - fixed4(_WorldSpaceCameraPos.xyz, 1.0)).xyz;
+            o.viewDir = normalize(mul(unity_ObjectToWorld, input.vertex) - fixed4(_WorldSpaceCameraPos.xyz, 1.0)).xyz;
             //output.viewDir = normalize(_WorldSpaceCameraPos - fixed3(mul(modelMatrix, input.vertex)));			   
 			   
             //output.binormalWorld = normalize(

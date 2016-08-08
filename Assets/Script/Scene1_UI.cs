@@ -126,17 +126,17 @@ public class Scene1_UI : MonoBehaviour
         RectTransform _rectTransform = GetComponent<RectTransform>();
         if (Mathf.Abs((_rectTransform.anchoredPosition.x - 75)) < 5)
         {
-            _rectTransform.DOAnchorPos(new Vector2(-75, 0), 1);
+			_rectTransform.DOAnchorPos(new Vector2(-75, 0), 0.5f).SetEase(Ease.InOutExpo);
         }
         else
         {
-            _rectTransform.DOAnchorPos(new Vector2(75, 0), 1);
+			_rectTransform.DOAnchorPos(new Vector2(75, 0), 0.5f).SetEase(Ease.InOutExpo);
         }
     }
 
     public void CloseMenu()
     {
-        GetComponent<RectTransform>().DOAnchorPos(new Vector2(-75, 0), 1);
+		GetComponent<RectTransform>().DOAnchorPos(new Vector2(-75, 0), 0.5f).SetEase(Ease.InOutExpo);
     }
 
     public void SeletCar(string __name)

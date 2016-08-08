@@ -1,3 +1,6 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
 //like MED but without POINT LIGHTS and with many optimisations
 
 Shader "RedDotGames/Mobile/Car Paint Low Detail Ref Color Spec Mask" {
@@ -78,8 +81,8 @@ SubShader {
          {          
             vertexOutput o;
  
-            o.posWorld = mul(_Object2World, input.vertex);
-            o.normalDir = normalize(fixed3(mul(fixed4(input.normal, 0.0), _World2Object).xyz));
+            o.posWorld = mul(unity_ObjectToWorld, input.vertex);
+            o.normalDir = normalize(fixed3(mul(fixed4(input.normal, 0.0), unity_WorldToObject).xyz));
 			   
 			o.tex = input.texcoord;
             o.pos = mul(UNITY_MATRIX_MVP, input.vertex);

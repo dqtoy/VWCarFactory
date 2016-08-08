@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Beffio/Car Paint Opaque"
 {
 	Properties
@@ -90,8 +92,8 @@ Shader "Beffio/Car Paint Opaque"
 				output.detailUVCoordsAndDepth.xy = TRANSFORM_TEX(input.UVCoordsChannel1, _DetailMap);
 				output.detailUVCoordsAndDepth.z = output.position.z;
 
-				float3 worldSpacePosition = mul(_Object2World, input.position).xyz;
-				float3 worldSpaceNormal = normalize(mul((float3x3)_Object2World, input.normal));
+				float3 worldSpacePosition = mul(unity_ObjectToWorld, input.position).xyz;
+				float3 worldSpaceNormal = normalize(mul((float3x3)unity_ObjectToWorld, input.normal));
 				output.worldSpaceReflectionVector = reflect(worldSpacePosition - _WorldSpaceCameraPos.xyz, worldSpaceNormal);
 				
 				return output;

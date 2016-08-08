@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "RedDotGames/Mobile/Light Probes Support/Car Glass" {
 Properties {
 	_Color ("Main Color (RGB)", Color) = (1,1,1,1)
@@ -31,7 +33,7 @@ struct Input {
 void vert (inout appdata_full  v, out Input o) {
 			UNITY_INITIALIZE_OUTPUT(Input, o);
             // evaluate SH light
-            float3 worldN = mul ((float3x3)_Object2World, SCALED_NORMAL);
+            float3 worldN = mul ((float3x3)unity_ObjectToWorld, SCALED_NORMAL);
             o.shLight = ShadeSH9(float4 (worldN, 1.0));
 }
 
