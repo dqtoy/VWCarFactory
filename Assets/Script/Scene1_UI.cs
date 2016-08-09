@@ -145,7 +145,7 @@ public class Scene1_UI : MonoBehaviour
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
         Loading.SetActive(true);
 
-        StartCoroutine(LoadingScene("Main"));
+        //StartCoroutine(LoadingScene("Main"));
     }
     IEnumerator LoadingScene(string __name)
     {

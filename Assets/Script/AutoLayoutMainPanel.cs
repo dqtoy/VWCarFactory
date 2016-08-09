@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+#if UNITY_IOS && !UNITY_EDITOR
 using UnityEngine.iOS;
+#endif
+
 
 public class AutoLayoutMainPanel : MonoBehaviour {
-    public RectTransform car1, car2, tools;
+    public RectTransform car1, car2, tools, meunButtons, CompanyProfile;
     public UnityEngine.UI.GridLayoutGroup grid;
     public Scene1_UI sceneUI;
 	// Use this for initialization
@@ -15,7 +18,7 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         int gcd = GCD(width, height);
         width = width / gcd;
         height = height / gcd;
-
+        //SixteenNine();
 #if UNITY_IOS && !UNITY_EDITOR
         if (width==4&& height == 3)
         {
@@ -38,9 +41,13 @@ public class AutoLayoutMainPanel : MonoBehaviour {
 
         if (width==4&& height == 3)
         {
-            SixteenNine();
+            //SixteenNine();
         }
         else if(width==16&& height == 9)
+        {
+            SixteenNine();
+        }
+        else
         {
             SixteenNine();
         }
@@ -72,23 +79,37 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         }
         return gcd;
     }
+    void Update()
+    {
+        //Debug.Log(CompanyProfile.rect + "    " + CompanyProfile.sizeDelta + "    " + CompanyProfile.anchoredPosition);
+        //Debug.Log(CompanyProfile.sizeDelta);
+        //Debug.Log(CompanyProfile.anchoredPosition);
+    }
 
     void SixteenNine()
     {
-        car1.anchorMin = new Vector2(0.5f, 0);
-        car1.anchorMax = new Vector2(0.5f, 0);
-        car1.anchoredPosition = new Vector2(-140.5f, 36.8f);
-        car1.sizeDelta = new Vector2(281, 108);
+        //car1.anchorMin = new Vector2(0.5f, 0);
+        //car1.anchorMax = new Vector2(0.5f, 0);
+        //car1.anchoredPosition = new Vector2(-140.5f, 36.8f);
+        //car1.sizeDelta = new Vector2(281, 108);
 
-        car2.anchorMin = new Vector2(0.5f, 0);
-        car2.anchorMax = new Vector2(0.5f, 0);
-        car2.anchoredPosition = new Vector2(151.5f, 28.8f);
-        car2.sizeDelta = new Vector2(303, 92);
+        //car2.anchorMin = new Vector2(0.5f, 0);
+        //car2.anchorMax = new Vector2(0.5f, 0);
+        //car2.anchoredPosition = new Vector2(151.5f, 28.8f);
+        //car2.sizeDelta = new Vector2(303, 92);
 
         tools.anchorMin = new Vector2(0.5f, 0);
         tools.anchorMax = new Vector2(0.5f, 0);
         tools.anchoredPosition = new Vector2(0, 183.0699f);
         tools.sizeDelta = new Vector2(375.9f, 48.4f);
+
+        meunButtons.sizeDelta = new Vector2(150, 330);
+        meunButtons.anchoredPosition = new Vector2(0, -206);
+
+        CompanyProfile.sizeDelta = new Vector2(800, 0);
+        CompanyProfile.anchoredPosition = new Vector2(-400, 0);
+        
+
 
         grid.cellSize = new Vector2(40, 40);
         grid.spacing = new Vector2(26.96f, 0);
