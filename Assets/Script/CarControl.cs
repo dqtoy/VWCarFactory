@@ -55,17 +55,24 @@ public class CarControl : MonoBehaviour {
 //			transform.Rotate (Vector3.up * Time.deltaTime * rotateSpeed);
 //		}
 		if (!UIManager.instance.isBarDraging) {
-			ChangeViewDistance();
+			if (!GameManager.instance.inCameraPosition) {
+				ChangeViewDistance();
+			}
 		}
 
 		//if (!GameManager.instance.inGoto) {
-		Camera.main.transform.LookAt (camTarget.position );
+		if (!GameManager.instance.inCameraPosition) {
+			Camera.main.transform.LookAt (camTarget.position);
+		}
 		//Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(camTarget.position - Camera.main.transform.position),Time.deltaTime * 10.0f);
 		//}
 	}
 
 	public void ChangeViewDistance()
 	{
+		
+		float dis = Vector3.Distance (carRoot.transform.position, Camera.main.transform.position);
+		//Debug.Log ("distance " + dis);
 		if (Input.touchCount > 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
 		{
 			Touch touch1 = Input.GetTouch(0);
@@ -80,7 +87,11 @@ public class CarControl : MonoBehaviour {
 				distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition)*pinchSpeed/10;
 			}
 			lastDist = curDist;
-			Camera.main.transform.localPosition = Camera.main.transform.localPosition + new Vector3 (0, 0, distance/700);
+
+			if (dis > 1.4f && dis < 2.5f) {
+				//Camera.main.transform.localPosition = Camera.main.transform.localPosition + new Vector3 (0, 0, distance/700);
+				Camera.main.transform.Translate(Vector3.forward * Time.deltaTime * distance/10);
+			}
 		}
 		if(distance <= minimumDistance)
 		{
@@ -89,6 +100,11 @@ public class CarControl : MonoBehaviour {
 		if(distance >= maximumDistance)
 		{
 			distance = maximumDistance;
+		}
+		if (dis >= 2.5f) {
+			Camera.main.transform.Translate(Vector3.forward * Time.deltaTime * 0.1f);
+		} else if(dis < 1.4f) {
+			Camera.main.transform.Translate(Vector3.forward * Time.deltaTime * (-0.1f));
 		}
 	}
 
@@ -117,18 +133,16 @@ public class CarControl : MonoBehaviour {
 			Camera.main.transform.RotateAround(carRoot.transform.position,Vector3.up,Time.deltaTime * (-mouseDelta.x) * rotateSpeed);
 			mouseLastPosition = Input.mousePosition;
 		}
-			
 	}
 
 	public void OnUp(IMessage rMessage)
 	{
-		StartCoroutine("ChangeToAutoRotation");
+		//StartCoroutine("ChangeToAutoRotation");
 		mouseLastPosition = Input.mousePosition;
 	}
 
 	IEnumerator ChangeToAutoRotation()
 	{
-		
 		yield return new WaitForSeconds (5.0f);
 		inAutoRotation = true;
 	}

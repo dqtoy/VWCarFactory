@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject largeSamplePhoto;
 	public GameObject samplePhotoContent;
 	public GameObject sampleVideoWindow;
+	public GameObject shareButtonWindow;
 	public MediaPlayerCtrl videoContent;
 	List<GameObject> samplePhotoList;
 
@@ -54,8 +55,9 @@ public class UIManager : MonoBehaviour {
 
 	public void ChangeTexture()
 	{
-		GameManager.instance.CameraChange (false);
+		//GameManager.instance.CameraChange (false);
 		ChangeButtonList (3,AppData.GetPaintingTemplateByName(CarStudio.Car.CarBaseModle));
+		TypeButtonChange (3);
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
 		}
@@ -63,7 +65,7 @@ public class UIManager : MonoBehaviour {
 
 	public void ChangeOutParts()
 	{
-		GameManager.instance.CameraChange (false);
+		//GameManager.instance.CameraChange (false);
 		ChangeButtonList (0,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
 		TypeButtonChange (0);
 		if (!isBarOpen) {
@@ -73,7 +75,7 @@ public class UIManager : MonoBehaviour {
 
 	public void ChangeElecDevice()
 	{
-		GameManager.instance.CameraChange (true);
+		//GameManager.instance.CameraChange (true);
 		ChangeButtonCNG (2);
 		TypeButtonChange (2);
 		//ChangeButtonList (2,AppData.GetCarPartsByName(Scene1_UI.CarSeleted,"CNG"));
@@ -84,7 +86,7 @@ public class UIManager : MonoBehaviour {
 
 	public void ChangeSpecialCar()
 	{
-		GameManager.instance.CameraChange (false);
+		//GameManager.instance.CameraChange (false);
 		ChangeButtonList (1,AppData.GetSpecialTemplateCarList(CarStudio.Car.CarBaseModle));
 		TypeButtonChange (1);
 		if (!isBarOpen) {
@@ -94,7 +96,7 @@ public class UIManager : MonoBehaviour {
 
 	public void ChangeOther()
 	{
-		GameManager.instance.CameraChange (false);
+		//GameManager.instance.CameraChange (false);
 		//ChangeButtonList (4,false);
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
@@ -146,7 +148,11 @@ public class UIManager : MonoBehaviour {
 		Image btnSubImg = objSub.GetComponent<Image> ();
 		objSub.transform.SetParent (buttonBarContent.transform, false);
 		Texture2D img;
-		img = Resources.Load (button.Icon) as Texture2D;
+		if (CarStudio.Exists (button.Name)) {
+			img = Resources.Load (button.Icon + "b") as Texture2D;
+		} else {
+			img = Resources.Load (button.Icon) as Texture2D;
+		}
 		btnSub.SetThisButton (button);
 		btnSub.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
 		btnSub.ChangeText (button.Name);
@@ -193,13 +199,25 @@ public class UIManager : MonoBehaviour {
 				Image btnSubImg = objSub.GetComponent<Image> ();
 				objSub.transform.SetParent (buttonBarContent.transform, false);
 				Texture2D img;
-				img = Resources.Load (button.Icon) as Texture2D;
+				if (CarStudio.Exists (button.Name)) {
+					img = Resources.Load (button.Icon + "b") as Texture2D;
+				} else {
+					img = Resources.Load (button.Icon) as Texture2D;
+				}
 				btnSub.SetThisButton (button);
 				btnSub.ChangeImage (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)));
 				btnSub.ChangeText (button.Name);
 				btnSub.ChangeCondition (id);
 				//btn.SetID (j);
 			}
+		}
+		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,110.0f);
+	}
+
+	public void ResetContentSize(RectTransform content,int count,float eleSize)
+	{
+		for (int i = 0; i < count; i++) {
+			content.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal,i * eleSize);
 		}
 	}
 
@@ -262,6 +280,11 @@ public class UIManager : MonoBehaviour {
 	public void LargeSamplePhotoShow(bool bo)
 	{
 		largeSamplePhoto.SetActive (bo);
+	}
+
+	public void ShareWindowShow(bool bo)
+	{
+		shareButtonWindow.SetActive (bo);
 	}
 
 	public void SamplePhotoRefresh()

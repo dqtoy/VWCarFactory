@@ -180,7 +180,7 @@ public class Test2 : MonoBehaviour
             GUILayout.Label(_car.Key);
             foreach (var button in _cars[_car.Key])
             {
-                GUILayout.BeginVertical();
+				GUILayout.BeginVertical();
 
                 GUILayout.Label(button.Name);
                 if (GUILayout.Button(Resources.Load<Texture2D>(button.Icon), GUILayout.MaxHeight(50), GUILayout.MaxWidth(50)))

@@ -30,7 +30,14 @@ public class GameManager : MonoBehaviour {
 	public GameObject floorObj;
 	public Material[] skyboxMats;
 	public Texture[] floors;
-	public Camera c;
+	//public Camera c;
+
+	public Transform[] allCamPosition;
+	public bool inCameraPosition;
+	public Vector3 cameraInitPosition;
+
+	public float cameraMoveTime;
+	public Ease cameraMoveEase;
 
 	void Awake()
 	{
@@ -42,7 +49,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		camControl = Camera.main.GetComponent<CameraControl> ();
-
+		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
 		ChangeBGFunc (0);
 	}
@@ -64,25 +71,25 @@ public class GameManager : MonoBehaviour {
 		//car = CarStudio.objects[CarStudio.Car.CarBaseModle];
 		//carPrefab = car.GetComponent<CarPrefab> ();
 		//car.transform.SetParent (CarControl.instance.transform);
-
-		CarPartsSetting ();
+		//CarPartsSetting ();
+		CarStudio.LoadCustum("save");
 	}
 
-	public void CameraChange(bool inside)
-	{
-		if (cameraIsInside != inside) {
-			
-			if (inside) {
-				//camControl.enabled = false;
-				CameraGoto (camInside);
-				cameraIsInside = true;
-			} else {
-				
-				CameraGoto (camOutside);
-				cameraIsInside = false;
-			}
-		}
-	}
+//	public void CameraChange(bool inside)
+//	{
+//		if (cameraIsInside != inside) {
+//			
+//			if (inside) {
+//				//camControl.enabled = false;
+//				CameraGoto (camInside);
+//				cameraIsInside = true;
+//			} else {
+//				
+//				CameraGoto (camOutside);
+//				cameraIsInside = false;
+//			}
+//		}
+//	}
 
 	public void CameraGoto(Transform pos)
 	{
@@ -115,6 +122,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	/*
 	public void SaveImage()
 	{
 		Rect rect = new Rect (Screen.width*0f, Screen.height*0f, Screen.width*1f, Screen.height*1f);
@@ -147,10 +155,17 @@ public class GameManager : MonoBehaviour {
 		//Debug.Log(string.Format("截屏了一张照片: {0}", filename));  
 		screenShot.SaveToAlbum();
 	}
+	*/
+
+	public void SaveImage()
+	{
+	}
 
 	public void ChangeBGFunc(int id)
 	{
 		RenderSettings.skybox = skyboxMats [id];
 		floorObj.GetComponent<Renderer> ().material.mainTexture = floors [id];
 	}
+
+
 }

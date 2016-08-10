@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public enum CustomType
 {
@@ -80,6 +81,7 @@ public class CustomButton : MonoBehaviour {
 
 			if (customType == CustomType.TextureColor && !UIManager.instance.isPaintBarOut) {
 				UIManager.instance.PaintBarAnimation (true);
+				CameraGoBack ();
 				//GameManager.instance.ChangeCustomTexture (thisID);
 			}
 			else{
@@ -94,24 +96,71 @@ public class CustomButton : MonoBehaviour {
 				}
 
 				if (customType == CustomType.OutsidePart) {
-					if (CarStudio.Exists(thisButton.Name)) {
-						CarStudio.RemovePart (thisButton.Name);
+
+					if (descriptionButton.Type == null) {
+						ChangePart ();
 					} else {
-						CarStudio.AddPart (thisButton.Name);
+						CameraGoto (int.Parse(descriptionButton.Type));
 					}
 				}
 				else if (customType == CustomType.SpecialCar) {
 					CarStudio.LoadTemplate (thisButton.Description);
+					CameraGoBack ();
 				}
 				else if (customType == CustomType.CNG) {
 //					CarData carData = AppData.GetCarAllParts().;
 //					CarStudio.LoadTemplate (carData.CNG);
-					CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
+					CameraGoto (2);
 				}
 				else if (customType == CustomType.PaintingCar) {
 					CarStudio.LoadTemplate (thisButton.Description);
+					CameraGoBack ();
 				}
+
+				CarStudio.SaveCustumUserCar("save");
+				Texture2D img;
+				if (CarStudio.Exists (descriptionButton.Name)) {
+					img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
+				} else {
+					img = Resources.Load (descriptionButton.Icon) as Texture2D;
+				}
+				thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+
+				Debug.Log (descriptionButton.Type);
 			}
 		}
+	}
+
+	void ChangePart()
+	{
+		if (customType == CustomType.CNG) {
+			CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
+		} else {
+			if (CarStudio.Exists(thisButton.Name)) {
+				CarStudio.RemovePart (thisButton.Name);
+			} else {
+				CarStudio.AddPart (thisButton.Name);
+			}
+		}
+	}
+
+	void CameraGoto(int id)
+	{
+		GameManager.instance.inCameraPosition = true;
+		Camera.main.transform.DOMove (GameManager.instance.allCamPosition [id].position, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase).OnComplete(CameraGotoFinish);
+		Camera.main.transform.DORotate (GameManager.instance.allCamPosition [id].rotation.eulerAngles, GameManager.instance.cameraMoveTime).SetEase (GameManager.instance.cameraMoveEase);
+	}
+
+	void CameraGoBack()
+	{
+		if (GameManager.instance.inCameraPosition) {
+			GameManager.instance.inCameraPosition = false;
+			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
+		}
+	}
+
+	void CameraGotoFinish()
+	{
+		ChangePart ();
 	}
 }
