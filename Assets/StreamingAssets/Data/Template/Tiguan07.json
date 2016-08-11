@@ -4,13 +4,10 @@
     "Icon": "UIImage/anniu/tz02",
     "Type": "SUV",
     "Description": "Tiguan07",
-    "MovieDescription": [
-    "sample1"
-    ],
-    "TextureDescription": [
-        "sample2",
-        "sample3"
-    ],
+    "MovieDescription":null,
+    "TextureDescription":[
+                "sample74","sample75","sample76","sample77","sample78","sample79"
+            ],
     "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
     "DefaultTexture": "Default",
     "CarBaseModle": "Tiguan",

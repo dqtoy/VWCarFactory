@@ -5,9 +5,10 @@
     "Type": "SUV",
     "Description": "Tiguan02",
     "PdfDescription":"sample1",
-    "MovieDescription": [
-    "sample1"
-    ],
+    "MovieDescription": null,
+	"TextureDescription": [
+    "sample100"
+  ],
     "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
     "DefaultTexture": "Default",
     "CarBaseModle": "Tiguan",

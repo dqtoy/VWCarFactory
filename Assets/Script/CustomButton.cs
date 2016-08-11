@@ -78,9 +78,11 @@ public class CustomButton : MonoBehaviour {
 	{
 		if (!isTag) {
 			descriptionButton = thisButton;
-
+			Texture2D img;
 			if (customType == CustomType.TextureColor && !UIManager.instance.isPaintBarOut) {
 				UIManager.instance.PaintBarAnimation (true);
+				img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
+				thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 				CameraGoBack ();
 				//GameManager.instance.ChangeCustomTexture (thisID);
 			}
@@ -92,8 +94,16 @@ public class CustomButton : MonoBehaviour {
 				if (!isPaint) {
 					UIManager.instance.ChangeDescriptionButtons(descriptionButton.TextureDescription!=null,descriptionButton.MovieDescription!=null,string.IsNullOrEmpty(descriptionButton.PdfDescription));
 					UIManager.instance.nowSelectedButton = thisButton;
+					if (CarStudio.Exists (descriptionButton.Name)) {
+						img = Resources.Load (descriptionButton.Icon) as Texture2D;
+					} else {
+						img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
 
-				}
+					}
+					//CameraGoBack ();
+					thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+				} 
+
 
 				if (customType == CustomType.OutsidePart) {
 
@@ -116,18 +126,8 @@ public class CustomButton : MonoBehaviour {
 					CarStudio.LoadTemplate (thisButton.Description);
 					CameraGoBack ();
 				}
-
-				CarStudio.SaveCustumUserCar("save");
-				Texture2D img;
-				if (CarStudio.Exists (descriptionButton.Name)) {
-					img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
-				} else {
-					img = Resources.Load (descriptionButton.Icon) as Texture2D;
-				}
-				thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
-
-				Debug.Log (descriptionButton.Type);
 			}
+			CarStudio.SaveCustumUserCar("save");
 		}
 	}
 
@@ -136,10 +136,28 @@ public class CustomButton : MonoBehaviour {
 		if (customType == CustomType.CNG) {
 			CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
 		} else {
+			string str;
+			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
 			if (CarStudio.Exists(thisButton.Name)) {
-				CarStudio.RemovePart (thisButton.Name);
+				str = "_playback";
+				foreach (GameObject obj in parts) {
+					obj.GetComponent<PartAnimation> ().SettingAnimation (thisButton.Name + str);
+				}
+				if (thisButton.Name != "电动踏板") {
+					CarStudio.RemovePart (thisButton.Name);
+				} else {
+					GameManager.instance.isDoorOpen = false;
+				}
 			} else {
+				
+				str = "_play";
+				foreach (GameObject obj in parts) {
+					obj.GetComponent<PartAnimation> ().SettingAnimation (thisButton.Name + str);
+				}
 				CarStudio.AddPart (thisButton.Name);
+				if (thisButton.Name == "电动踏板") {
+					GameManager.instance.isDoorOpen = true;
+				}
 			}
 		}
 	}
@@ -156,6 +174,13 @@ public class CustomButton : MonoBehaviour {
 		if (GameManager.instance.inCameraPosition) {
 			GameManager.instance.inCameraPosition = false;
 			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
+			if (GameManager.instance.isDoorOpen == true) {
+				GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+				foreach (GameObject obj in parts) {
+					obj.GetComponent<PartAnimation> ().DoorClose();
+				}
+				GameManager.instance.isDoorOpen = false;
+			}
 		}
 	}
 

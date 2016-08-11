@@ -4,12 +4,10 @@
     "Icon": "UIImage/anniu/tz02",
     "Type": "SUV",
     "Description": "Tiguan08",
-    "MovieDescription": [
-    "sample1"
-    ],
+    "MovieDescription": null,
     "TextureDescription": [
-        "sample2",
-        "sample3"
+        "sample82","sample83","sample84","sample85","sample86","sample87","sample88","sample89",
+				"sample90","sample91","sample92","sample93","sample94","sample95"
     ],
     "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
     "DefaultTexture": "Default",

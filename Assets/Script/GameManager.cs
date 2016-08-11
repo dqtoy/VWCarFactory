@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour {
 
 	public float cameraMoveTime;
 	public Ease cameraMoveEase;
+	public bool isDoorOpen;
 
 	void Awake()
 	{
@@ -159,6 +160,23 @@ public class GameManager : MonoBehaviour {
 
 	public void SaveImage()
 	{
+		UIManager.instance.gameObject.SetActive (false);
+		Rect rect = new Rect (Screen.width*0f, Screen.height*0f, Screen.width*1f, Screen.height*1f);
+		// 先创建一个的空纹理，大小可根据实现需要来设置  
+		Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24,false);  
+
+		// 读取屏幕像素信息并存储为纹理数据，  
+		screenShot.ReadPixels(rect, 0, 0); 
+		screenShot.Apply(); 
+
+		// 然后将这些纹理数据，成一个png图片文件  
+//		byte[] bytes = screenShot.EncodeToPNG();  
+//		string filename = Application.dataPath + "/Screenshot.png";  
+//		System.IO.File.WriteAllBytes(filename, bytes);  
+//		Debug.Log(string.Format("截屏了一张图片: {0}", filename));  
+
+		screenShot.SaveToAlbum();
+		UIManager.instance.gameObject.SetActive (true);
 	}
 
 	public void ChangeBGFunc(int id)

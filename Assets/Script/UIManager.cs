@@ -199,8 +199,12 @@ public class UIManager : MonoBehaviour {
 				Image btnSubImg = objSub.GetComponent<Image> ();
 				objSub.transform.SetParent (buttonBarContent.transform, false);
 				Texture2D img;
-				if (CarStudio.Exists (button.Name)) {
-					img = Resources.Load (button.Icon + "b") as Texture2D;
+				if (id == 0 || id == 2) {
+					if (CarStudio.Exists (button.Name)) {
+						img = Resources.Load (button.Icon + "b") as Texture2D;
+					} else {
+						img = Resources.Load (button.Icon) as Texture2D;
+					}
 				} else {
 					img = Resources.Load (button.Icon) as Texture2D;
 				}
@@ -211,7 +215,7 @@ public class UIManager : MonoBehaviour {
 				//btn.SetID (j);
 			}
 		}
-		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,110.0f);
+		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,150.0f);
 	}
 
 	public void ResetContentSize(RectTransform content,int count,float eleSize)
@@ -252,6 +256,8 @@ public class UIManager : MonoBehaviour {
 		} else {
 			isPaintBarOut = false;
 			paintBarRoot.transform.DOLocalMoveX (paintBarBound.x, 0.5f).SetEase (Ease.InOutExpo);
+			Texture2D tex = Resources.Load("UIImage/anniu/01") as Texture2D;
+			GameManager.instance.allButtonIcon[1].GetComponent<Image>().sprite = Sprite.Create (tex, new Rect (0, 0, tex.width, tex.height), new Vector2 (0, 0));
 		}
 	}
 
@@ -327,6 +333,4 @@ public class UIManager : MonoBehaviour {
 	{
 		GameManager.instance.SaveImage ();
 	}
-
-
 }

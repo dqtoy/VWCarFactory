@@ -1,1 +1,22 @@
-{"Name":"警车警车改装1","Tag":"警车改装","Icon":"UIImage/anniu/jc01","Type":"SUV","Description":"Tiguan01","PdfDescription":"sample1","TextureDescription":["sample2","sample3"],"Path":"C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum","DefaultTexture":"Default","CarBaseModle":"Tiguan","BodyTexture":"","Parts":["电动踏板","后盖开启","保险处涂装2","导航仪","碳纤维出风口"]}
+{
+  "Name": "警车警车改装1",
+  "Tag": "警车改装",
+  "Icon": "UIImage/anniu/jc01",
+  "Type": "SUV",
+  "Description": "Tiguan01",
+  "PdfDescription": "sample1",
+  "TextureDescription": [
+    "sample99","sample101","sample102","sample103","sample104","sample105"
+  ],
+  "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+  "DefaultTexture": "Default",
+  "CarBaseModle": "Tiguan",
+  "BodyTexture": "",
+  "Parts": [
+    "电动踏板",
+    "后盖开启",
+    "保险处涂装2",
+    "导航仪",
+    "碳纤维出风口"
+  ]
+}
