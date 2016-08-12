@@ -106,7 +106,9 @@ public class CustomButton : MonoBehaviour {
 
 
 				if (customType == CustomType.OutsidePart) {
-
+					if (thisButton.Name != "电动踏板") {
+						CloseDoor ();
+					}
 					if (descriptionButton.Type == null) {
 						ChangePart ();
 					} else {
@@ -159,6 +161,8 @@ public class CustomButton : MonoBehaviour {
 					GameManager.instance.isDoorOpen = true;
 				}
 			}
+
+
 		}
 	}
 
@@ -174,13 +178,18 @@ public class CustomButton : MonoBehaviour {
 		if (GameManager.instance.inCameraPosition) {
 			GameManager.instance.inCameraPosition = false;
 			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
-			if (GameManager.instance.isDoorOpen == true) {
-				GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
-				foreach (GameObject obj in parts) {
-					obj.GetComponent<PartAnimation> ().DoorClose();
-				}
-				GameManager.instance.isDoorOpen = false;
+			CloseDoor ();
+		}
+	}
+
+	public void CloseDoor()
+	{
+		if (GameManager.instance.isDoorOpen == true) {
+			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+			foreach (GameObject obj in parts) {
+				obj.GetComponent<PartAnimation> ().DoorClose();
 			}
+			GameManager.instance.isDoorOpen = false;
 		}
 	}
 

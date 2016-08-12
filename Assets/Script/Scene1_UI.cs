@@ -28,7 +28,8 @@ public class Scene1_UI : MonoBehaviour
     public CompanyProfile_UIGroup[] CompanyProfileUIs;
     public ProfessionProfile_UIGroup[] ProfessionProfileUIs;
     Color gray, blue, light_gray, white;
-
+    public RectTransform[] viewports;
+    public RectTransform link;
 
     public static string CarSeleted;
     // Use this for initialization
@@ -97,6 +98,11 @@ public class Scene1_UI : MonoBehaviour
         MenuButtons[__index].transform.FindChild("Image/Text").GetComponent<Text>().color = blue;
         MenuButtons[__index].transform.FindChild("Image/icon").GetComponent<Image>().color = blue;
         CloseMenu();
+        for (int i = 0; i < viewports.Length; i++)
+        {
+            viewports[i].anchorMin = Vector2.zero;
+            viewports[i].anchorMax = Vector2.one;
+        }
         switch (__index)
         {
             case 0:
@@ -110,6 +116,7 @@ public class Scene1_UI : MonoBehaviour
             case 2:
                 break;
             case 3:
+                link.anchoredPosition = new Vector2(0, -250);
                 break;
             case 4:
                 break;

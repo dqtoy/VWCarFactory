@@ -165,7 +165,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void DoorLclose(){
 		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z + 70.0f));
-		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, -70.0f), 3.0f).SetEase (Ease.OutExpo).OnComplete (AnimationStartOver);
+		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, -70.0f), 1.0f).SetEase (Ease.OutExpo).OnComplete (AnimationStartOver);
 		//左门关闭
 
 	}
@@ -178,7 +178,7 @@ public class PartAnimation : MonoBehaviour {
 	public void DoorRclose(){
 		
 		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z - 70.0f));
-		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 70.0f), 3.0f).SetEase (Ease.OutExpo).OnComplete (AnimationStartOver);
+		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 70.0f), 1.0f).SetEase (Ease.OutExpo).OnComplete (AnimationStartOver);
 		//右门关闭
 	}
 

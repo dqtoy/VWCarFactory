@@ -324,6 +324,7 @@ public class CarStudio
                                 {
                                     oldPartObjects.Add(__part.Assets[i].Target, objects[__part.Assets[i].Target]);
                                     objects[__part.Assets[i].Target].SetActive(false);
+                                    _obj.transform.parent = objects[__part.Assets[i].Target].transform.parent;
                                 }
                                 else
                                 {
