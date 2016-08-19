@@ -1,0 +1,18 @@
+{
+    "Name":"驾校车改装1",
+    "Tag":"驾校车改装",
+    "Icon":"UIImage/CarButton/car02",
+    "Type":"CAR",
+    "Description":"Passat03",
+    "PdfDescription":null,
+    "MovieDescription":null,
+    "TextureDescription":null,
+    "Path":"C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+    "DefaultTexture":"Default",
+    "CarBaseModle":"Passat",
+    "BodyTexture":"",
+    "Parts":[
+        "white",
+        "副反光镜"
+    ]
+}

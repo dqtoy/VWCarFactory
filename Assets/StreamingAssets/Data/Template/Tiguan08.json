@@ -1,10 +1,10 @@
 {
-    "Name": "出租车涂装1",
+    "Name": "出租车涂装2",
     "Tag": "出租车涂装",
-    "Icon": "UIImage/anniu/tz02",
+    "Icon": "UIImage/CarButton/car09",
     "Type": "SUV",
     "Description": "Tiguan08",
-    "MovieDescription": null,
+    "MovieDescription":null,
     "TextureDescription": [
         "sample82","sample83","sample84","sample85","sample86","sample87","sample88","sample89",
 				"sample90","sample91","sample92","sample93","sample94","sample95"
@@ -14,6 +14,6 @@
     "CarBaseModle": "Tiguan",
     "BodyTexture": "",
     "Parts": [
-        "出租车涂装1"
+        "出租车涂装2","出租车灯"
     ]
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using com.ootii.Messages;
+//using com.ootii.Messages;
 
 public class DragDropUI : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointerUpHandler 
 {
@@ -25,7 +25,8 @@ public class DragDropUI : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointe
 	public void OnPointerUp(PointerEventData eventData)
 	{
 		//transform.localPosition = new Vector3 (transform.localPosition.x, UIManager.instance.scrollBounds.y, transform.localPosition.z);
-		MessageDispatcher.SendMessage (UIManager.instance.gameObject,"OnDragFinish","DFinish", 0);
+		//MessageDispatcher.SendMessage (UIManager.instance.gameObject,"OnDragFinish","DFinish", 0);
+		UIManager.instance.OnBarDragFinish ();
 		//transform.localScale=new Vector3(1f,1f,1f);
 	}
 }

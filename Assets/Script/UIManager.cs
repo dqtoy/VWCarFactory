@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
-using com.ootii.Messages;
+//using com.ootii.Messages;
 
 public class UIManager : MonoBehaviour {
 
@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour {
 	public Image[] typeButtons;
 	public GameObject[] descriptionButtons;
 
+	public GameObject[] bgButtonSelect;
 	public GameObject changeBGWindow;
 	public GameObject samplePhotoWindow;
 	public GameObject largeSamplePhoto;
@@ -38,18 +39,28 @@ public class UIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		samplePhotoList = new List<GameObject> ();
-		MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
+		//MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
 		instance = this;
 		InitialTextureButton ();
 		InitialColorButton ();
 		TypeButtonChange (0);
+		InitialPartTypeButton ();
 		//ChangeDescriptionButtons (false, false, false);
 		PaintBarAnimation (false);
 	}
 
+	void InitialPartTypeButton()
+	{
+		if (!CarStudio.Exists("CNG")) {
+			typeButtons [2].gameObject.SetActive (false);
+		}
+	}
+
 	public void BackToTitle()
 	{
-		GetComponent<AudioSource> ().Play ();
+		//GetComponent<AudioSource> ().Play ();
+		//CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
+		CarStudio.CloseStudio ();
 		Application.LoadLevel (Application.loadedLevel - 1);
 	}
 
@@ -66,6 +77,7 @@ public class UIManager : MonoBehaviour {
 	public void ChangeOutParts()
 	{
 		//GameManager.instance.CameraChange (false);
+		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 		ChangeButtonList (0,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
 		TypeButtonChange (0);
 		if (!isBarOpen) {
@@ -237,7 +249,7 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public void OnBarDragFinish(IMessage rMessage)
+	public void OnBarDragFinish()
 	{
 		//Debug.Log((scrollBounds.y - scrollBounds.x)/2);
 		if (animationScrollBar.transform.localPosition.y > scrollBounds.y - (scrollBounds.y - scrollBounds.x)/2) {
@@ -264,11 +276,21 @@ public class UIManager : MonoBehaviour {
 	public void BGWinodowShow(bool bo)
 	{
 		changeBGWindow.SetActive (bo);
+		ChangeBGSelectionUI (GameManager.instance.selectedBG);
 	}
 
 	public void ChangeBG(int id)
 	{
 		GameManager.instance.ChangeBGFunc (id);
+		ChangeBGSelectionUI (id);
+	}
+
+	public void ChangeBGSelectionUI(int id)
+	{
+		foreach (GameObject item in bgButtonSelect) {
+			item.SetActive (false);
+		}
+		bgButtonSelect [id].SetActive (true);
 	}
 
 	public void SamplePhotoWindowShow(bool bo)
@@ -327,6 +349,7 @@ public class UIManager : MonoBehaviour {
 			item.color = new Color(item.color.r,item.color.g,item.color.b,0);
 		}
 		typeButtons[id].color =  new Color(typeButtons[id].color.r,typeButtons[id].color.g,typeButtons[id].color.b,1);
+		GameManager.instance.CameraGoBack ();
 	}
 
 	public void SaveImage()

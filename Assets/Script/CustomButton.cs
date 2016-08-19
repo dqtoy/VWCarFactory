@@ -77,13 +77,14 @@ public class CustomButton : MonoBehaviour {
 	public void ClickThisButton()
 	{
 		if (!isTag) {
+			GameManager.instance.isPartButtonClick = true;
 			descriptionButton = thisButton;
 			Texture2D img;
 			if (customType == CustomType.TextureColor && !UIManager.instance.isPaintBarOut) {
 				UIManager.instance.PaintBarAnimation (true);
 				img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
 				thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
-				CameraGoBack ();
+				GameManager.instance.CameraGoBack ();
 				//GameManager.instance.ChangeCustomTexture (thisID);
 			}
 			else{
@@ -107,7 +108,7 @@ public class CustomButton : MonoBehaviour {
 
 				if (customType == CustomType.OutsidePart) {
 					if (thisButton.Name != "电动踏板") {
-						CloseDoor ();
+						GameManager.instance.CloseDoor ();
 					}
 					if (descriptionButton.Type == null) {
 						ChangePart ();
@@ -117,19 +118,22 @@ public class CustomButton : MonoBehaviour {
 				}
 				else if (customType == CustomType.SpecialCar) {
 					CarStudio.LoadTemplate (thisButton.Description);
-					CameraGoBack ();
+					GameManager.instance.CameraGoBack ();
+					return;
 				}
 				else if (customType == CustomType.CNG) {
 //					CarData carData = AppData.GetCarAllParts().;
 //					CarStudio.LoadTemplate (carData.CNG);
 					CameraGoto (2);
+					return;
 				}
 				else if (customType == CustomType.PaintingCar) {
 					CarStudio.LoadTemplate (thisButton.Description);
-					CameraGoBack ();
+					GameManager.instance.CameraGoBack ();
+					return;
 				}
 			}
-			CarStudio.SaveCustumUserCar("save");
+			CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 		}
 	}
 
@@ -138,63 +142,47 @@ public class CustomButton : MonoBehaviour {
 		if (customType == CustomType.CNG) {
 			CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
 		} else {
-			string str;
-			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+			
 			if (CarStudio.Exists(thisButton.Name)) {
-				str = "_playback";
-				foreach (GameObject obj in parts) {
-					obj.GetComponent<PartAnimation> ().SettingAnimation (thisButton.Name + str);
-				}
-				if (thisButton.Name != "电动踏板") {
+				StartSettingAnimation ("_playback");
+				if (thisButton.Name != "电动踏板" && thisButton.Name != "后盖开启") {
 					CarStudio.RemovePart (thisButton.Name);
-				} else {
-					GameManager.instance.isDoorOpen = false;
 				}
+//				else if (thisButton.Name == "电动踏板" && !GameManager.instance.epDown) {
+//					CarStudio.RemovePart (thisButton.Name);
+//				}
 			} else {
-				
-				str = "_play";
-				foreach (GameObject obj in parts) {
-					obj.GetComponent<PartAnimation> ().SettingAnimation (thisButton.Name + str);
-				}
 				CarStudio.AddPart (thisButton.Name);
-				if (thisButton.Name == "电动踏板") {
-					GameManager.instance.isDoorOpen = true;
-				}
+				StartSettingAnimation ("_play");
 			}
+		}
+	}
 
-
+	void StartSettingAnimation(string str)
+	{
+		GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+		foreach (GameObject obj in parts) {
+			obj.GetComponent<PartAnimation> ().SettingAnimation (thisButton.Name + str);
 		}
 	}
 
 	void CameraGoto(int id)
 	{
 		GameManager.instance.inCameraPosition = true;
+		GameManager.instance.nowCamPositionID = id;
+		CarControl.instance.camNowPosX = 0;
+		CarControl.instance.camNowRotateY = Camera.main.transform.rotation.eulerAngles.y;
 		Camera.main.transform.DOMove (GameManager.instance.allCamPosition [id].position, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase).OnComplete(CameraGotoFinish);
 		Camera.main.transform.DORotate (GameManager.instance.allCamPosition [id].rotation.eulerAngles, GameManager.instance.cameraMoveTime).SetEase (GameManager.instance.cameraMoveEase);
-	}
-
-	void CameraGoBack()
-	{
-		if (GameManager.instance.inCameraPosition) {
-			GameManager.instance.inCameraPosition = false;
-			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
-			CloseDoor ();
-		}
-	}
-
-	public void CloseDoor()
-	{
-		if (GameManager.instance.isDoorOpen == true) {
-			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
-			foreach (GameObject obj in parts) {
-				obj.GetComponent<PartAnimation> ().DoorClose();
-			}
-			GameManager.instance.isDoorOpen = false;
-		}
 	}
 
 	void CameraGotoFinish()
 	{
 		ChangePart ();
+		if (GameManager.instance.inCameraPosition) {
+			GameManager.instance.cameraRotationY = Camera.main.transform.rotation.eulerAngles.y;
+			CarControl.instance.camNowRotateY = Camera.main.transform.rotation.eulerAngles.y;
+
+		}
 	}
 }

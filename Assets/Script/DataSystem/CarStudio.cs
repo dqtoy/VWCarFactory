@@ -62,8 +62,10 @@ public class CarStudio
             }
             else
             {
-                car.Parts.Add(_part.Name);
-                InitObject(_part);
+				//if (__partName != "电动踏板" && __partName != "后盖开启") {
+					car.Parts.Add(_part.Name);
+					InitObject(_part);
+				//}
                 return true;
             }
         }
@@ -324,7 +326,11 @@ public class CarStudio
                                 {
                                     oldPartObjects.Add(__part.Assets[i].Target, objects[__part.Assets[i].Target]);
                                     objects[__part.Assets[i].Target].SetActive(false);
-                                    _obj.transform.parent = objects[__part.Assets[i].Target].transform.parent;
+									if (Scene1_UI.CarSeleted == "Tiguan") {
+										_obj.transform.parent = objects[__part.Assets[i].Target].transform.parent;
+									} else {
+										_obj.transform.SetParent(objects[__part.Assets[i].Target].transform.parent,false);
+									}
                                 }
                                 else
                                 {
@@ -487,6 +493,7 @@ public class CarStudio
         if (IsInitObject)
         {
             DeleteAllModel();
+			Debug.Log ("car.CarBaseModle " + car.CarBaseModle);
             CarData _data = AppData.GetCarDataByName(car.CarBaseModle);
             InitObject(AppData.GetCarPartData(car.CarBaseModle, carBodyName));
             

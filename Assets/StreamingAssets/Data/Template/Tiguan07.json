@@ -1,7 +1,7 @@
 {
-    "Name": "出租车涂装2",
+    "Name": "出租车涂装1",
     "Tag": "出租车涂装",
-    "Icon": "UIImage/anniu/tz02",
+    "Icon": "UIImage/CarButton/car08",
     "Type": "SUV",
     "Description": "Tiguan07",
     "MovieDescription":null,
@@ -13,6 +13,6 @@
     "CarBaseModle": "Tiguan",
     "BodyTexture": "",
     "Parts": [
-        "保险处涂装2"
+        "出租车涂装1","出租车灯"
     ]
 }

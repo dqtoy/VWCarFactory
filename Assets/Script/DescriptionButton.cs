@@ -19,6 +19,6 @@ public class DescriptionButton : MonoBehaviour {
 			UIManager.instance.SamplePhotoRefresh ();
 		} else if (type == DescriptionType.VideoButton) {
 			UIManager.instance.SampleVideoWindowShow (true);
-		} 
+		}
 	}
 }

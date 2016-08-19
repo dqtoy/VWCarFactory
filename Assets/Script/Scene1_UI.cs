@@ -23,7 +23,7 @@ public class Scene1_UI : MonoBehaviour
     public GameObject[] UIs;
     public Image[] MenuButtons;
 
-    public GameObject CompanyContent, ProfessionContent;
+    public GameObject CompanyContent, ProfessionContent, linkContent, aboutContent;
     public Scrollbar CompanyScrollbar, ProfessionScrollbar;
     public CompanyProfile_UIGroup[] CompanyProfileUIs;
     public ProfessionProfile_UIGroup[] ProfessionProfileUIs;
@@ -60,6 +60,7 @@ public class Scene1_UI : MonoBehaviour
         CompanyProfileUIs[__index].buttonBG.color = white;
         CompanyProfileUIs[__index].content.SetActive(true);
         CompanyScrollbar.value = 1;
+        CompanyScrollbar.transform.parent.GetComponent<ScrollRect>().content = CompanyProfileUIs[__index].content.GetComponent<RectTransform>();
     }
 
     public void OpenProfessionDescriptionSub(int __index)
@@ -77,7 +78,8 @@ public class Scene1_UI : MonoBehaviour
         ProfessionProfileUIs[__index].lable.color = blue;
         ProfessionProfileUIs[__index].content.SetActive(true);
         ProfessionScrollbar.value = 1;
-
+        ProfessionScrollbar.transform.parent.GetComponent<ScrollRect>().content = ProfessionProfileUIs[__index].content.GetComponent<RectTransform>();
+        
     }
 
     public void OpenPanel(int __index)
@@ -106,19 +108,23 @@ public class Scene1_UI : MonoBehaviour
         switch (__index)
         {
             case 0:
+                
+                break;
+            case 1:
                 OpenCompanyDescriptionSub(0);
                 CompanyContent.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 break;
-            case 1:
+            case 2:
                 OpenProfessionDescriptionSub(0);
                 ProfessionContent.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
                 break;
-            case 2:
-                break;
             case 3:
-                link.anchoredPosition = new Vector2(0, -250);
+                linkContent.GetComponent<RectTransform>().anchoredPosition = Vector2.zero; 
+                //link.anchoredPosition = new Vector2(0, -250);
                 break;
             case 4:
+                aboutContent.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
                 break;
             case 5:
                 break;

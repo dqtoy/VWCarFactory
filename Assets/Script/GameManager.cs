@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject car;
 	public CarPrefab carPrefab;
 	public int selectedCarID;
+	public int selectedBG;
 	public int nowSelectedCustomType;
 	bool cameraIsInside;
 	public bool inGoto;
@@ -30,15 +31,23 @@ public class GameManager : MonoBehaviour {
 	public GameObject floorObj;
 	public Material[] skyboxMats;
 	public Texture[] floors;
+	public Texture[] cubeMapMats;
 	//public Camera c;
 
 	public Transform[] allCamPosition;
+	public int nowCamPositionID;
 	public bool inCameraPosition;
 	public Vector3 cameraInitPosition;
 
 	public float cameraMoveTime;
 	public Ease cameraMoveEase;
 	public bool isDoorOpen;
+
+	public bool isPartButtonClick;
+	public float cameraRotationY;
+	public bool epDown;
+	public Material[] carBodyMats;
+	public Material[] glassMats;
 
 	void Awake()
 	{
@@ -49,10 +58,12 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log (gameObject);
 		camControl = Camera.main.GetComponent<CameraControl> ();
 		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
 		ChangeBGFunc (0);
+		InitCarPart ();
 	}
 
 	void InitData()
@@ -68,12 +79,14 @@ public class GameManager : MonoBehaviour {
 	public void InitialCar()
 	{
 		//CarStudio.IsInitObject = false;
+		Debug.Log("Scene1_UI.CarSeleted " + Scene1_UI.CarSeleted);
 		CarStudio.OpenStudio(Scene1_UI.CarSeleted);
 		//car = CarStudio.objects[CarStudio.Car.CarBaseModle];
 		//carPrefab = car.GetComponent<CarPrefab> ();
 		//car.transform.SetParent (CarControl.instance.transform);
 		//CarPartsSetting ();
-		CarStudio.LoadCustum("save");
+
+		//CarStudio.LoadCustum(Scene1_UI.CarSeleted + "save");
 	}
 
 //	public void CameraChange(bool inside)
@@ -105,9 +118,32 @@ public class GameManager : MonoBehaviour {
 //		}
 	}
 
+	public void CameraGoBack()
+	{
+		if (GameManager.instance.inCameraPosition) {
+			GameManager.instance.inCameraPosition = false;
+			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
+			CloseDoor ();
+		}
+	}
+
+	public void CloseDoor()
+	{
+		if (GameManager.instance.isDoorOpen == true) {
+			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+			foreach (GameObject obj in parts) {
+				obj.GetComponent<PartAnimation> ().DoorClose();
+			}
+			//GameManager.instance.isDoorOpen = false;
+		}
+	}
+
 	public void CameraGoFinish()
 	{
 		inGoto = false;
+		if (inCameraPosition) {
+			cameraRotationY = Camera.main.transform.rotation.eulerAngles.y;
+		}
 		//camControl.enabled = true;
 	}
 
@@ -183,7 +219,22 @@ public class GameManager : MonoBehaviour {
 	{
 		RenderSettings.skybox = skyboxMats [id];
 		floorObj.GetComponent<Renderer> ().material.mainTexture = floors [id];
+		foreach (Material item in carBodyMats) {
+			item.SetTexture("_ReflectionMap",cubeMapMats[id]);
+		}
+		foreach (Material item in glassMats) {
+			item.SetTexture("_Cube",cubeMapMats[id]);
+		}
+		selectedBG = id;
 	}
 
-
+	void InitCarPart()
+	{
+//		if (CarStudio.Exists("电动踏板")) {
+//			CarStudio.RemovePart ("电动踏板");
+//		}
+		if (CarStudio.Exists("后盖开启")) {
+			CarStudio.RemovePart ("后盖开启");
+		}
+	}
 }

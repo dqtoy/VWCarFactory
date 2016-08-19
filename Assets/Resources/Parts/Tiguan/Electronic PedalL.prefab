@@ -36,6 +36,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000014131975828}
+  - 33: {fileID: 33000013271549684}
+  - 23: {fileID: 23000012987783982}
   - 114: {fileID: 114000012645381354}
   m_Layer: 0
   m_Name: Electronic PedalL
@@ -124,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012285900598}
   m_LocalRotation: {x: 0.2705982, y: 0.65328145, z: 0.65328145, w: -0.2705982}
-  m_LocalPosition: {x: -0.14999633, y: -0.13897084, z: 0.27354056}
+  m_LocalPosition: {x: -0.171, y: -0.102, z: 0.294}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: -90, y: -135, z: 0}
   m_Children:
@@ -191,6 +193,35 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!23 &23000012987783982
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012285900598}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedWireframeHidden: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!23 &23000013432378126
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -241,6 +272,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011195052938}
   m_Mesh: {fileID: 4300144, guid: a4fdb4b087c0b4b488bfe09c65bd1748, type: 3}
+--- !u!33 &33000013271549684
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012285900598}
+  m_Mesh: {fileID: 0}
 --- !u!114 &114000012645381354
 MonoBehaviour:
   m_ObjectHideFlags: 1

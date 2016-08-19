@@ -1,0 +1,20 @@
+{
+    "Name":"警车警车改装2",
+    "Tag":"警车改装",
+    "Icon":"UIImage/anniu/jc02",
+    "Type":"CAR",
+    "Description":"Passat02",
+    "PdfDescription":"sample1",
+    "MovieDescription":null,
+    "TextureDescription":[
+        "sample100"
+    ],
+    "Path":"C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+    "DefaultTexture":"Default",
+    "CarBaseModle":"Passat",
+    "BodyTexture":"",
+    "Parts":[
+        "警车涂装2",
+		"警灯"
+    ]
+}

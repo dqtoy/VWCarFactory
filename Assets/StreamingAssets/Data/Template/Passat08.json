@@ -1,0 +1,22 @@
+{
+  "Name": "保险处涂装2",
+  "Tag": "保险处涂装",
+  "Icon": "UIImage/CarButton/car11",
+  "Type": "CAR",
+  "Description": "Passat08",
+  "PdfDescription": "sample1",
+  "MovieDescription": null,
+  "TextureDescription": [
+    "sample68",
+    "sample69",
+    "sample72",
+    "sample73"
+  ],
+  "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+  "DefaultTexture": "Default",
+  "CarBaseModle": "Passat",
+  "BodyTexture": "",
+  "Parts": [
+    "保险处涂装2"
+  ]
+}

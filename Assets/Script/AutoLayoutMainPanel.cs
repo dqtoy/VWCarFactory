@@ -6,7 +6,7 @@ using UnityEngine.iOS;
 
 
 public class AutoLayoutMainPanel : MonoBehaviour {
-    public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link;
+    public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link, about;
     public UnityEngine.UI.GridLayoutGroup grid;
     public Scene1_UI sceneUI;
 	// Use this for initialization
@@ -18,7 +18,7 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         int gcd = GCD(width, height);
         width = width / gcd;
         height = height / gcd;
-        //SixteenNine();
+        SixteenNine();
 #if UNITY_IOS && !UNITY_EDITOR
         if (width==4&& height == 3)
         {
@@ -116,6 +116,9 @@ public class AutoLayoutMainPanel : MonoBehaviour {
 
         link.sizeDelta = new Vector2(-150, 0);
         link.anchoredPosition = new Vector2(75, 0);
+
+        about.sizeDelta = new Vector2(-150, 0);
+        about.anchoredPosition = new Vector2(75, 0);
 
     }
 }

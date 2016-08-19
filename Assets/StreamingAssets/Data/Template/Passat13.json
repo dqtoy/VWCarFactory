@@ -1,0 +1,23 @@
+{
+  "Name": "出租车涂装4",
+  "Tag": "出租车涂装",
+  "Icon": "UIImage/CarButton/car15",
+  "Type": "CAR",
+  "Description": "Passat13",
+  "MovieDescription": null,
+  "TextureDescription": [
+    "sample74",
+    "sample75",
+    "sample76",
+    "sample77",
+    "sample78",
+    "sample79"
+  ],
+  "Path": "C:/Users/CHenB/AppData/LocalLow/CHenIOS/Test/Custum",
+  "DefaultTexture": "Default",
+  "CarBaseModle": "Passat",
+  "BodyTexture": "",
+  "Parts": [
+    "出租车涂装4","出租车灯"
+  ]
+}
