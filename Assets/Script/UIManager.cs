@@ -33,6 +33,12 @@ public class UIManager : MonoBehaviour {
 	public GameObject shareButtonWindow;
 	public MediaPlayerCtrl videoContent;
 	List<GameObject> samplePhotoList;
+	public GameObject floatWindow;
+	public Vector2 floatWindowMoveX;
+	public Image floatWindowImage;
+	public Text floatWindowText;
+	public UIFrom3D float3DButton;
+	public GameObject floatBackButton;
 
 	public IButtonInfo nowSelectedButton;
 
@@ -44,6 +50,7 @@ public class UIManager : MonoBehaviour {
 		InitialTextureButton ();
 		InitialColorButton ();
 		TypeButtonChange (0);
+		HideFloatWindow ();
 		InitialPartTypeButton ();
 		//ChangeDescriptionButtons (false, false, false);
 		PaintBarAnimation (false);
@@ -51,7 +58,9 @@ public class UIManager : MonoBehaviour {
 
 	void InitialPartTypeButton()
 	{
-		if (!CarStudio.Exists("CNG")) {
+		//if (!CarStudio.Exists("CNG")) {
+		//Debug.Log(AppData.GetCarPartData(Scene1_UI.CarSeleted,"CNG").Name);
+		if (Scene1_UI.CarSeleted == "Tiguan") {
 			typeButtons [2].gameObject.SetActive (false);
 		}
 	}
@@ -77,12 +86,14 @@ public class UIManager : MonoBehaviour {
 	public void ChangeOutParts()
 	{
 		//GameManager.instance.CameraChange (false);
-		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
+		//CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 		ChangeButtonList (0,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
 		TypeButtonChange (0);
 		if (!isBarOpen) {
 			ChangeScrollBar (true);
 		}
+		CarStudio.CloseStudio ();
+		CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
 	}
 
 	public void ChangeElecDevice()
@@ -350,6 +361,25 @@ public class UIManager : MonoBehaviour {
 		}
 		typeButtons[id].color =  new Color(typeButtons[id].color.r,typeButtons[id].color.g,typeButtons[id].color.b,1);
 		GameManager.instance.CameraGoBack ();
+
+	}
+
+	public void ShowFloatWindow(Texture2D img,string txt)
+	{
+		floatWindowImage.sprite = Sprite.Create(img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+		floatWindowText.text = txt;
+		float3DButton.gameObject.SetActive (true);
+		floatBackButton.SetActive (true);
+		floatWindow.transform.DOLocalMoveX (floatWindowMoveX.y, 0.5f).SetEase (Ease.OutExpo);
+	}
+
+	public void HideFloatWindow()
+	{
+		floatBackButton.SetActive (false);
+		if (!GameManager.instance.inCameraPosition) {
+			float3DButton.gameObject.SetActive (false);
+		}
+		floatWindow.transform.DOLocalMoveX (floatWindowMoveX.x, 0.5f).SetEase (Ease.OutExpo);
 	}
 
 	public void SaveImage()

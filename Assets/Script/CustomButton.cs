@@ -107,6 +107,8 @@ public class CustomButton : MonoBehaviour {
 
 
 				if (customType == CustomType.OutsidePart) {
+					
+
 					if (thisButton.Name != "电动踏板") {
 						GameManager.instance.CloseDoor ();
 					}
@@ -133,7 +135,7 @@ public class CustomButton : MonoBehaviour {
 					return;
 				}
 			}
-			CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
+
 		}
 	}
 
@@ -146,6 +148,8 @@ public class CustomButton : MonoBehaviour {
 			if (CarStudio.Exists(thisButton.Name)) {
 				StartSettingAnimation ("_playback");
 				if (thisButton.Name != "电动踏板" && thisButton.Name != "后盖开启") {
+					UIManager.instance.HideFloatWindow ();
+					UIManager.instance.float3DButton.gameObject.SetActive (false);
 					CarStudio.RemovePart (thisButton.Name);
 				}
 //				else if (thisButton.Name == "电动踏板" && !GameManager.instance.epDown) {
@@ -154,8 +158,10 @@ public class CustomButton : MonoBehaviour {
 			} else {
 				CarStudio.AddPart (thisButton.Name);
 				StartSettingAnimation ("_play");
+				ShowFloatButton ();
 			}
 		}
+		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 	}
 
 	void StartSettingAnimation(string str)
@@ -183,6 +189,15 @@ public class CustomButton : MonoBehaviour {
 			GameManager.instance.cameraRotationY = Camera.main.transform.rotation.eulerAngles.y;
 			CarControl.instance.camNowRotateY = Camera.main.transform.rotation.eulerAngles.y;
 
+		}
+	}
+
+	void ShowFloatButton()
+	{
+		if (thisButton.Description != null) {
+			UIManager.instance.float3DButton.gameObject.SetActive (true);
+			UIManager.instance.float3DButton.SetThisTarget (GameObject.Find(AppData.GetSamples (thisButton.Description).Asset),thisButton);
+			//UIManager.instance.float3DButton.SetThisTarget (CarStudio.objects[AppData.GetCarPartData(Scene1_UI.CarSeleted,thisButton.Name)]. thisButton.,thisButton);
 		}
 	}
 }
