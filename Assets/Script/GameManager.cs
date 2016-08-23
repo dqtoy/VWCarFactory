@@ -62,7 +62,11 @@ public class GameManager : MonoBehaviour {
 		camControl = Camera.main.GetComponent<CameraControl> ();
 		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
-		ChangeBGFunc (0);
+		if (Scene1_UI.CarSeleted == "Tiguan") {
+			ChangeBGFunc (0);
+		} else {
+			ChangeBGFunc (2);
+		}
 		InitCarPart ();
 	}
 
@@ -86,7 +90,7 @@ public class GameManager : MonoBehaviour {
 		//car.transform.SetParent (CarControl.instance.transform);
 		//CarPartsSetting ();
 
-		//CarStudio.LoadCustum(Scene1_UI.CarSeleted + "save");
+		CarStudio.LoadCustum(Scene1_UI.CarSeleted + "save");
 	}
 
 //	public void CameraChange(bool inside)
@@ -124,6 +128,7 @@ public class GameManager : MonoBehaviour {
 			GameManager.instance.inCameraPosition = false;
 			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
 			CloseDoor ();
+			UIManager.instance.float3DButton.gameObject.SetActive (false);
 		}
 	}
 

@@ -12,6 +12,7 @@ public class PartAnimation : MonoBehaviour {
 	string nowBack;
 	bool inAnimation;
 	float epMoveValue;
+	public Vector2 backDoorValue;
 
 	void Start()
 	{
@@ -173,6 +174,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void EPLback(bool isRemove){
 		inAnimation = true;
+		UIManager.instance.float3DButton.gameObject.SetActive (false);
 		if (isRemove) {
 			transform.DOLocalMove (new Vector3 (transform.localPosition.x + 0.05f, transform.localPosition.y, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (EPLup);
 		} else {
@@ -194,7 +196,8 @@ public class PartAnimation : MonoBehaviour {
 
 	public void Backopne(){
 		inAnimation = true;
-		transform.DOLocalRotate (new Vector3 (transform.localRotation.x , transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (AnimationStartOver);
+		Debug.Log ("开启 " + gameObject.name);
+		transform.DOLocalRotate (new Vector3 (transform.localRotation.x + backDoorValue.x , transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (AnimationStartOver);
 		//后盖开启
 	}
 
@@ -202,7 +205,7 @@ public class PartAnimation : MonoBehaviour {
 		inAnimation = true;
 		Debug.Log ("关闭 " + gameObject.name);
 		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.x +12.0f, transform.localRotation.y, transform.localRotation.z));
-		transform.DOLocalRotate (new Vector3 (transform.localRotation.x -90.0f, transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (RemovePart);
+		transform.DOLocalRotate (new Vector3 (transform.localRotation.x  + backDoorValue.y, transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (RemovePart);
 		//后盖关闭
 	}
 
@@ -277,6 +280,7 @@ public class PartAnimation : MonoBehaviour {
 	void RemovePart()
 	{
 		AnimationStartOver ();
+		UIManager.instance.HideFloatWindow ();
 		CarStudio.RemovePart (thisName);
 	}
 }
