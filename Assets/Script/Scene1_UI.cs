@@ -154,6 +154,7 @@ public class Scene1_UI : MonoBehaviour
 
     public void SeletCar(string __name)
     {
+        CloseMenu();
         CarSeleted = __name;
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
         Loading.SetActive(true);

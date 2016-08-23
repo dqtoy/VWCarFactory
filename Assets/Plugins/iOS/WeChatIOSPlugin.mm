@@ -79,7 +79,7 @@ extern "C" void SetThumbImageWithTexture()
                                                          NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString* path = [documentsDirectory stringByAppendingPathComponent:
-                      @"/wechatshare.png" ];
+                      @"/wechatshareThumb.png" ];
     UIImage* image = [UIImage imageWithContentsOfFile:path];
     thumbimagechosen = image;
 }

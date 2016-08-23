@@ -100,11 +100,11 @@ public class AutoLayoutMainPanel : MonoBehaviour {
 
         tools.anchorMin = new Vector2(0.5f, 0);
         tools.anchorMax = new Vector2(0.5f, 0);
-        tools.anchoredPosition = new Vector2(0, 183.0699f);
+        tools.anchoredPosition = new Vector2(0, 191.1f);
         tools.sizeDelta = new Vector2(375.9f, 48.4f);
 
-        meunButtons.sizeDelta = new Vector2(150, 330);
-        meunButtons.anchoredPosition = new Vector2(0, -206);
+        meunButtons.sizeDelta = new Vector2(150, 455);
+        meunButtons.anchoredPosition = new Vector2(0, -268.06f);
 
         CompanyProfile.sizeDelta = new Vector2(800, 0);
         CompanyProfile.anchoredPosition = new Vector2(75, 0);
