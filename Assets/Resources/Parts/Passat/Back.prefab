@@ -21,6 +21,8 @@ GameObject:
   - 4: {fileID: 4000014067991664}
   - 33: {fileID: 33000011121051196}
   - 23: {fileID: 23000013266364890}
+  - 114: {fileID: 114000012781256106}
+  - 114: {fileID: 114000013628632936}
   m_Layer: 0
   m_Name: Back
   m_TagString: Untagged
@@ -77,3 +79,29 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010811092516}
   m_Mesh: {fileID: 4300022, guid: dc3fc666fb19b40e1a41c3eb5bc63b81, type: 3}
+--- !u!114 &114000012781256106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010811092516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b1e0aaf8a8f459e977a9a7685b0cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisName: "\u540E\u76D6\u5F00\u542F"
+  isDoor: 0
+  isLeft: 0
+  backDoorValue: {x: 90, y: 0}
+--- !u!114 &114000013628632936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010811092516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39f78ffbb8be4dd48881c7006e5b997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

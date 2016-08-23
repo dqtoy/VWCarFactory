@@ -36,6 +36,8 @@ GameObject:
   - 4: {fileID: 4000010867393488}
   - 33: {fileID: 33000010884631322}
   - 23: {fileID: 23000012537127442}
+  - 114: {fileID: 114000013199687136}
+  - 114: {fileID: 114000010522929756}
   m_Layer: 0
   m_Name: Back(open)
   m_TagString: Untagged
@@ -106,3 +108,29 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012164745944}
   m_Mesh: {fileID: 4300022, guid: dc3fc666fb19b40e1a41c3eb5bc63b81, type: 3}
+--- !u!114 &114000010522929756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012164745944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39f78ffbb8be4dd48881c7006e5b997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114000013199687136
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012164745944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b1e0aaf8a8f459e977a9a7685b0cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisName: "\u540E\u76D6\u5F00\u542F"
+  isDoor: 0
+  isLeft: 0
+  backDoorValue: {x: 90, y: 0}
