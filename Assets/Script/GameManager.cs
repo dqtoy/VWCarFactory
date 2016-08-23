@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour {
 		instance = this;
 		InitData ();
 		InitialCar ();
+		InitCarPart ();
+		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 	}
 
 	// Use this for initialization
@@ -67,7 +69,7 @@ public class GameManager : MonoBehaviour {
 		} else {
 			ChangeBGFunc (2);
 		}
-		InitCarPart ();
+
 	}
 
 	void InitData()
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour {
 		//CarPartsSetting ();
 
 		CarStudio.LoadCustum(Scene1_UI.CarSeleted + "save");
+
 	}
 
 //	public void CameraChange(bool inside)

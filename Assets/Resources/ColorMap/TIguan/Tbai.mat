@@ -90,7 +90,7 @@ Material:
     - first:
         name: _ReflectionMap
       second:
-        m_Texture: {fileID: 8900000, guid: 593fa22df313a443cba4c080134c846c, type: 2}
+        m_Texture: {fileID: 8900000, guid: 6a8c03a2b29984d2492ee24b9a776bc2, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
