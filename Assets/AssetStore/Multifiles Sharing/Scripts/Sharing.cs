@@ -254,6 +254,13 @@ public class Sharing : MonoBehaviour
 
 	public void OnShare ()
 	{
+        
+
+        StartCoroutine(OnShareCoroutine());
+	}
+	public IEnumerator OnShareCoroutine ()
+	{
+        yield return new WaitForEndOfFrame();
         if (images.Count > 1)
         {
             images.Clear();
@@ -261,6 +268,7 @@ public class Sharing : MonoBehaviour
         if (images.Count == 1)
         {
             images[0].ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+            images[0].Apply();
         }
         else
         {
@@ -269,12 +277,7 @@ public class Sharing : MonoBehaviour
             _screenshot.Apply();
             images.Add(_screenshot);
         }
-
-        StartCoroutine(OnShareCoroutine());
-	}
-	public IEnumerator OnShareCoroutine ()
-	{
-		Debug.Log ("Share");
+        //Debug.Log ("Share");
 		filesPathsAll = new List<string>();
 		filesPathsAll.AddRange(imgPath);
 		foreach (var image in images)

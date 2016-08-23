@@ -75,7 +75,7 @@ public class WechatPluginIOS : MonoBehaviour {
 	public static void _SetThumbImageWithTexture(Texture2D imageData)
 	{
 		byte[] imageArray = imageData.EncodeToPNG();
-		File.WriteAllBytes (Application.persistentDataPath + "/wechatshare.png", imageArray);
+		File.WriteAllBytes (Application.persistentDataPath + "/wechatshareThumb.png", imageArray);
 		SetThumbImageWithTexture ();
 	}
 
