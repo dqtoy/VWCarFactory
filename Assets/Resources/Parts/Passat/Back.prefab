@@ -25,7 +25,7 @@ GameObject:
   - 114: {fileID: 114000013628632936}
   m_Layer: 0
   m_Name: Back
-  m_TagString: Untagged
+  m_TagString: AnimPart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010811092516}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0000000019073485, y: 1.4257851, z: 0.06780926}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4257853, z: 0.067809224}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -78,7 +78,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010811092516}
-  m_Mesh: {fileID: 4300022, guid: dc3fc666fb19b40e1a41c3eb5bc63b81, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 92e43ab469a7a4c35914806d7ed84cb2, type: 3}
 --- !u!114 &114000012781256106
 MonoBehaviour:
   m_ObjectHideFlags: 1
