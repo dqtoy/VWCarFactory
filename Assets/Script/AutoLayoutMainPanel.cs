@@ -18,7 +18,7 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         int gcd = GCD(width, height);
         width = width / gcd;
         height = height / gcd;
-        SixteenNine();
+        //SixteenNine();
 #if UNITY_IOS && !UNITY_EDITOR
         if (width==4&& height == 3)
         {
@@ -103,8 +103,12 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         tools.anchoredPosition = new Vector2(0, 191.1f);
         tools.sizeDelta = new Vector2(375.9f, 48.4f);
 
-        meunButtons.sizeDelta = new Vector2(150, 455);
-        meunButtons.anchoredPosition = new Vector2(0, -268.06f);
+        for (int i = 0; i < sceneUI.MenuButtons.Length; i++)
+        {
+            sceneUI.MenuButtons[i].transform.Find("buttonIconAndName").GetComponent<RectTransform>().sizeDelta = new Vector2(62, 62);
+        }
+        //meunButtons.sizeDelta = new Vector2(150, 267.5f);
+        //meunButtons.anchoredPosition = new Vector2(0, -174.75f);
 
         CompanyProfile.sizeDelta = new Vector2(800, 0);
         CompanyProfile.anchoredPosition = new Vector2(75, 0);

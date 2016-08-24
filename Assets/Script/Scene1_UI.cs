@@ -92,13 +92,13 @@ public class Scene1_UI : MonoBehaviour
         for (int i = 0; i < MenuButtons.Length; i++)
         {
             MenuButtons[i].color = white;
-            MenuButtons[i].transform.Find("Image/Text").GetComponent<Text>().color = gray;
-            MenuButtons[i].transform.Find("Image/icon").GetComponent<Image>().color = gray;
+            MenuButtons[i].transform.Find("buttonIconAndName/Text").GetComponent<Text>().color = gray;
+            MenuButtons[i].transform.Find("buttonIconAndName/icon").GetComponent<Image>().color = gray;
 
         }
         MenuButtons[__index].color = light_gray;
-        MenuButtons[__index].transform.FindChild("Image/Text").GetComponent<Text>().color = blue;
-        MenuButtons[__index].transform.FindChild("Image/icon").GetComponent<Image>().color = blue;
+        MenuButtons[__index].transform.FindChild("buttonIconAndName/Text").GetComponent<Text>().color = blue;
+        MenuButtons[__index].transform.FindChild("buttonIconAndName/icon").GetComponent<Image>().color = blue;
         CloseMenu();
         for (int i = 0; i < viewports.Length; i++)
         {

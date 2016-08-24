@@ -9,7 +9,7 @@ public class AutoLayout : MonoBehaviour {
     {
         GridLayoutGroup grid = GetComponent<GridLayoutGroup>();
         RectTransform rect = GetComponent<RectTransform>();
-        grid.cellSize = new Vector2(150, rect.rect.height / 5.29f);
+        grid.cellSize = new Vector2(150, rect.rect.height / 6);
 
     }
 	
