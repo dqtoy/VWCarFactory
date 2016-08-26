@@ -31,7 +31,6 @@ public class UIManager : MonoBehaviour {
 	public GameObject samplePhotoContent;
 	public GameObject sampleVideoWindow;
 	public GameObject shareButtonWindow;
-	public MediaPlayerCtrl videoContent;
 	List<GameObject> samplePhotoList;
 	public GameObject floatWindow;
 	public Vector2 floatWindowMoveX;
@@ -41,6 +40,10 @@ public class UIManager : MonoBehaviour {
 	public GameObject floatBackButton;
 
 	public IButtonInfo nowSelectedButton;
+	public MediaPlayerCtrl videoContent;
+	public RawImage videoFrame;
+	int m_iOrgWidth = 0;
+	int m_iOrgHeight = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -380,6 +383,49 @@ public class UIManager : MonoBehaviour {
 			float3DButton.gameObject.SetActive (false);
 		}
 		floatWindow.transform.DOLocalMoveX (floatWindowMoveX.x, 0.5f).SetEase (Ease.OutExpo);
+	}
+
+	public void InitSampleVideo(string url)
+	{
+		videoContent.m_strFileName = url;
+	}
+
+	public void PlaySampleVideo()
+	{
+		if (GameManager.instance.videoIsPlaying) {
+			videoContent.Stop ();
+		} else {
+			videoContent.Play ();
+		}
+		GameManager.instance.videoIsPlaying = !GameManager.instance.videoIsPlaying;
+	}
+
+	public void VideoSoundChange()
+	{
+		if (GameManager.instance.videoIsSoundOff) {
+			videoContent.SetVolume (1.0f);
+		} else {
+			videoContent.SetVolume (0);
+		}
+		GameManager.instance.videoIsSoundOff = !GameManager.instance.videoIsSoundOff;
+	}
+
+	public void VideoFullScreen()
+	{
+		//videoContent.m_bFullScreen = true;
+		FullScreenResize ();
+	}
+
+	void FullScreenResize()
+	{
+		m_iOrgWidth = Screen.width;
+		m_iOrgHeight = Screen.height;
+
+		float fRatio = (float) m_iOrgHeight / (float)m_iOrgWidth;
+
+		videoFrame.transform.localScale = new Vector3( 20.0f / fRatio, 20.0f / fRatio, 1.0f);
+
+		videoContent.Resize();
 	}
 
 	public void SaveImage()

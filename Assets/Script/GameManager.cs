@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour {
 	public bool epDown;
 	public Material[] carBodyMats;
 	public Material[] glassMats;
+	public bool videoIsPlaying;
+	public bool videoIsSoundOff;
 
 	void Awake()
 	{
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.Log (gameObject);
+		UIManager.instance.videoContent.Stop ();
 		camControl = Camera.main.GetComponent<CameraControl> ();
 		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
@@ -245,4 +248,6 @@ public class GameManager : MonoBehaviour {
 			CarStudio.RemovePart ("后盖开启");
 		}
 	}
+
+
 }
