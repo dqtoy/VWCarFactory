@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour {
 	public bool videoIsPlaying;
 	public bool videoIsSoundOff;
 
+	public GameObject[] iphones;
+
 	void Awake()
 	{
 		instance = this;
@@ -69,10 +71,11 @@ public class GameManager : MonoBehaviour {
 		UIManager.instance.ChangeScrollBar (false);
 		if (Scene1_UI.CarSeleted == "Tiguan") {
 			ChangeBGFunc (0);
+			selectedCarID = 0;
 		} else {
 			ChangeBGFunc (2);
+			selectedCarID = 1;
 		}
-
 	}
 
 	void InitData()
@@ -249,5 +252,20 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void ShowIphone(bool bo,int id)
+	{
+		iphones [id].SetActive (bo);
+		if (bo) {
+			iphones [id].transform.DOLocalMoveX ( - 0.065f, 0.5f).SetEase (Ease.OutQuad);
+		} else {
+			iphones [id].transform.DOLocalMoveX (0, 0.5f).SetEase (Ease.OutQuad).OnComplete(iphoneHideComplete);
+		}
+	}
 
+	public void iphoneHideComplete()
+	{
+		foreach (GameObject item in iphones) {
+			item.SetActive (false);
+		}
+	}
 }
