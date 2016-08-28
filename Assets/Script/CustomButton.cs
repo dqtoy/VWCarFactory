@@ -112,7 +112,7 @@ public class CustomButton : MonoBehaviour {
 					if (thisButton.Name != "电动踏板") {
 						GameManager.instance.CloseDoor ();
 					}
-					if (descriptionButton.Type == null) {
+					if (descriptionButton.Type == null){// || GameManager.instance.inCameraPosition) {
 						ChangePart ();
 					} else {
 						CameraGoto (int.Parse(descriptionButton.Type));
@@ -152,6 +152,12 @@ public class CustomButton : MonoBehaviour {
 					UIManager.instance.float3DButton.gameObject.SetActive (false);
 					CarStudio.RemovePart (thisButton.Name);
 				}
+
+				if (thisButton.Name == "导航仪") {
+					GameManager.instance.ShowIphone (false, GameManager.instance.selectedCarID);
+				} else {
+					GameManager.instance.iphoneHideComplete ();
+				}
 //				else if (thisButton.Name == "电动踏板" && !GameManager.instance.epDown) {
 //					CarStudio.RemovePart (thisButton.Name);
 //				}
@@ -159,6 +165,13 @@ public class CustomButton : MonoBehaviour {
 				CarStudio.AddPart (thisButton.Name);
 				StartSettingAnimation ("_play");
 				ShowFloatButton ();
+				if (thisButton.Name == "导航仪") {
+					GameManager.instance.ShowIphone (true, GameManager.instance.selectedCarID);
+				}
+				else
+				{
+					GameManager.instance.iphoneHideComplete ();
+				}
 			}
 		}
 		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");

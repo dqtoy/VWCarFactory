@@ -54,31 +54,67 @@ public class AppData
     {
         try
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            
             m_DataPath = Application.streamingAssetsPath + "/Data";
-            string _dataText = File.ReadAllText(m_DataPath + "/MainData.json");
+            WWW _www = new WWW(m_DataPath + "/MainData.json");
+            while (!_www.isDone)
+            {
+                continue;
+            }
+            if (_www.error != null)
+                Debug.Log(_www.error);
+            string _dataText = _www.text;
             m_MainJsonData = JsonMapper.ToObject<MainJsonData>(_dataText);
             m_carsData = new Dictionary<string, CarData>();
             foreach (var _carName in CarList)
             {
                 m_carsData.Add(_carName, GetCarDataFromFile(_carName));
             }
+            return;
+
+#endif
+
+            m_DataPath = Application.streamingAssetsPath + "/Data";
+            string _dataText1 = File.ReadAllText(m_DataPath + "/MainData.json");
+            m_MainJsonData = JsonMapper.ToObject<MainJsonData>(_dataText1);
+            m_carsData = new Dictionary<string, CarData>();
+            foreach (var _carName in CarList)
+            {
+                m_carsData.Add(_carName, GetCarDataFromFile(_carName));
+            }
+
+
         }
         catch (System.Exception ex)
         {
-            Debug.Log("错误：" + ex.Message + "/r/n" + ex.StackTrace);
+            Debug.Log("错误：" + ex.Message + "\r\n" + ex.StackTrace);
         }
 
     }
 
 
-    #region 私有函数
+#region 私有函数
     static CarData GetCarDataFromFile(string __name)
     {
         CarData _carData = new CarData();
 
         try
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+
+            WWW _www = new WWW(m_DataPath + "/" + __name + ".json");
+            while (!_www.isDone)
+            {
+                continue;
+            }
+            if (_www.error != null)
+                Debug.Log(_www.error);
+            _carData = JsonMapper.ToObject<CarData>(_www.text);
+#else
+
             _carData = JsonMapper.ToObject<CarData>(File.ReadAllText(m_DataPath + "/" + __name + ".json"));
+#endif
         }
         catch (System.Exception ex)
         {
@@ -88,9 +124,9 @@ public class AppData
         return _carData;
     }
 
-    #endregion
+#endregion
 
-    #region 公有函数
+#region 公有函数
     ///// <summary>
     ///// (弃用！)获取指定车型的所有案例
     ///// </summary>
@@ -396,7 +432,7 @@ public class AppData
 		return GetTemplateCarData(_carData.CNG);
 	} 
 
-    #endregion
+#endregion
 }
 
 #region 数据

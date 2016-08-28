@@ -38,12 +38,18 @@ public class UIFrom3D : MonoBehaviour {
 		if (thisTarget) {
 			transform.localPosition = WorldToUI (Camera.main, thisTarget.transform.position);
 		}
-
 	}
 
 	public void ClickThisButton()
 	{
-		Texture2D img = Resources.Load (AppData.GetSamples (buttonInfo.Description).Icon) as Texture2D;
-		UIManager.instance.ShowFloatWindow (img, AppData.GetSamples (buttonInfo.Description).Description);
+		if (buttonInfo.Name == "后盖开启" && Scene1_UI.CarSeleted == "Tiguan") {
+			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+			foreach (GameObject obj in parts) {
+				obj.GetComponent<PartAnimation> ().SettingAnimation (buttonInfo.Name + "_playback");
+			}
+		} else {
+			Texture2D img = Resources.Load (AppData.GetSamples (buttonInfo.Description).Icon) as Texture2D;
+			UIManager.instance.ShowFloatWindow (img, AppData.GetSamples (buttonInfo.Description).Description);
+		}
 	}
 }

@@ -13,6 +13,7 @@
     "BodyTexture":"",
     "Parts":[
         "white",
+		"车顶",
         "副反光镜"
     ]
 }

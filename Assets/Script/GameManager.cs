@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour {
 	public bool epDown;
 	public Material[] carBodyMats;
 	public Material[] glassMats;
+	public bool videoIsPlaying;
+	public bool videoIsSoundOff;
+
+	public GameObject[] iphones;
 
 	void Awake()
 	{
@@ -61,15 +65,17 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.Log (gameObject);
+		UIManager.instance.videoContent.Stop ();
 		camControl = Camera.main.GetComponent<CameraControl> ();
 		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
 		if (Scene1_UI.CarSeleted == "Tiguan") {
 			ChangeBGFunc (0);
+			selectedCarID = 0;
 		} else {
 			ChangeBGFunc (2);
+			selectedCarID = 1;
 		}
-
 	}
 
 	void InitData()
@@ -243,6 +249,23 @@ public class GameManager : MonoBehaviour {
 //		}
 		if (CarStudio.Exists("后盖开启")) {
 			CarStudio.RemovePart ("后盖开启");
+		}
+	}
+
+	public void ShowIphone(bool bo,int id)
+	{
+		iphones [id].SetActive (bo);
+		if (bo) {
+			iphones [id].transform.DOLocalMoveX ( - 0.065f, 0.5f).SetEase (Ease.OutQuad);
+		} else {
+			iphones [id].transform.DOLocalMoveX (0, 0.5f).SetEase (Ease.OutQuad).OnComplete(iphoneHideComplete);
+		}
+	}
+
+	public void iphoneHideComplete()
+	{
+		foreach (GameObject item in iphones) {
+			item.SetActive (false);
 		}
 	}
 }
