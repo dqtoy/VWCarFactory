@@ -9,7 +9,7 @@ public class OutLog : MonoBehaviour
     static List<string> mLines = new List<string>();
     static List<string> mWriteTxt = new List<string>();
     private string outpath;
-    void Start()
+    void Awake()
     {
         DontDestroyOnLoad(gameObject);
         //Application.persistentDataPath Unity中只有这个路径是既可以读也可以写的。
@@ -21,7 +21,12 @@ public class OutLog : MonoBehaviour
             File.Delete(outpath);
         }
         //在这里做一个Log的监听
+        //Application.SetStackTraceLogType(LogType.Log | LogType.Error | LogType.Assert | LogType.Exception | LogType.Warning, StackTraceLogType.Full);
+        //Application.SetStackTraceLogType(LogType.Log , StackTraceLogType.Full);
+
+        //Application.logMessageReceived += HandleLog;
         Application.RegisterLogCallback(HandleLog);
+        Application.LoadLevel(1);
     }
 
     void Update()
@@ -43,8 +48,9 @@ public class OutLog : MonoBehaviour
 
     void HandleLog(string logString, string stackTrace, LogType type)
     {
-        mWriteTxt.Add(logString);
-        mWriteTxt.Add(stackTrace);
+        mWriteTxt.Add(type + " :" + "-------------");
+        mWriteTxt.Add(logString + "\r\n");
+        mWriteTxt.Add(stackTrace + "\r\n" + "\r\n");
 
         if (type == LogType.Error || type == LogType.Exception)
         {

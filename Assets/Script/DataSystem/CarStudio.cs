@@ -45,33 +45,33 @@ public class CarStudio
         CarPart _part = AppData.GetCarPartData(Car.CarBaseModle, __partName);
         if (_part == null)
         {
-            Debug.Log("找不到指定组件");
+            Debug.LogError("找不到指定组件");
             return false;
         }
         if (!car)
         {
-            Debug.Log("数据Car不能为空");
+            Debug.LogError("数据Car不能为空");
             return false;
         }
         if (AppData.GetCarDataByName(car.CarBaseModle).CustumParts.Exists((_temp) => _temp.Name == _part.Name))
         {
             if (car.Parts.Exists((_s) => _s == _part.Name))
             {
-                Debug.Log("配件已存在");
+                Debug.LogError("配件已存在");
                 return false;
             }
             else
             {
-				//if (__partName != "电动踏板" && __partName != "后盖开启") {
-					car.Parts.Add(_part.Name);
-					InitObject(_part);
-				//}
+                //if (__partName != "电动踏板" && __partName != "后盖开启") {
+                car.Parts.Add(_part.Name);
+                InitObject(_part);
+                //}
                 return true;
             }
         }
         else
         {
-            Debug.Log("该车型不存在" + _part.Name + "的组件");
+            Debug.LogError("该车型不存在" + _part.Name + "的组件");
             return false;
         }
 
@@ -87,12 +87,12 @@ public class CarStudio
         CarPart _part = AppData.GetCarPartData(car.CarBaseModle, __partName);
         if (_part == null)
         {
-            Debug.Log("找不到指定组件");
+            Debug.LogError("找不到指定组件");
             return false;
         }
         if (!car)
         {
-            Debug.Log("数据Car不能为空");
+            Debug.LogError("数据Car不能为空");
             return false;
         }
         if (car.Parts.Exists((_s) =>
@@ -110,7 +110,7 @@ public class CarStudio
         }
         else
         {
-            Debug.Log("指定组件不存在");
+            Debug.LogError("指定组件不存在");
             return false;
         }
     }
@@ -155,7 +155,7 @@ public class CarStudio
     {
         if (string.IsNullOrEmpty(car.CarBaseModle))
         {
-            Debug.Log(car.CarBaseModle + "不能为空");
+            Debug.LogError(car.CarBaseModle + "不能为空");
         }
 
         car.Name = __name;
@@ -179,7 +179,7 @@ public class CarStudio
         }
         else
         {
-            Debug.Log("指定自定义车数据不存在");
+            Debug.LogError("指定自定义车数据不存在");
         }
     }
 
@@ -190,8 +190,31 @@ public class CarStudio
     /// <returns></returns>
     public static void LoadTemplate(string __TemplateCarName)
     {
-        
+
         string _fileName = Application.streamingAssetsPath + "/Data/Template/" + __TemplateCarName + ".json";
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+
+            WWW _www = new WWW(_fileName);
+            while (!_www.isDone)
+            {
+                continue;
+            }
+        if (_www.error != null)
+        {
+            Debug.Log(_www.error);
+            car = new CustumCar(car.CarBaseModle);
+            InitCar();
+        
+        }
+        else
+        {
+            car = LitJson.JsonMapper.ToObject<CustumCar>(_www.text);
+            InitCar();
+
+        }
+        return;
+#endif
         if (File.Exists(_fileName))
         {
             car = LitJson.JsonMapper.ToObject<CustumCar>(File.ReadAllText(_fileName));
@@ -208,14 +231,34 @@ public class CarStudio
     public static CustumCar GetTemplate(string __Name)
     {
         string _fileName = Application.streamingAssetsPath + "/Data/Template/" + __Name + ".json";
-        if (File.Exists(_fileName))
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+
+            WWW _www = new WWW(_fileName);
+            while (!_www.isDone)
+            {
+                continue;
+            }
+        if (_www.error != null)
         {
-            CustumCar _car = LitJson.JsonMapper.ToObject<CustumCar>(File.ReadAllText(_fileName));
-            return _car;
+            Debug.Log(_www.error);
         }
         else
         {
-            
+            CustumCar _car = LitJson.JsonMapper.ToObject<CustumCar>(_www.text);
+            return _car;
+        }
+#endif
+
+
+        if (File.Exists(_fileName))
+        {
+            CustumCar _car1 = LitJson.JsonMapper.ToObject<CustumCar>(File.ReadAllText(_fileName));
+            return _car1;
+        }
+        else
+        {
+
             throw new System.Exception("指定模板数据不存在");
         }
 
@@ -281,7 +324,7 @@ public class CarStudio
     //            _carBody.GetComponent<Renderer>().material.mainTexture = _tex;
     //        }
 
-            
+
     //    }
     //}
 
@@ -310,7 +353,7 @@ public class CarStudio
             else
             {
                 partObjects.Add(__part.Name, new List<GameObject>());
-                
+
                 for (int i = 0; i < __part.Assets.Count; i++)
                 {
                     Object _tempAsset = Resources.Load(__part.Assets[i].AssetPath);
@@ -326,11 +369,14 @@ public class CarStudio
                                 {
                                     oldPartObjects.Add(__part.Assets[i].Target, objects[__part.Assets[i].Target]);
                                     objects[__part.Assets[i].Target].SetActive(false);
-									if (Scene1_UI.CarSeleted == "Tiguan") {
-										_obj.transform.parent = objects[__part.Assets[i].Target].transform.parent;
-									} else {
-										_obj.transform.SetParent(objects[__part.Assets[i].Target].transform.parent,false);
-									}
+                                    if (Scene1_UI.CarSeleted == "Tiguan")
+                                    {
+                                        _obj.transform.parent = objects[__part.Assets[i].Target].transform.parent;
+                                    }
+                                    else
+                                    {
+                                        _obj.transform.SetParent(objects[__part.Assets[i].Target].transform.parent, false);
+                                    }
                                 }
                                 else
                                 {
@@ -353,7 +399,7 @@ public class CarStudio
                             }
                         }
                     }
-                    else if(_tempAsset is Material)//如果资源是材质
+                    else if (_tempAsset is Material)//如果资源是材质
                     {
                         if (!string.IsNullOrEmpty(__part.Assets[i].Target))
                         {
@@ -418,7 +464,7 @@ public class CarStudio
                     }
                 }
             }
-            
+
 
 
         }
@@ -451,7 +497,7 @@ public class CarStudio
                 }
                 partObjects.Remove(__part.Name);
             }
-            
+
             for (int i = 0; i < __part.Assets.Count; i++)
             {
                 if (string.IsNullOrEmpty(__part.Assets[i].Target))
@@ -484,7 +530,7 @@ public class CarStudio
 
                 }
             }
-            
+
         }
     }
 
@@ -493,10 +539,10 @@ public class CarStudio
         if (IsInitObject)
         {
             DeleteAllModel();
-			Debug.Log ("car.CarBaseModle " + car.CarBaseModle);
+            Debug.Log("car.CarBaseModle " + car.CarBaseModle);
             CarData _data = AppData.GetCarDataByName(car.CarBaseModle);
             InitObject(AppData.GetCarPartData(car.CarBaseModle, carBodyName));
-            
+
             for (int i = 0; i < car.Parts.Count; i++)
             {
                 if (car.Parts[i] == carBodyName)
@@ -550,7 +596,7 @@ public class CarStudio
 /// <summary>
 /// 自定义车
 /// </summary>
-public class CustumCar:IButtonInfo
+public class CustumCar : IButtonInfo
 {
     /// <summary>
     /// 文件名字
