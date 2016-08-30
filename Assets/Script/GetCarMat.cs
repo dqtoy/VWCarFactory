@@ -9,9 +9,12 @@ public class GetCarMat : MonoBehaviour {
 //		Debug.Log ("bodymat " + body);
 //		if (body != null) {
 //			GetComponent<Renderer> ().sharedMaterial = body;
-//		} 
-		StartCoroutine (RegetMat ());
+//		}
+	}
 
+	void OnEnable()
+	{
+		StartCoroutine (RegetMat ());
 	}
 
 	IEnumerator RegetMat()

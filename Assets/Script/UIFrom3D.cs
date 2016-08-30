@@ -6,7 +6,7 @@ public class UIFrom3D : MonoBehaviour {
 
 	public GameObject thisTarget;
 	public string targetName;
-	IButtonInfo buttonInfo;
+	public IButtonInfo buttonInfo;
 
 	// Use this for initialization
 //	void Start () {
@@ -37,19 +37,46 @@ public class UIFrom3D : MonoBehaviour {
 	void Update () {
 		if (thisTarget) {
 			transform.localPosition = WorldToUI (Camera.main, thisTarget.transform.position);
+		} else {
+			SetThisTarget (GameObject.Find(AppData.GetSamples (buttonInfo.Description).Asset),buttonInfo);
 		}
 	}
 
 	public void ClickThisButton()
 	{
-		if (buttonInfo.Name == "后盖开启" && Scene1_UI.CarSeleted == "Tiguan") {
-			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
-			foreach (GameObject obj in parts) {
-				obj.GetComponent<PartAnimation> ().SettingAnimation (buttonInfo.Name + "_playback");
+		if (GameManager.instance.inAnimation == false) {
+			if (buttonInfo.Name == "后盖开启" && Scene1_UI.CarSeleted == "Tiguan") {
+				
+				//Debug.Log ("CarStudio.Exists (buttonInfo.Name) " + CarStudio.Exists (buttonInfo.Name));
+
+
+				Texture2D img;
+				if (CarStudio.Exists (buttonInfo.Name)) {
+					img = Resources.Load (buttonInfo.Icon) as Texture2D;
+					Debug.Log ("CarStudio.Exist");
+					AnimationPlay ("_playback");
+				} else {
+					img = Resources.Load (buttonInfo.Icon + "b") as Texture2D;
+					Debug.Log ("CarStudio. not Exist");
+					CarStudio.AddPart (buttonInfo.Name);
+					AnimationPlay ("_play");
+				}
+				GameManager.instance.nowCustomButton.thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+
+
+				//CarStudio.RemovePart (buttonInfo.Name);
+			} else {
+				Texture2D img = Resources.Load (AppData.GetSamples (buttonInfo.Description).Icon) as Texture2D;
+				UIManager.instance.ShowFloatWindow (img, AppData.GetSamples (buttonInfo.Description).Description);
 			}
-		} else {
-			Texture2D img = Resources.Load (AppData.GetSamples (buttonInfo.Description).Icon) as Texture2D;
-			UIManager.instance.ShowFloatWindow (img, AppData.GetSamples (buttonInfo.Description).Description);
+		}
+	}
+
+	public void AnimationPlay(string str)
+	{
+		GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+		foreach (GameObject obj in parts) {
+			obj.GetComponent<PartAnimation> ().SettingAnimation (buttonInfo.Name + str);
 		}
 	}
 }
