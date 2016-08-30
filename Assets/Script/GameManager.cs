@@ -50,8 +50,10 @@ public class GameManager : MonoBehaviour {
 	public Material[] glassMats;
 	public bool videoIsPlaying;
 	public bool videoIsSoundOff;
+	public bool inAnimation;
 
 	public GameObject[] iphones;
+	public CustomButton nowCustomButton;
 
 	void Awake()
 	{
@@ -98,7 +100,7 @@ public class GameManager : MonoBehaviour {
 		//car.transform.SetParent (CarControl.instance.transform);
 		//CarPartsSetting ();
 
-		CarStudio.LoadCustum(Scene1_UI.CarSeleted + "save");
+		//CarStudio.LoadCustum(Scene1_UI.CarSeleted + "save");
 
 	}
 
@@ -137,6 +139,9 @@ public class GameManager : MonoBehaviour {
 			GameManager.instance.inCameraPosition = false;
 			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
 			CloseDoor ();
+			CloseBackDoor ();
+			ResetAnimationObj ();
+
 			UIManager.instance.float3DButton.gameObject.SetActive (false);
 		}
 	}
@@ -266,6 +271,24 @@ public class GameManager : MonoBehaviour {
 	{
 		foreach (GameObject item in iphones) {
 			item.SetActive (false);
+		}
+	}
+
+	public void CloseBackDoor()
+	{
+		Texture2D img;
+		if (CarStudio.Exists ("后盖开启")) {
+			CarStudio.RemovePart ("后盖开启");
+			img = Resources.Load (nowCustomButton.thisButton.Icon) as Texture2D;
+			GameManager.instance.nowCustomButton.thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+		}
+	}
+
+	public void ResetAnimationObj()
+	{
+		GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+		foreach (GameObject obj in parts) {
+			obj.GetComponent<PartAnimation> ().inAnimation = false;
 		}
 	}
 }

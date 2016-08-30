@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour {
 	public IButtonInfo nowSelectedButton;
 	public MediaPlayerCtrl videoContent;
 	public RawImage videoFrame;
+
+	public bool inSpecialButton;
 	int m_iOrgWidth = 0;
 	int m_iOrgHeight = 0;
 
@@ -79,10 +81,12 @@ public class UIManager : MonoBehaviour {
 	public void ChangeTexture()
 	{
 		//GameManager.instance.CameraChange (false);
-		ChangeButtonList (3,AppData.GetPaintingTemplateByName(CarStudio.Car.CarBaseModle));
-		TypeButtonChange (3);
-		if (!isBarOpen) {
-			ChangeScrollBar (true);
+		if (GameManager.instance.inAnimation == false) {
+			ChangeButtonList (3,AppData.GetPaintingTemplateByName(CarStudio.Car.CarBaseModle));
+			TypeButtonChange (3);
+			if (!isBarOpen) {
+				ChangeScrollBar (true);
+			}
 		}
 	}
 
@@ -90,33 +94,40 @@ public class UIManager : MonoBehaviour {
 	{
 		//GameManager.instance.CameraChange (false);
 		//CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
-		ChangeButtonList (0,AppData.GetCarAllParts(CarStudio.Car.CarBaseModle));
-		TypeButtonChange (0);
-		if (!isBarOpen) {
-			ChangeScrollBar (true);
+		if (GameManager.instance.inAnimation == false) {
+			ChangeButtonList (0, AppData.GetCarAllParts (CarStudio.Car.CarBaseModle));
+			TypeButtonChange (0);
+			ResetPartButtonColor ();
+			if (!isBarOpen) {
+				ChangeScrollBar (true);
+			}
 		}
-		CarStudio.CloseStudio ();
-		CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
+//		CarStudio.CloseStudio ();
+//		CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
 	}
 
 	public void ChangeElecDevice()
 	{
 		//GameManager.instance.CameraChange (true);
-		ChangeButtonCNG (2);
-		TypeButtonChange (2);
-		//ChangeButtonList (2,AppData.GetCarPartsByName(Scene1_UI.CarSeleted,"CNG"));
-		if (!isBarOpen) {
-			ChangeScrollBar (true);
+		if (GameManager.instance.inAnimation == false) {
+			ChangeButtonCNG (2);
+			TypeButtonChange (2);
+			//ChangeButtonList (2,AppData.GetCarPartsByName(Scene1_UI.CarSeleted,"CNG"));
+			if (!isBarOpen) {
+				ChangeScrollBar (true);
+			}
 		}
 	}
 
 	public void ChangeSpecialCar()
 	{
 		//GameManager.instance.CameraChange (false);
-		ChangeButtonList (1,AppData.GetSpecialTemplateCarList(CarStudio.Car.CarBaseModle));
-		TypeButtonChange (1);
-		if (!isBarOpen) {
-			ChangeScrollBar (true);
+		if (GameManager.instance.inAnimation == false) {
+			ChangeButtonList (1, AppData.GetSpecialTemplateCarList (CarStudio.Car.CarBaseModle));
+			TypeButtonChange (1);
+			if (!isBarOpen) {
+				ChangeScrollBar (true);
+			}
 		}
 	}
 
@@ -241,7 +252,7 @@ public class UIManager : MonoBehaviour {
 				//btn.SetID (j);
 			}
 		}
-		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,150.0f);
+		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,180.0f);
 	}
 
 	public void ResetContentSize(RectTransform content,int count,float eleSize)
@@ -426,6 +437,39 @@ public class UIManager : MonoBehaviour {
 		videoFrame.transform.localScale = new Vector3( 20.0f / fRatio, 20.0f / fRatio, 1.0f);
 
 		videoContent.Resize();
+	}
+
+	public void ResetButtonColor()
+	{
+		foreach (GameObject item in GameManager.instance.allButtonIcon) {
+			CustomButton btn = item.GetComponent<CustomButton> ();
+			if (btn != null) {
+				if ( btn.isTag == false ) {
+					Texture2D img = Resources.Load (btn.thisButton.Icon) as Texture2D;
+					btn.thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+				}
+			}
+		}
+	}
+
+	public void ResetPartButtonColor()
+	{
+		foreach (GameObject item in GameManager.instance.allButtonIcon) {
+			CustomButton btn = item.GetComponent<CustomButton> ();
+			if (btn != null) {
+				if ( btn.isTag == false ) {
+					Texture2D img = Resources.Load (btn.thisButton.Icon) as Texture2D;
+					btn.thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+
+					if (CarStudio.Exists (btn.thisButton.Name)) {
+						img = Resources.Load (btn.thisButton.Icon + "b") as Texture2D;
+					} else {
+						img = Resources.Load (btn.thisButton.Icon) as Texture2D;
+					}
+					btn.thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+				}
+			}
+		}
 	}
 
 	public void SaveImage()

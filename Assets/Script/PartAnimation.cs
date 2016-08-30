@@ -10,7 +10,7 @@ public class PartAnimation : MonoBehaviour {
 	Vector3 orgPosition;
 	Vector3 orgRotation;
 	string nowBack;
-	bool inAnimation;
+	public bool inAnimation;
 	float epMoveValue;
 	public Vector2 backDoorValue;
 
@@ -62,6 +62,13 @@ public class PartAnimation : MonoBehaviour {
 				EPRback (false);
 			}
 			//Debug.Log ("epBack");
+		}
+	}
+
+	public void BackDoorClose()
+	{
+		if (thisName == "后盖开启") {
+			Backclose ();
 		}
 	}
 
@@ -119,6 +126,7 @@ public class PartAnimation : MonoBehaviour {
 				}
 				break;
 			case "后盖开启":
+				
 				Backclose ();
 				break;
 			case "CNG":
@@ -136,6 +144,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void EPRdown(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		//transform.localPosition = new Vector3 (transform.localPosition.x - 0.05f, transform.localPosition.y + 0.05f, transform.localPosition.z);
 		transform.DOLocalMove (new Vector3 (transform.localPosition.x + 0.05f, transform.localPosition.y - 0.03f, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (EPRout);
 		//右踏板伸出
@@ -143,6 +152,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void EPRback(bool isRemove){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		if (isRemove) {
 			transform.DOLocalMove (new Vector3 (transform.localPosition.x - 0.05f, transform.localPosition.y, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (EPRup);
 		} else {
@@ -167,6 +177,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void EPLdown(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		//transform.localPosition = new Vector3 (transform.localPosition.x + 0.1f, transform.localPosition.y + 0.05f, transform.localPosition.z);
 		transform.DOLocalMove (new Vector3 (transform.localPosition.x - 0.05f, transform.localPosition.y - 0.03f, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (EPLout);
 		//左踏板伸出
@@ -174,6 +185,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void EPLback(bool isRemove){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		UIManager.instance.float3DButton.gameObject.SetActive (false);
 		if (isRemove) {
 			transform.DOLocalMove (new Vector3 (transform.localPosition.x + 0.05f, transform.localPosition.y, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (EPLup);
@@ -196,6 +208,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void Backopne(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		Debug.Log ("开启 " + gameObject.name);
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.x + backDoorValue.x , transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (AnimationStartOver);
 		//后盖开启
@@ -203,6 +216,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void Backclose(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		Debug.Log ("关闭 " + gameObject.name);
 		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.x +12.0f, transform.localRotation.y, transform.localRotation.z));
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.x  + backDoorValue.y, transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (RemovePart);
@@ -211,39 +225,50 @@ public class PartAnimation : MonoBehaviour {
 
 	public void CNGinstall(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		transform.DOMove(new Vector3(0,0,0),2.5f).SetEase (Ease.InOutExpo);
 		//CNG安装
 	}
 
 	public void CNGremove(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		transform.DOMove(new Vector3(0,0,-1.5f),2.5f).SetEase (Ease.InOutExpo);
 		//CNG移除
 	}
 
 	public void DoorLopen(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 70.0f), 3.0f).SetEase (Ease.OutExpo).OnComplete (AnimationStartOver);
 		//左门开启
 	}
 
 	public void DoorLclose(){
-		inAnimation = true;
-		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z + 70.0f));
-		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, -70.0f), 1.0f).SetEase (Ease.OutExpo).OnComplete (AnimationBackOver);
+		Debug.Log ("lclose " + transform.localRotation.z);
+		if (transform.localRotation.z < -0.3f) {
+			inAnimation = true;
+			GameManager.instance.inAnimation = true;
+			//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z + 70.0f));
+			transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, -70.0f), 1.0f).SetEase (Ease.OutExpo).OnComplete (AnimationBackOver);
+		}
 		//左门关闭
 	}
 
 	public void DoorRopen(){
 		inAnimation = true;
+		GameManager.instance.inAnimation = true;
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, -70.0f), 3.0f).SetEase (Ease.OutExpo).OnComplete (AnimationStartOver);
 		//右门开启
 	}
 
 	public void DoorRclose(){
-		inAnimation = true;
-		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z - 70.0f));
-		transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 70.0f), 1.0f).SetEase (Ease.OutExpo).OnComplete (AnimationBackOver);
+		if (transform.localRotation.z > 0.3f) {
+			inAnimation = true;
+			GameManager.instance.inAnimation = true;
+			//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z - 70.0f));
+			transform.DOLocalRotate (new Vector3 (transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, 70.0f), 1.0f).SetEase (Ease.OutExpo).OnComplete (AnimationBackOver);
+		}
 		//右门关闭
 	}
 
@@ -264,8 +289,8 @@ public class PartAnimation : MonoBehaviour {
 		if (isDoor) {
 			GameManager.instance.isDoorOpen = true;
 		}
-		Debug.Log ("startOver");
 		inAnimation = false;
+		GameManager.instance.inAnimation = false;
 	}
 
 	void AnimationBackOver()
@@ -275,12 +300,15 @@ public class PartAnimation : MonoBehaviour {
 			GameManager.instance.isDoorOpen = false;
 		}
 		inAnimation = false;
+		GameManager.instance.inAnimation = false;
 	}
 
 	void RemovePart()
 	{
 		AnimationStartOver ();
 		UIManager.instance.HideFloatWindow ();
-		CarStudio.RemovePart (thisName);
+		if (CarStudio.Exists (thisName)) {
+			CarStudio.RemovePart (thisName);
+		}
 	}
 }
