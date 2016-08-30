@@ -6,7 +6,7 @@ using UnityEngine.iOS;
 
 
 public class AutoLayoutMainPanel : MonoBehaviour {
-    public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link, about;
+    public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link, about, titl;
     public UnityEngine.UI.GridLayoutGroup grid;
     public Scene1_UI sceneUI;
 	// Use this for initialization
@@ -102,6 +102,8 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         tools.anchorMax = new Vector2(0.5f, 0);
         tools.anchoredPosition = new Vector2(0, 191.1f);
         tools.sizeDelta = new Vector2(375.9f, 48.4f);
+
+        titl.anchoredPosition = new Vector2(0, -26.62f);
 
         for (int i = 0; i < sceneUI.MenuButtons.Length; i++)
         {
