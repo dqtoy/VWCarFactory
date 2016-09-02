@@ -37,6 +37,8 @@ public class UIManager : MonoBehaviour {
 	public Image floatWindowImage;
 	public Text floatWindowText;
 	public UIFrom3D float3DButton;
+	public UIFrom3D[] CNGFloat3DButton;
+	public UIFrom3D[] CoachFloat3DButton;
 	public GameObject floatBackButton;
 
 	public IButtonInfo nowSelectedButton;
@@ -252,13 +254,13 @@ public class UIManager : MonoBehaviour {
 				//btn.SetID (j);
 			}
 		}
-		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,180.0f);
+		ResetContentSize (buttonBarContent.GetComponent<RectTransform>(),GameManager.instance.allButtonIcon.Count,227.0f);
 	}
 
 	public void ResetContentSize(RectTransform content,int count,float eleSize)
 	{
 		for (int i = 0; i < count; i++) {
-			content.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal,i * eleSize);
+			content.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal,i * eleSize - eleSize / 100 * (i*i*2));
 		}
 	}
 
@@ -272,6 +274,7 @@ public class UIManager : MonoBehaviour {
 			isBarOpen = false;
 			ChangeDescriptionButtons (false, false, false);
 		}
+		buttonBarContent.transform.localPosition = new Vector3 (0, buttonBarContent.transform.localPosition.y, buttonBarContent.transform.localPosition.z);
 	}
 
 	public void OnBarDragFinish()
@@ -375,20 +378,47 @@ public class UIManager : MonoBehaviour {
 		}
 		typeButtons[id].color =  new Color(typeButtons[id].color.r,typeButtons[id].color.g,typeButtons[id].color.b,1);
 		GameManager.instance.CameraGoBack ();
-
+		if (GameManager.instance.inCNG == true) {
+			GameManager.instance.inCNG = false;
+			ShowCNGFloatButton (false);
+			CarStudio.CloseStudio ();
+			CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
+		}
+		if (GameManager.instance.inCoach == true) {
+			GameManager.instance.inCoach = false;
+			ShowCoachFloatButton (false);
+			CarStudio.CloseStudio ();
+			CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
+		}
 	}
 
-	public void ShowFloatWindow(Texture2D img,string txt)
+	public void ShowFloatWindow(Texture2D img,string txt,bool bo)
 	{
+		if (GameManager.instance.inCNG == true) {
+			ShowCNGFloatButton (false);
+		}
+		if (GameManager.instance.inCoach == true) {
+			ShowCoachFloatButton (false);
+		}
 		floatWindowImage.sprite = Sprite.Create(img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 		floatWindowText.text = txt;
-		float3DButton.gameObject.SetActive (true);
+		float3DButton.gameObject.SetActive (bo);
 		floatBackButton.SetActive (true);
 		floatWindow.transform.DOLocalMoveX (floatWindowMoveX.y, 0.5f).SetEase (Ease.OutExpo);
 	}
 
 	public void HideFloatWindow()
 	{
+		if (GameManager.instance.inCNG == true) {
+			if (GameObject.Find ("CNG").GetComponent<MeshRenderer>().enabled == true) {
+				ShowCNGFloatButton (true);
+				ShowCoachFloatButton (false);
+			}
+		}
+		if (GameManager.instance.inCoach == true) {
+			ShowCoachFloatButton (true);
+			ShowCNGFloatButton (false);
+		}
 		floatBackButton.SetActive (false);
 		if (!GameManager.instance.inCameraPosition) {
 			float3DButton.gameObject.SetActive (false);
@@ -469,6 +499,20 @@ public class UIManager : MonoBehaviour {
 					btn.thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 				}
 			}
+		}
+	}
+
+	public void ShowCNGFloatButton(bool bo)
+	{
+		foreach (UIFrom3D item in UIManager.instance.CNGFloat3DButton) {
+			item.gameObject.SetActive (bo);
+		}
+	}
+
+	public void ShowCoachFloatButton(bool bo)
+	{
+		foreach (UIFrom3D item in UIManager.instance.CoachFloat3DButton) {
+			item.gameObject.SetActive (bo);
 		}
 	}
 

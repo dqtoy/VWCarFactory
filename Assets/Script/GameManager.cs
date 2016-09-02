@@ -51,9 +51,12 @@ public class GameManager : MonoBehaviour {
 	public bool videoIsPlaying;
 	public bool videoIsSoundOff;
 	public bool inAnimation;
+	public bool inCNG;
+	public bool inCoach;
 
 	public GameObject[] iphones;
 	public CustomButton nowCustomButton;
+	public GameObject backParticle;
 
 	void Awake()
 	{
@@ -141,7 +144,7 @@ public class GameManager : MonoBehaviour {
 			CloseDoor ();
 			CloseBackDoor ();
 			ResetAnimationObj ();
-
+			backParticle.SetActive (false);
 			UIManager.instance.float3DButton.gameObject.SetActive (false);
 		}
 	}
@@ -216,6 +219,12 @@ public class GameManager : MonoBehaviour {
 	public void SaveImage()
 	{
 		UIManager.instance.gameObject.SetActive (false);
+		StartCoroutine (SaveImageEnd ());
+	}
+		
+	IEnumerator SaveImageEnd()
+	{
+		yield return new WaitForEndOfFrame ();
 		Rect rect = new Rect (Screen.width*0f, Screen.height*0f, Screen.width*1f, Screen.height*1f);
 		// 先创建一个的空纹理，大小可根据实现需要来设置  
 		Texture2D screenShot = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGB24,false);  
@@ -225,10 +234,10 @@ public class GameManager : MonoBehaviour {
 		screenShot.Apply(); 
 
 		// 然后将这些纹理数据，成一个png图片文件  
-//		byte[] bytes = screenShot.EncodeToPNG();  
-//		string filename = Application.dataPath + "/Screenshot.png";  
-//		System.IO.File.WriteAllBytes(filename, bytes);  
-//		Debug.Log(string.Format("截屏了一张图片: {0}", filename));  
+		//		byte[] bytes = screenShot.EncodeToPNG();  
+		//		string filename = Application.dataPath + "/Screenshot.png";  
+		//		System.IO.File.WriteAllBytes(filename, bytes);  
+		//		Debug.Log(string.Format("截屏了一张图片: {0}", filename));  
 
 		screenShot.SaveToAlbum();
 		UIManager.instance.gameObject.SetActive (true);
@@ -289,6 +298,14 @@ public class GameManager : MonoBehaviour {
 		GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
 		foreach (GameObject obj in parts) {
 			obj.GetComponent<PartAnimation> ().inAnimation = false;
+		}
+	}
+
+	public void SetCNGRenderer(bool bo)
+	{
+		MeshRenderer[] cngRenderers = GameObject.Find ("CNG").GetComponentsInChildren<MeshRenderer> ();
+		foreach (MeshRenderer item in cngRenderers) {
+			item.enabled = bo;
 		}
 	}
 }

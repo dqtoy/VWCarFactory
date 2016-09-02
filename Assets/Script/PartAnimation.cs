@@ -209,6 +209,7 @@ public class PartAnimation : MonoBehaviour {
 	public void Backopne(){
 		inAnimation = true;
 		GameManager.instance.inAnimation = true;
+
 		Debug.Log ("开启 " + gameObject.name);
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.x + backDoorValue.x , transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (AnimationStartOver);
 		//后盖开启

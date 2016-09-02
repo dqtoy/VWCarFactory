@@ -138,10 +138,13 @@ public class CarControl : MonoBehaviour {
 					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * (-0.1f));
 				}
 			} else {
-				if (curDist > lastDist) {
-					GameManager.instance.CameraGoBack ();
-				}
+				//Debug.Log ((curDist - lastDist));
+//				if ((curDist - lastDist) <= -40) {
+//					GameManager.instance.CameraGoBack ();
+//				}
+//				lastDist = curDist;
 			}
+
 		}
 	}
 

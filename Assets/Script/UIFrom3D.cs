@@ -1,17 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class UIFrom3D : MonoBehaviour {
 
+	public string thisTargetName;
+	public string Icon;
+	public string description;
 	public GameObject thisTarget;
 	public string targetName;
 	public IButtonInfo buttonInfo;
 
 	// Use this for initialization
-//	void Start () {
-//	
-//	}
+	void Start () {
+		if (thisTargetName != "") {
+			thisTarget = GameObject.Find (thisTargetName);
+		}
+	}
+
+	void OnEnable()
+	{
+		if (thisTargetName != "") {
+//			List<IButtonInfo> btnInfo = AppData.GetCarPartsByName(Scene1_UI.CarSeleted,buttonType);
+//			foreach (IButtonInfo item in btnInfo) {
+//				if (item.Name == buttonName) {
+//					SetThisTarget (GameObject.Find (buttonName + "Float"), item);
+//				}
+//			}
+			thisTarget = GameObject.Find (thisTargetName);
+		}
+	}
 
 	public void SetThisTarget(GameObject target,IButtonInfo btn)
 	{
@@ -37,7 +56,10 @@ public class UIFrom3D : MonoBehaviour {
 	void Update () {
 		if (thisTarget) {
 			transform.localPosition = WorldToUI (Camera.main, thisTarget.transform.position);
-		} else {
+		}else if (thisTargetName != "") {
+			thisTarget = GameObject.Find (thisTargetName);
+		}
+		if(thisTargetName == "" && !thisTarget) {
 			SetThisTarget (GameObject.Find(AppData.GetSamples (buttonInfo.Description).Asset),buttonInfo);
 		}
 	}
@@ -67,9 +89,15 @@ public class UIFrom3D : MonoBehaviour {
 				//CarStudio.RemovePart (buttonInfo.Name);
 			} else {
 				Texture2D img = Resources.Load (AppData.GetSamples (buttonInfo.Description).Icon) as Texture2D;
-				UIManager.instance.ShowFloatWindow (img, AppData.GetSamples (buttonInfo.Description).Description);
+				UIManager.instance.ShowFloatWindow (img, AppData.GetSamples (buttonInfo.Description).Description,true);
 			}
 		}
+	}
+
+	public void ClickButtonSpecial()
+	{
+		Texture2D img = Resources.Load (Icon) as Texture2D;
+		UIManager.instance.ShowFloatWindow (img, description,false);
 	}
 
 	public void AnimationPlay(string str)

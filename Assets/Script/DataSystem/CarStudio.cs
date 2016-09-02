@@ -26,6 +26,23 @@ public class CarStudio
     }
 
     #region 公有函数
+	public static Material GetCurrentBodyMat(){
+		IButtonInfo _partInfo = null;
+		for (int i = 0; i < car.Parts.Count; i++) {
+			IButtonInfo _temp = AppData.GetCarPartData (car.CarBaseModle, car.Parts [i]);
+			if (_temp.Tag == "变色模块") {
+				_partInfo = _temp;
+				break;
+			}
+		}
+		if (_partInfo != null) {
+			CarPart _part = AppData.GetCarPartData (car.CarBaseModle, _partInfo.Name);
+			return Resources.Load (_part.Assets [0].AssetPath) as Material;
+		} else {
+			return null;
+		}
+	}
+
     /// <summary>
     /// 添加组件
     /// </summary>

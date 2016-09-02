@@ -79,6 +79,9 @@ public class CustomButton : MonoBehaviour {
 		if (!isTag && GameManager.instance.inAnimation == false) {
 			GameManager.instance.nowCustomButton = this;
 			GameManager.instance.isPartButtonClick = true;
+			GameManager.instance.inCNG = false;
+			GameManager.instance.inCoach = false;
+			GameManager.instance.backParticle.SetActive (false);
 			descriptionButton = thisButton;
 			Texture2D img = new Texture2D(10,10);
 			if (customType == CustomType.TextureColor && !UIManager.instance.isPaintBarOut) {
@@ -122,15 +125,23 @@ public class CustomButton : MonoBehaviour {
 
 				}
 				else if (customType == CustomType.SpecialCar) {
+					
+					if (descriptionButton.Description == "sampleASB") {
+						GameManager.instance.inCoach = false;
+					}
 					UIManager.instance.ResetButtonColor ();
 					ChangeButtonColor (img);
 					CarStudio.LoadTemplate (thisButton.Description);
 					GameManager.instance.CameraGoBack ();
 					UIManager.instance.inSpecialButton = true;
-
+					if (descriptionButton.Name == "驾校车改装1") {
+						GameManager.instance.inCoach = true;
+						UIManager.instance.ShowCoachFloatButton (true);
+					}
 					return;
 				}
 				else if (customType == CustomType.CNG) {
+					GameManager.instance.inCNG = true;
 					ChangeButtonColor (img);
 					if (UIManager.instance.inSpecialButton == true) {
 						CarStudio.CloseStudio ();
@@ -139,7 +150,7 @@ public class CustomButton : MonoBehaviour {
 					UIManager.instance.inSpecialButton = false;
 //					CarData carData = AppData.GetCarAllParts().;
 //					CarStudio.LoadTemplate (carData.CNG);
-					CameraGoto (2);
+					CameraGoto (12);
 
 					return;
 				}
@@ -160,20 +171,45 @@ public class CustomButton : MonoBehaviour {
 
 	void ChangeButtonColor(Texture2D img)
 	{
-		if (CarStudio.Exists (descriptionButton.Name)) {
-			img = Resources.Load (descriptionButton.Icon) as Texture2D;
-		} else {
-			img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
+		if (!isPaint) {
+			if (CarStudio.Exists (descriptionButton.Name)) {
+				img = Resources.Load (descriptionButton.Icon) as Texture2D;
+			} else {
+				img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
+			}
+			//CameraGoBack ();
+			thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 
 		}
-		//CameraGoBack ();
-		thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 	}
 
 	void ChangePart()
 	{
 		if (customType == CustomType.CNG) {
-			CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
+			Texture2D img = new Texture2D(10,10);
+			MeshRenderer cngRenderer = GameObject.Find ("CNG").GetComponent<MeshRenderer> ();
+			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
+			foreach (GameObject obj in parts) {
+				if (cngRenderer.enabled == false) {
+					obj.GetComponent<PartAnimation> ().SettingAnimation ("后盖开启_play");
+					cngRenderer.transform.localPosition = new Vector3(cngRenderer.transform.localPosition.x,5.0f,cngRenderer.transform.localPosition.z);
+					GameManager.instance.SetCNGRenderer (true);
+					cngRenderer.transform.DOLocalMoveY (1.355f, 3.0f).SetEase (Ease.OutQuad);
+				} else {
+					obj.GetComponent<PartAnimation> ().SettingAnimation ("后盖开启_playback");
+					GameManager.instance.SetCNGRenderer (false);
+					cngRenderer.transform.DOLocalMoveY (5.0f, 3.0f).SetEase (Ease.OutQuad).OnComplete(ResetCNG);
+				}
+			}
+			if (cngRenderer.enabled == false) {
+				img = Resources.Load (descriptionButton.Icon) as Texture2D;
+				UIManager.instance.ShowCNGFloatButton (false);
+			} else {
+				img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
+				UIManager.instance.ShowCNGFloatButton (true);
+			}
+			thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
+			//CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
 		} else {
 			
 			if (CarStudio.Exists(thisButton.Name)) {
@@ -204,8 +240,17 @@ public class CustomButton : MonoBehaviour {
 					GameManager.instance.iphoneHideComplete ();
 				}
 			}
+			if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat") {
+				GameManager.instance.backParticle.SetActive (true);
+			}
 		}
 		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
+	}
+
+	void ResetCNG()
+	{
+		GameObject obj = GameObject.Find ("CNG");
+		obj.transform.localPosition = new Vector3(obj.transform.localPosition.x,1.355f,obj.transform.localPosition.z);
 	}
 
 	void StartSettingAnimation(string str)
