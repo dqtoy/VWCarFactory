@@ -152,7 +152,7 @@ public class CarControl : MonoBehaviour {
 	{
 		inAutoRotation = false;
 		mouseLastPosition = Input.mousePosition;
-		UIManager.instance.ChangeScrollBar (false);
+		//UIManager.instance.ChangeScrollBar (false);
 		if (UIManager.instance.isPaintBarOut) {
 			UIManager.instance.PaintBarAnimation (false);
 		}

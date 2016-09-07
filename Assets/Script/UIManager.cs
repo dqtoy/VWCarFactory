@@ -44,6 +44,8 @@ public class UIManager : MonoBehaviour {
 	public IButtonInfo nowSelectedButton;
 	public MediaPlayerCtrl videoContent;
 	public RawImage videoFrame;
+	public Image saveImageFinish;
+	public Text saveImageText;
 
 	public bool inSpecialButton;
 	int m_iOrgWidth = 0;
@@ -330,7 +332,9 @@ public class UIManager : MonoBehaviour {
 	public void SampleVideoWindowShow(bool bo)
 	{
 		sampleVideoWindow.SetActive (bo);
-
+		if (!bo) {
+			videoContent.Stop ();
+		}
 	}
 
 	public void LargeSamplePhotoShow(bool bo)
@@ -516,8 +520,22 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
+	public void ShowSaveImageUI()
+	{
+		saveImageFinish.DOFade (1.0f, 0.5f).SetEase(Ease.OutExpo).OnComplete(ShowSaveImageUIFinish);
+		saveImageText.DOFade (1.0f, 0.5f).SetEase(Ease.OutExpo);
+	}
+
+	public void ShowSaveImageUIFinish()
+	{
+		saveImageFinish.DOFade (0, 0.5f).SetEase(Ease.OutExpo);
+		saveImageText.DOFade (0, 0.5f).SetEase(Ease.OutExpo);
+	}
+
 	public void SaveImage()
 	{
+		ShowSaveImageUI ();
 		GameManager.instance.SaveImage ();
+
 	}
 }
