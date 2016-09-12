@@ -57,8 +57,10 @@ public class GameManager : MonoBehaviour {
 	public GameObject[] iphones;
 	public CustomButton nowCustomButton;
 	public GameObject backParticle;
+    public bool pedalOpen;
 
-	void Awake()
+
+    void Awake()
 	{
 		instance = this;
 		InitData ();
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour {
 		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
 		if (Scene1_UI.CarSeleted == "Tiguan") {
-			ChangeBGFunc (0);
+			ChangeBGFunc (1);
 			selectedCarID = 0;
 		} else {
 			ChangeBGFunc (2);
@@ -140,7 +142,9 @@ public class GameManager : MonoBehaviour {
 	{
 		if (GameManager.instance.inCameraPosition) {
 			GameManager.instance.inCameraPosition = false;
-			Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
+            CarControl.instance.camTarget = CarControl.instance.transform;
+            UIManager.instance.HideOtherFloatButton();
+            Camera.main.transform.DOMove (GameManager.instance.cameraInitPosition, GameManager.instance.cameraMoveTime).SetEase(GameManager.instance.cameraMoveEase);
 			CloseDoor ();
 			CloseBackDoor ();
 			ResetAnimationObj ();

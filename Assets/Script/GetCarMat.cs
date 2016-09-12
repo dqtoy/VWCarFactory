@@ -14,7 +14,7 @@ public class GetCarMat : MonoBehaviour {
 
 	void OnEnable()
 	{
-		//StartCoroutine (RegetMat ());
+		StartCoroutine (RegetMat ());
 		Material mat=CarStudio.GetCurrentBodyMat();
 		if (mat != null)
 			GetComponent<Renderer> ().material = mat;

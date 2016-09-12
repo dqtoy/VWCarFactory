@@ -139,7 +139,7 @@ public class CustomButton : MonoBehaviour {
 						UIManager.instance.ShowCoachFloatButton (true);
 					}
 					return;
-				}
+				}  
 				else if (customType == CustomType.CNG) {
 					GameManager.instance.inCNG = true;
 					ChangeButtonColor (img);
@@ -185,7 +185,8 @@ public class CustomButton : MonoBehaviour {
 
 	void ChangePart()
 	{
-		if (customType == CustomType.CNG) {
+        UIManager.instance.HideOtherFloatButton();
+        if (customType == CustomType.CNG) {
 			Texture2D img = new Texture2D(10,10);
 			MeshRenderer cngRenderer = GameObject.Find ("CNG").GetComponent<MeshRenderer> ();
 			GameObject[] parts = GameObject.FindGameObjectsWithTag("AnimPart");
@@ -211,12 +212,18 @@ public class CustomButton : MonoBehaviour {
 			thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 			//CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
 		} else {
-			
-			if (CarStudio.Exists(thisButton.Name)) {
-				StartSettingAnimation ("_playback");
-				if (thisButton.Name != "电动踏板" && thisButton.Name != "后盖开启") {
-					UIManager.instance.HideFloatWindow ();
-					UIManager.instance.float3DButton.gameObject.SetActive (false);
+           
+            if (CarStudio.Exists(thisButton.Name)) {
+                if (thisButton.Name != "电动踏板")
+                    StartSettingAnimation("_playback");
+                else
+                    UIManager.instance.ShowPedalFloat3DButton(false);
+                
+				//if (thisButton.Name != "电动踏板" && thisButton.Name != "后盖开启") {
+                if (thisButton.Name != "后盖开启")// || thisButton.Name == "电动踏板")
+                {
+                    UIManager.instance.HideFloatWindow ();
+                    UIManager.instance.float3DButton.gameObject.SetActive (false);
 					CarStudio.RemovePart (thisButton.Name);
 				}
 
@@ -230,8 +237,11 @@ public class CustomButton : MonoBehaviour {
 //				}
 			} else {
 				CarStudio.AddPart (thisButton.Name);
-				StartSettingAnimation ("_play");
-				ShowFloatButton ();
+                if (thisButton.Name != "电动踏板")
+                    StartSettingAnimation("_play");
+                else
+                    UIManager.instance.ShowPedalFloat3DButton(true);
+                ShowFloatButton ();
 				if (thisButton.Name == "导航仪") {
 					GameManager.instance.ShowIphone (true, GameManager.instance.selectedCarID);
 				}
@@ -242,8 +252,14 @@ public class CustomButton : MonoBehaviour {
 			}
 			if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat") {
 				GameManager.instance.backParticle.SetActive (true);
-			}
-		}
+                
+            }
+            else if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Tiguan")
+            {
+                UIManager.instance.ShowTiguanBackFloat3DButton(true);
+                //UIManager.instance.float3DButton.gameObject.SetActive(true);
+            }
+        }
 		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 	}
 

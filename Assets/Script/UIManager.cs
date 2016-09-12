@@ -35,10 +35,13 @@ public class UIManager : MonoBehaviour {
 	public GameObject floatWindow;
 	public Vector2 floatWindowMoveX;
 	public Image floatWindowImage;
-	public Text floatWindowText;
+    public Text floatWindowName;
+    public Text floatWindowText;
 	public UIFrom3D float3DButton;
 	public UIFrom3D[] CNGFloat3DButton;
 	public UIFrom3D[] CoachFloat3DButton;
+    public UIFrom3D pedalFloat3DButton;
+    public UIFrom3D tiguanBack3DButton;
 	public GameObject floatBackButton;
 
 	public IButtonInfo nowSelectedButton;
@@ -281,11 +284,12 @@ public class UIManager : MonoBehaviour {
 
 	public void OnBarDragFinish()
 	{
-		//Debug.Log((scrollBounds.y - scrollBounds.x)/2);
-		if (animationScrollBar.transform.localPosition.y > scrollBounds.y - (scrollBounds.y - scrollBounds.x)/2) {
-			ChangeScrollBar (true);
-		} else {
+        //Debug.Log((scrollBounds.y - scrollBounds.x)/2);
+        //if (animationScrollBar.transform.localPosition.y > scrollBounds.y - (scrollBounds.y - scrollBounds.x)/2) {
+        if (isBarOpen) {
 			ChangeScrollBar (false);
+		} else {
+			ChangeScrollBar (true);
 		}
 		isBarDraging = false;
 	}
@@ -391,19 +395,22 @@ public class UIManager : MonoBehaviour {
 		if (GameManager.instance.inCoach == true) {
 			GameManager.instance.inCoach = false;
 			ShowCoachFloatButton (false);
-			CarStudio.CloseStudio ();
+            ShowPedalFloat3DButton(false);
+            CarStudio.CloseStudio ();
 			CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
 		}
 	}
 
-	public void ShowFloatWindow(Texture2D img,string txt,bool bo)
+	public void ShowFloatWindow(Texture2D img,string nam,string txt,bool bo)
 	{
 		if (GameManager.instance.inCNG == true) {
 			ShowCNGFloatButton (false);
 		}
 		if (GameManager.instance.inCoach == true) {
 			ShowCoachFloatButton (false);
-		}
+            ShowPedalFloat3DButton(false);
+        }
+        floatWindowName.text = nam;
 		floatWindowImage.sprite = Sprite.Create(img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 		floatWindowText.text = txt;
 		float3DButton.gameObject.SetActive (bo);
@@ -417,12 +424,14 @@ public class UIManager : MonoBehaviour {
 			if (GameObject.Find ("CNG").GetComponent<MeshRenderer>().enabled == true) {
 				ShowCNGFloatButton (true);
 				ShowCoachFloatButton (false);
-			}
+                ShowPedalFloat3DButton(false);
+            }
 		}
 		if (GameManager.instance.inCoach == true) {
 			ShowCoachFloatButton (true);
 			ShowCNGFloatButton (false);
-		}
+            ShowPedalFloat3DButton(false);
+        }
 		floatBackButton.SetActive (false);
 		if (!GameManager.instance.inCameraPosition) {
 			float3DButton.gameObject.SetActive (false);
@@ -520,7 +529,18 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public void ShowSaveImageUI()
+    public void ShowPedalFloat3DButton(bool bo)
+    {
+        pedalFloat3DButton.gameObject.SetActive(bo);
+    }
+
+    public void ShowTiguanBackFloat3DButton(bool bo)
+    {
+        tiguanBack3DButton.gameObject.SetActive(bo);
+    }
+
+
+    public void ShowSaveImageUI()
 	{
 		saveImageFinish.DOFade (1.0f, 0.5f).SetEase(Ease.OutExpo).OnComplete(ShowSaveImageUIFinish);
 		saveImageText.DOFade (1.0f, 0.5f).SetEase(Ease.OutExpo);
@@ -531,6 +551,20 @@ public class UIManager : MonoBehaviour {
 		saveImageFinish.DOFade (0, 0.5f).SetEase(Ease.OutExpo);
 		saveImageText.DOFade (0, 0.5f).SetEase(Ease.OutExpo);
 	}
+
+    public void HideOtherFloatButton()
+    {
+        foreach (UIFrom3D item in CNGFloat3DButton)
+        {
+            item.gameObject.SetActive(false);
+        }
+        foreach (UIFrom3D item2 in CoachFloat3DButton)
+        {
+            item2.gameObject.SetActive(false);
+        }
+        pedalFloat3DButton.gameObject.SetActive(false);
+        tiguanBack3DButton.gameObject.SetActive(false);
+    }
 
 	public void SaveImage()
 	{

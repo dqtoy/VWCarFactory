@@ -99,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011043806516}
   m_LocalRotation: {x: -0, y: -0, z: -0.00000020861626, w: -1}
-  m_LocalPosition: {x: 0.0603, y: 0.2741, z: -0.4113}
+  m_LocalPosition: {x: 0.06, y: 0.21, z: -0.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -267,4 +267,5 @@ MonoBehaviour:
   thisName: "\u540E\u76D6\u5F00\u542F"
   isDoor: 0
   isLeft: 0
+  inAnimation: 0
   backDoorValue: {x: 0, y: -90}

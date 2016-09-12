@@ -162,8 +162,8 @@ public class PartAnimation : MonoBehaviour {
 	}
 
 	public void EPRup(){
-		//transform.localPosition = new Vector3 (transform.localPosition.x + 0.1f, transform.localPosition.y - 0.05f, transform.localPosition.z);
-		transform.DOLocalMove (new Vector3 (transform.localPosition.x - 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (RemovePart );
+        //transform.localPosition = new Vector3 (transform.localPosition.x + 0.1f, transform.localPosition.y - 0.05f, transform.localPosition.z);
+        transform.DOLocalMove(new Vector3(transform.localPosition.x - 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase(Ease.Linear);//.OnComplete (RemovePart );
 	}
 
 	public void EPRupDontRemove()
@@ -197,8 +197,8 @@ public class PartAnimation : MonoBehaviour {
 	}
 		
 	public void EPLup(){
-		//transform.localPosition = new Vector3 (transform.localPosition.x - 0.1f, transform.localPosition.y - 0.05f, transform.localPosition.z);
-		transform.DOLocalMove (new Vector3 (transform.localPosition.x + 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase (Ease.Linear).OnComplete (RemovePart);
+        //transform.localPosition = new Vector3 (transform.localPosition.x - 0.1f, transform.localPosition.y - 0.05f, transform.localPosition.z);
+        transform.DOLocalMove(new Vector3(transform.localPosition.x + 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase(Ease.Linear);//.OnComplete (RemovePart);
 	}
 
 	public void EPLupDontRemove()

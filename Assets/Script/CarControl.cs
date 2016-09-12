@@ -102,48 +102,59 @@ public class CarControl : MonoBehaviour {
 	{
 		
 		float dis = Vector3.Distance (carRoot.transform.position, mainCamera.transform.position);
-		//Debug.Log ("distance " + dis);
-		if (Input.touchCount > 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
+        
+        //Debug.Log ("distance " + dis);
+        if (Input.touchCount > 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
 		{
 			Touch touch1 = Input.GetTouch(0);
 			Touch touch2 = Input.GetTouch(1);
 			curDist = Vector2.Distance(touch1.position, touch2.position);
-			if (isChangeView) {
-				if(curDist > lastDist)
-				{
-					distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition)*pinchSpeed/10;
-				}
-				else
-				{
-					distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition)*pinchSpeed/10;
-				}
-				lastDist = curDist;
+            if (curDist > lastDist)
+            {
+                distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 10;
+            }
+            else
+            {
+                distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 10;
+            }
+            lastDist = curDist;
 
-				if (dis > cameraScaleBound.x && dis < cameraScaleBound.y) {
-					//mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3 (0, 0, distance/700);
-					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * distance/10);
-				}
+            if (dis > cameraScaleBound.x && dis < cameraScaleBound.y)
+            {
+                //mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3 (0, 0, distance/700);
+                mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * distance / 10);
+            }
 
-				if(distance <= minimumDistance)
-				{
-					distance = minimumDistance;
-				}
-				if(distance >= maximumDistance)
-				{
-					distance = maximumDistance;
-				}
+            if (distance <= minimumDistance)
+            {
+                distance = minimumDistance;
+            }
+            if (distance >= maximumDistance)
+            {
+                distance = maximumDistance;
+            }
+            if (isChangeView) {
 				if (dis >= cameraScaleBound.y) {
 					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * 0.1f);
 				} else if(dis < cameraScaleBound.x) {
 					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * (-0.1f));
 				}
 			} else {
-				//Debug.Log ((curDist - lastDist));
-//				if ((curDist - lastDist) <= -40) {
-//					GameManager.instance.CameraGoBack ();
-//				}
-//				lastDist = curDist;
-			}
+                float disInPos = Vector3.Distance(camTarget.position, mainCamera.transform.position);
+                if (disInPos >= (cameraScaleBound.y - 0.8f))
+                {
+                    mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * 0.1f);
+                }
+                else if (disInPos < (cameraScaleBound.x + 0.8f))
+                {
+                    mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * (-0.1f));
+                }
+                //Debug.Log ((curDist - lastDist));
+                //				if ((curDist - lastDist) <= -40) {
+                //					GameManager.instance.CameraGoBack ();
+                //				}
+                //				lastDist = curDist;
+            }
 
 		}
 	}
