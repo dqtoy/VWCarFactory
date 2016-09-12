@@ -9,6 +9,8 @@ public class AutoLayoutMainPanel : MonoBehaviour {
     public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link, about, titl;
     public UnityEngine.UI.GridLayoutGroup grid;
     public Scene1_UI sceneUI;
+
+	public Sprite aboutSprite, serviceSprite;
 	// Use this for initialization
 	void Start ()
     {
@@ -18,7 +20,7 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         int gcd = GCD(width, height);
         width = width / gcd;
         height = height / gcd;
-        //SixteenNine();
+        SixteenNine();
 #if UNITY_IOS && !UNITY_EDITOR
         if (width==4&& height == 3)
         {
@@ -98,17 +100,36 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         //car2.anchoredPosition = new Vector2(151.5f, 28.8f);
         //car2.sizeDelta = new Vector2(303, 92);
 
-        tools.anchorMin = new Vector2(0.5f, 0);
-        tools.anchorMax = new Vector2(0.5f, 0);
-        tools.anchoredPosition = new Vector2(0, 191.1f);
-        tools.sizeDelta = new Vector2(375.9f, 48.4f);
+        
 
         titl.anchoredPosition = new Vector2(0, -26.62f);
 
         for (int i = 0; i < sceneUI.MenuButtons.Length; i++)
         {
-            sceneUI.MenuButtons[i].transform.Find("buttonIconAndName").GetComponent<RectTransform>().sizeDelta = new Vector2(62, 62);
+			sceneUI.MenuButtons [i].transform.Find ("buttonIconAndName").GetComponent<RectTransform> ().sizeDelta = new Vector2 (62, 62);
+			sceneUI.MenuButtons [i].transform.Find ("buttonIconAndName/icon").GetComponent<RectTransform> ().sizeDelta = new Vector2 (30.1f, 32.6f);
+			sceneUI.MenuButtons [i].transform.Find ("buttonIconAndName/icon").GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, -16.3f);
+			sceneUI.MenuButtons [i].transform.Find ("buttonIconAndName/Text").GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, 16.5f);
         }
+
+
+
+		transform.Find ("main/buttons/button").GetComponent<RectTransform> ().sizeDelta = new Vector2 (400, 130.7f);
+		transform.Find ("main/buttons/button").GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-200, -21.9f);
+		transform.Find ("main/buttons/button/Image").GetComponent<UnityEngine.UI.Image> ().sprite = aboutSprite;
+//		transform.Find ("main/buttons/button/Text").GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-200, -21.9f);
+//		transform.Find ("main/buttons/button/Text (1)").GetComponent<RectTransform> ().anchoredPosition = new Vector2 (-200, -21.9f);
+		transform.Find ("main/buttons/button (1)").GetComponent<RectTransform> ().sizeDelta = new Vector2 (400, 130.7f);
+		transform.Find ("main/buttons/button (1)").GetComponent<RectTransform> ().anchoredPosition = new Vector2 (200, -21.9f);
+		transform.Find ("main/buttons/button (1)/Image").GetComponent<UnityEngine.UI.Image> ().sprite = serviceSprite;
+
+		tools.anchorMin = new Vector2(0.5f, 0);
+		tools.anchorMax = new Vector2(0.5f, 0);
+		tools.anchoredPosition = new Vector2(0, 154.9f);
+		tools.sizeDelta = new Vector2(375.9f, 48.4f);
+
+		car1.transform.parent.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (0, 108);
+
         //meunButtons.sizeDelta = new Vector2(150, 267.5f);
         //meunButtons.anchoredPosition = new Vector2(0, -174.75f);
 

@@ -1176,8 +1176,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 107, y: 30}
+  m_AnchoredPosition: {x: 2.3, y: 0}
+  m_SizeDelta: {x: 268.9, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &131456855
 MonoBehaviour:
@@ -1205,13 +1205,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 2
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "2016 \u5E15\u8428\u7279"
+  m_Text: "\u5E15\u8428\u7279"
 --- !u!222 &131456856
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2693,8 +2693,8 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20.5}
-  m_SizeDelta: {x: 150, y: 41}
+  m_AnchoredPosition: {x: 0, y: -23.55}
+  m_SizeDelta: {x: 150, y: 47.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &340542642
 MonoBehaviour:
@@ -4556,6 +4556,8 @@ MonoBehaviour:
   titl: {fileID: 2075030831}
   grid: {fileID: 190968737}
   sceneUI: {fileID: 500029776}
+  aboutSprite: {fileID: 21300000, guid: 6701b035ddb6aac40a98c2f92cbaf84e, type: 3}
+  serviceSprite: {fileID: 21300000, guid: 879ba4c5a42243d4f8ee8409ed248ad1, type: 3}
 --- !u!1 &509023959
 GameObject:
   m_ObjectHideFlags: 0
@@ -6543,8 +6545,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.0000019073486, y: -0.000015258789}
-  m_SizeDelta: {x: 107, y: 30}
+  m_AnchoredPosition: {x: -12.1, y: -0.000015258789}
+  m_SizeDelta: {x: 274.3, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691150303
 MonoBehaviour:
@@ -6572,13 +6574,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "2016 \u9014\u89C2"
+  m_Text: "\u9014\u89C2"
 --- !u!222 &691150304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13916,10 +13918,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 403276468}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 174.5}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1632040020
 MonoBehaviour:
@@ -17784,8 +17786,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -75, y: -20.75}
-  m_SizeDelta: {x: 150, y: -41.5}
+  m_AnchoredPosition: {x: -75, y: -23.577}
+  m_SizeDelta: {x: 150, y: -47.155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2005941109
 MonoBehaviour:
@@ -17806,7 +17808,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 150, y: 93.08}
+  m_CellSize: {x: 150, y: 92.145}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -18000,10 +18002,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 23254434}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0000023841858}
-  m_SizeDelta: {x: 400, y: 174.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2022345336
 MonoBehaviour:
