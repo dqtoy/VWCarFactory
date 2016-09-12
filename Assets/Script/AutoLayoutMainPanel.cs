@@ -20,7 +20,7 @@ public class AutoLayoutMainPanel : MonoBehaviour {
         int gcd = GCD(width, height);
         width = width / gcd;
         height = height / gcd;
-        SixteenNine();
+        //SixteenNine();
 #if UNITY_IOS && !UNITY_EDITOR
         if (width==4&& height == 3)
         {
