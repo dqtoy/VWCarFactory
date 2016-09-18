@@ -9,6 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 452588}
   - 114: {fileID: 11457412}
+  - 114: {fileID: 114000010752998386}
+  - 114: {fileID: 114000013296525670}
   m_Layer: 0
   m_Name: WeChatPluginAndroidIOS
   m_TagString: Untagged
@@ -25,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -39,7 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4350c3d6c8092b9448cdd166be9aca76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AppID: 777838643339313363336466343238373332
+  m_AppID: wxfe733c57a68868a1
   m_shareType: 0
   m_isMoments: 0
   m_desc: 
@@ -96,3 +99,41 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 121118}
   m_IsPrefabParent: 1
+--- !u!114 &114000010752998386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eac32d9b5a21ba48b24a78ca37489f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_weChatShareObject: {fileID: 11457412}
+  shareImage: {fileID: 2800000, guid: 3e0554316db00d249a10610b347cceab, type: 3}
+--- !u!114 &114000013296525670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 121118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0ffe770e9f4471fa7384a732013462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  to: []
+  subject: 
+  message: 
+  files: []
+  images: []
+  imgPath: []
+  excludeMail: 1
+  excludeMessage: 0
+  excludePostToFacebook: 1
+  excludePostToTwitter: 1
+  excludePostToFlickr: 1
+  excludeSaveToCameraRoll: 1
+  excludePostToWeibo: 0
+  excludePostToTencentWeibo: 1

@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour {
 	//public Camera c;
 
 	public Transform[] allCamPosition;
+    public float[] allCamPositionScaleVal;
 	public int nowCamPositionID;
+    public int nowCamScalePos;
 	public bool inCameraPosition;
 	public Vector3 cameraInitPosition;
 
@@ -59,6 +61,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject backParticle;
     public bool pedalOpen;
 
+    public bool isInChangeColor;
+
 
     void Awake()
 	{
@@ -71,8 +75,8 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log (gameObject);
 		UIManager.instance.videoContent.Stop ();
+		UIManager.instance.videoContent.gameObject.SetActive (false);
 		camControl = Camera.main.GetComponent<CameraControl> ();
 		cameraInitPosition = transform.position;
 		UIManager.instance.ChangeScrollBar (false);
@@ -83,6 +87,13 @@ public class GameManager : MonoBehaviour {
 			ChangeBGFunc (2);
 			selectedCarID = 1;
 		}
+	}
+
+	void OnEnable()
+	{
+		Debug.Log ("video false");
+		UIManager.instance.videoContent.Stop();
+		UIManager.instance.videoContent.gameObject.SetActive (false);
 	}
 
 	void InitData()
@@ -127,7 +138,9 @@ public class GameManager : MonoBehaviour {
 
 	public void CameraGoto(Transform pos)
 	{
-		transform.DOMove (pos.position, 1.0f).SetEase (Ease.OutExpo).OnComplete(CameraGoFinish);
+        nowCamScalePos = 0;
+
+        transform.DOMove (pos.position, 1.0f).SetEase (Ease.OutExpo).OnComplete(CameraGoFinish);
 		transform.DORotate (pos.rotation.eulerAngles, 1.0f).SetEase (Ease.OutExpo);
 		inGoto = true;
 //		if (cameraIsInside) {
@@ -169,6 +182,7 @@ public class GameManager : MonoBehaviour {
 		inGoto = false;
 		if (inCameraPosition) {
 			cameraRotationY = Camera.main.transform.rotation.eulerAngles.y;
+			CarControl.instance.camInPos = Camera.main.transform.localPosition;
 		}
 		//camControl.enabled = true;
 	}

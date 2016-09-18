@@ -77,7 +77,9 @@ public class CustomButton : MonoBehaviour {
 	public void ClickThisButton()
 	{
 		if (!isTag && GameManager.instance.inAnimation == false) {
-			GameManager.instance.nowCustomButton = this;
+            GameManager.instance.isInChangeColor = false;
+
+            GameManager.instance.nowCustomButton = this;
 			GameManager.instance.isPartButtonClick = true;
 			GameManager.instance.inCNG = false;
 			GameManager.instance.inCoach = false;
@@ -89,9 +91,17 @@ public class CustomButton : MonoBehaviour {
 				img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
 				thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 				GameManager.instance.CameraGoBack ();
-
-				//GameManager.instance.ChangeCustomTexture (thisID);
-			}
+                UIManager.instance.ChangeDescriptionButtons(false, false, false);
+                //UIManager.instance.nowSelectedButton = null;
+                GameManager.instance.isInChangeColor = true;
+                UIManager.instance.paintUI = gameObject.GetComponent<Image>();
+                if (!isPaint)
+                {
+                    UIManager.instance.nowSelectedButton = thisButton;
+                    //ChangeButtonColor (img);
+                }
+                //GameManager.instance.ChangeCustomTexture (thisID);
+            }
 			else{
 				
 				if (UIManager.instance.isPaintBarOut && !isPaint) {
@@ -121,7 +131,9 @@ public class CustomButton : MonoBehaviour {
 					} else {
 						CameraGoto (int.Parse(descriptionButton.Type));
 					}
-
+					if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat") {
+						GameManager.instance.backParticle.SetActive (true);
+					}
 
 				}
 				else if (customType == CustomType.SpecialCar) {
@@ -236,9 +248,24 @@ public class CustomButton : MonoBehaviour {
 //					CarStudio.RemovePart (thisButton.Name);
 //				}
 			} else {
-				CarStudio.AddPart (thisButton.Name);
+                if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat")
+                {
+                    Debug.Log("Passat back open!");
+                    StartCoroutine("PassatBackDoorOpen");
+                }
+                else
+                {
+                    Debug.Log("Add part!");
+                    CarStudio.AddPart(thisButton.Name);
+                }
+
                 if (thisButton.Name != "电动踏板")
-                    StartSettingAnimation("_play");
+                {
+                    if (thisButton.Name != "后盖开启" || Scene1_UI.CarSeleted != "Passat")
+                    {
+                        StartSettingAnimation("_play");
+                    }
+                }
                 else
                     UIManager.instance.ShowPedalFloat3DButton(true);
                 ShowFloatButton ();
@@ -251,7 +278,7 @@ public class CustomButton : MonoBehaviour {
 				}
 			}
 			if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat") {
-				GameManager.instance.backParticle.SetActive (true);
+				//GameManager.instance.backParticle.SetActive (true);
                 
             }
             else if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Tiguan")
@@ -262,6 +289,13 @@ public class CustomButton : MonoBehaviour {
         }
 		CarStudio.SaveCustumUserCar(Scene1_UI.CarSeleted + "save");
 	}
+
+    IEnumerator PassatBackDoorOpen()
+    {
+        yield return new WaitForSeconds(3.0f);
+        CarStudio.AddPart(thisButton.Name);
+        StartSettingAnimation("_play");
+    }
 
 	void ResetCNG()
 	{
@@ -279,7 +313,8 @@ public class CustomButton : MonoBehaviour {
 
 	void CameraGoto(int id)
 	{
-		GameManager.instance.inCameraPosition = true;
+        GameManager.instance.nowCamScalePos = 0;
+        GameManager.instance.inCameraPosition = true;
 		GameManager.instance.nowCamPositionID = id;
 		CarControl.instance.camNowPosX = 0;
 		CarControl.instance.camNowRotateY = Camera.main.transform.rotation.eulerAngles.y;
@@ -293,6 +328,7 @@ public class CustomButton : MonoBehaviour {
 		if (GameManager.instance.inCameraPosition) {
 			GameManager.instance.cameraRotationY = Camera.main.transform.rotation.eulerAngles.y;
 			CarControl.instance.camNowRotateY = Camera.main.transform.rotation.eulerAngles.y;
+			CarControl.instance.camInPos = Camera.main.transform.localPosition;
 		}
 	}
 

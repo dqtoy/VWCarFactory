@@ -26,6 +26,9 @@ public class CarControl : MonoBehaviour {
 	float distance;
 	public float minimumDistance;
 	public float maximumDistance;
+	public float inCamPosMaxScale;
+	public float minimumDistanceInpos;
+	public float maximumDistanceInpos;
 	public float pinchSpeed;
 	float lastDist;
 	float curDist;
@@ -36,6 +39,7 @@ public class CarControl : MonoBehaviour {
 	public Vector2 camUpDownBound;
 	public float camNowRotateY;
 	public float camNowPosX;
+	public Vector3 camInPos;
 
 	void Awake()
 	{
@@ -102,62 +106,140 @@ public class CarControl : MonoBehaviour {
 	{
 		
 		float dis = Vector3.Distance (carRoot.transform.position, mainCamera.transform.position);
-        
+
         //Debug.Log ("distance " + dis);
         if (Input.touchCount > 1 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
-		{
-			Touch touch1 = Input.GetTouch(0);
-			Touch touch2 = Input.GetTouch(1);
-			curDist = Vector2.Distance(touch1.position, touch2.position);
-            if (curDist > lastDist)
-            {
-                distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 10;
-            }
-            else
-            {
-                distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 10;
-            }
-            lastDist = curDist;
+        {
+            Touch touch1 = Input.GetTouch(0);
+            Touch touch2 = Input.GetTouch(1);
+            curDist = Vector2.Distance(touch1.position, touch2.position);
 
-            if (dis > cameraScaleBound.x && dis < cameraScaleBound.y)
+            if (isChangeView)
             {
-                //mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3 (0, 0, distance/700);
-                mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * distance / 10);
-            }
+                if (curDist > lastDist)
+                {
+                    distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 10;
+                }
+                else
+                {
+                    distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 10;
+                }
+                lastDist = curDist;
 
-            if (distance <= minimumDistance)
-            {
-                distance = minimumDistance;
-            }
-            if (distance >= maximumDistance)
-            {
-                distance = maximumDistance;
-            }
-            if (isChangeView) {
-				if (dis >= cameraScaleBound.y) {
-					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * 0.1f);
-				} else if(dis < cameraScaleBound.x) {
-					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * (-0.1f));
-				}
-			} else {
-                float disInPos = Vector3.Distance(camTarget.position, mainCamera.transform.position);
-                if (disInPos >= (cameraScaleBound.y - 0.8f))
+                if (dis > cameraScaleBound.x && dis < cameraScaleBound.y)
+                {
+                    //mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3 (0, 0, distance/700);
+                    mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * distance / 10);
+                }
+
+                if (distance <= minimumDistance)
+                {
+                    distance = minimumDistance;
+                }
+                if (distance >= maximumDistance)
+                {
+                    distance = maximumDistance;
+                }
+
+                if (dis >= cameraScaleBound.y)
                 {
                     mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * 0.1f);
                 }
-                else if (disInPos < (cameraScaleBound.x + 0.8f))
+                else if (dis < cameraScaleBound.x)
                 {
                     mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * (-0.1f));
                 }
+            }
+            else
+            {
+                if (curDist > lastDist)
+                {
+                    //distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 20;
+					CameraInPositionScaleMove(true);
+
+                }
+                else if (curDist < lastDist)
+                {
+                    //distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 20;
+					CameraInPositionScaleMove(false);
+                }
+                lastDist = curDist;
+                /*
+				float disInPos = Vector3.Distance(camTarget.position, mainCamera.transform.position);
+				float standardDis = Vector3.Distance(camTarget.position, camInPos);
+//				float minDisPos = minimumDistance + 0.5f;
+//				float maxDisPos = maximumDistance - 0.5f;
+				if (disInPos > (standardDis - inCamPosMaxScale) && disInPos < (standardDis + inCamPosMaxScale))
+				{
+					//mainCamera.transform.localPosition = mainCamera.transform.localPosition + new Vector3 (0, 0, distance/700);
+					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * distance / 30);
+				}
+				if (distance <= minimumDistanceInpos)
+				{
+					distance = minimumDistanceInpos;
+				}
+				if (distance >= maximumDistanceInpos)
+				{
+					distance = maximumDistanceInpos;
+				}
+//                
+				if (disInPos >= (standardDis + inCamPosMaxScale))
+                {
+					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * 0.01f);
+                }
+				else if (disInPos < (standardDis - inCamPosMaxScale))
+                {
+					mainCamera.transform.Translate(Vector3.forward * Time.deltaTime * (-0.01f));
+                }
+                */
                 //Debug.Log ((curDist - lastDist));
                 //				if ((curDist - lastDist) <= -40) {
                 //					GameManager.instance.CameraGoBack ();
                 //				}
                 //				lastDist = curDist;
             }
+        }
 
-		}
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+            {
+                if (!isChangeView)
+                {
+                    if (Input.GetKey(KeyCode.DownArrow))
+                    {
+                        //distance += Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 20;
+                        CameraInPositionScaleMove(false);
+
+                    }
+                    else if (Input.GetKey(KeyCode.UpArrow))
+                    {
+                        //distance -= Vector2.Distance(touch1.deltaPosition, touch2.deltaPosition) * pinchSpeed / 20;
+                        CameraInPositionScaleMove(true);
+                    }
+                  
+                }
+            }
 	}
+
+    void CameraInPositionScaleMove(bool isZoomIn)
+    {
+        if (isZoomIn)
+        {
+           //mainCamera.transform.DOLocalMoveZ(GameManager.instance.allCamPositionScaleVal[GameManager.instance.nowCamPositionID], 1.0f);
+           mainCamera.transform.position = 
+                Vector3.Lerp(mainCamera.transform.position, GameManager.instance.allCamPosition[GameManager.instance.nowCamPositionID].localPosition + 
+                mainCamera.transform.TransformDirection(Vector3.forward * 0.1f),0.1f);
+           //GameManager.instance.nowCamScalePos--;
+        }
+        else
+        {
+            mainCamera.transform.position = 
+                Vector3.Lerp(mainCamera.transform.position, GameManager.instance.allCamPosition[GameManager.instance.nowCamPositionID].localPosition + 
+                mainCamera.transform.TransformDirection(Vector3.back * 0.1f), 0.1f);
+            //mainCamera.transform.localPosition = new Vector3(mainCamera.transform.localPosition.x, mainCamera.transform.localPosition.y, Mathf.Lerp(mainCamera.transform.localPosition.z,
+            //GameManager.instance.allCamPosition[GameManager.instance.nowCamPositionID].localPosition.z - GameManager.instance.allCamPositionScaleVal[GameManager.instance.nowCamPositionID], 0.1f));
+        }
+        //+new Vector3(0, 0, GameManager.instance.allCamPositionScaleVal[GameManager.instance.nowCamPositionID])
+    }
 
 	public void OnDown()//IMessage rMessage)
 	{
@@ -187,6 +269,17 @@ public class CarControl : MonoBehaviour {
 		//StartCoroutine("ChangeToAutoRotation");
 		mouseLastPosition = Input.mousePosition;
 		mouseDelta = Vector2.zero;
+        if (GameManager.instance.isInChangeColor == true)
+        {
+            UIManager.instance.PaintBarAnimation(true);
+            if (UIManager.instance.paintUI)
+            {
+                Debug.Log(UIManager.instance.nowSelectedButton);
+                Texture2D img = Resources.Load(UIManager.instance.nowSelectedButton.Icon + "b") as Texture2D;
+                UIManager.instance.paintUI.sprite = Sprite.Create(img, new Rect(0, 0, img.width, img.height), new Vector2(0, 0));
+            }
+            GameManager.instance.isInChangeColor = true;
+        }
 	}
 
 	IEnumerator ChangeToAutoRotation()
@@ -212,10 +305,10 @@ public class CarControl : MonoBehaviour {
 	void LimitedCameraControl()
 	{
 		mouseDelta = mouseLastPosition - new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-		if (mainCamera.transform.localPosition.y < cameraLimitBoundsY.y && mainCamera.transform.localPosition.y > cameraLimitBoundsY.x) {
-			//mainCamera.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y * 0.2f,Space.World);
-			mainCamera.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y * 0.1f);
-		}
+//		if (mainCamera.transform.localPosition.y < cameraLimitBoundsY.y && mainCamera.transform.localPosition.y > cameraLimitBoundsY.x) {
+//			//mainCamera.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y * 0.2f,Space.World);
+//			mainCamera.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y * 0.1f);
+//		}
 
 		if ((camNowPosX + (Vector3.right * Time.deltaTime * mouseDelta.x * 0.1f).x) <= cameraLimitBoundsX.y && (camNowPosX + (Vector3.right * Time.deltaTime * mouseDelta.x * 0.1f).x) >= cameraLimitBoundsX.x) {
 			//mainCamera.transform.Translate(Vector3.up * Time.deltaTime * mouseDelta.y * 0.2f,Space.World);

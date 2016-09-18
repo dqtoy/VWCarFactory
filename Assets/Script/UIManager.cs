@@ -29,7 +29,8 @@ public class UIManager : MonoBehaviour {
 	public GameObject samplePhotoWindow;
 	public GameObject largeSamplePhoto;
 	public GameObject samplePhotoContent;
-	public GameObject sampleVideoWindow;
+    public float samplePhotoContentHeight;
+    public GameObject sampleVideoWindow;
 	public GameObject shareButtonWindow;
 	List<GameObject> samplePhotoList;
 	public GameObject floatWindow;
@@ -50,15 +51,22 @@ public class UIManager : MonoBehaviour {
 	public Image saveImageFinish;
 	public Text saveImageText;
 
+    public Image paintUI;
+
 	public bool inSpecialButton;
 	int m_iOrgWidth = 0;
 	int m_iOrgHeight = 0;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
 	// Use this for initialization
 	void Start () {
 		samplePhotoList = new List<GameObject> ();
 		//MessageDispatcher.AddListener ("OnDragFinish",OnBarDragFinish,true);
-		instance = this;
+		
 		InitialTextureButton ();
 		InitialColorButton ();
 		TypeButtonChange (0);
@@ -265,16 +273,27 @@ public class UIManager : MonoBehaviour {
 	public void ResetContentSize(RectTransform content,int count,float eleSize)
 	{
 		for (int i = 0; i < count; i++) {
-			content.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal,i * eleSize - eleSize / 100 * (i*i*2));
+			content.SetSizeWithCurrentAnchors (RectTransform.Axis.Horizontal,i * eleSize - eleSize / 100 * (i*i*2)); 
 		}
 	}
 
 	public void ChangeScrollBar(bool bo)
 	{
-		if (bo) {
+        Debug.Log("is bar open " + bo);
+        GameManager.instance.isInChangeColor = false;
+        if (bo) {
 			animationScrollBar.transform.DOLocalMoveY (scrollBounds.y, 0.5f).SetEase (Ease.InOutExpo);
 			isBarOpen = true;
-		} else {
+            if (nowSelectedButton != null)
+            {
+                Debug.Log("now select button " + nowSelectedButton.Name);
+                if (nowSelectedButton.Tag == "外饰改装" || nowSelectedButton.Tag == "内饰改装")
+                {
+                    ChangeDescriptionButtons(nowSelectedButton.TextureDescription != null, nowSelectedButton.MovieDescription != null, false);
+                }
+            }
+            
+        } else {
 			animationScrollBar.transform.DOLocalMoveY (scrollBounds.x, 0.5f).SetEase (Ease.InOutExpo);
 			isBarOpen = false;
 			ChangeDescriptionButtons (false, false, false);
@@ -338,6 +357,9 @@ public class UIManager : MonoBehaviour {
 		sampleVideoWindow.SetActive (bo);
 		if (!bo) {
 			videoContent.Stop ();
+			UIManager.instance.videoContent.gameObject.SetActive (false);
+		} else {
+			UIManager.instance.videoContent.gameObject.SetActive (true);
 		}
 	}
 
@@ -370,12 +392,14 @@ public class UIManager : MonoBehaviour {
 			img = Resources.Load (AppData.GetSamples(item).Asset) as Texture2D;
 			btn.SetSamplePhoto (Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0)), AppData.GetSamples(item).Name, AppData.GetSamples(item).Description);
 		}
-	}
+        int line = samplePhotoList.Count / 3;
+        samplePhotoContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, samplePhotoContentHeight + samplePhotoContentHeight * line);
+    }
 
 	public void ChangeDescriptionButtons(bool bo0,bool bo1,bool bo2)
 	{
 		descriptionButtons [0].SetActive(bo0);
-		descriptionButtons [1].SetActive(bo1);
+		descriptionButtons [1].SetActive(bo1); 
 		//descriptionButtons [2].SetActive(bo2);
 	}
 
@@ -542,14 +566,14 @@ public class UIManager : MonoBehaviour {
 
     public void ShowSaveImageUI()
 	{
-		saveImageFinish.DOFade (1.0f, 0.5f).SetEase(Ease.OutExpo).OnComplete(ShowSaveImageUIFinish);
-		saveImageText.DOFade (1.0f, 0.5f).SetEase(Ease.OutExpo);
+		saveImageFinish.DOFade (1.0f, 1.5f).SetEase(Ease.OutExpo).OnComplete(ShowSaveImageUIFinish);
+		saveImageText.DOFade (1.0f, 1.5f).SetEase(Ease.OutExpo);
 	}
 
 	public void ShowSaveImageUIFinish()
 	{
-		saveImageFinish.DOFade (0, 0.5f).SetEase(Ease.OutExpo);
-		saveImageText.DOFade (0, 0.5f).SetEase(Ease.OutExpo);
+		saveImageFinish.DOFade (0, 1.5f).SetEase(Ease.OutExpo);
+		saveImageText.DOFade (0, 1.5f).SetEase(Ease.OutExpo);
 	}
 
     public void HideOtherFloatButton()

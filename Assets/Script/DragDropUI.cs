@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 
 public class DragDropUI : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointerUpHandler 
 {
+    public Transform subUI;
 
 	public void OnDrag(PointerEventData eventData)
 	{
-		
-		GetComponent<RectTransform>().pivot.Set(0,0);
+        subUI.position = transform.position;
+
+        GetComponent<RectTransform>().pivot.Set(0,0);
 		if (transform.localPosition.y <= UIManager.instance.scrollBounds.y) {
 			transform.position = new Vector3 (transform.position.x, Input.mousePosition.y, transform.position.z);
 		}
