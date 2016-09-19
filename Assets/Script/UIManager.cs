@@ -242,7 +242,11 @@ public class UIManager : MonoBehaviour {
 			GameManager.instance.allButtonIcon.Add (obj);
 			CustomButton btn = obj.GetComponent<CustomButton> ();
 			obj.transform.SetParent (buttonBarContent.transform, false);
-			btn.ChangeText (part.Key);
+			if (part.Key == "保险处涂装") {
+				btn.ChangeText ("保险车涂装");
+			} else {
+				btn.ChangeText (part.Key);
+			}
 
 			foreach (var button in parts[part.Key]) {
 				GameObject objSub = Instantiate (Resources.Load ("UI/PartButton") as GameObject, Vector3.zero, Quaternion.identity) as GameObject;

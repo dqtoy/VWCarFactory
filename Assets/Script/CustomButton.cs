@@ -76,6 +76,10 @@ public class CustomButton : MonoBehaviour {
 
 	public void ClickThisButton()
 	{
+		UIManager.instance.ShowCNGFloatButton (false);
+		UIManager.instance.ShowCoachFloatButton (false);
+		UIManager.instance.ShowPedalFloat3DButton (false);
+		UIManager.instance.ShowTiguanBackFloat3DButton (false);
 		if (!isTag && GameManager.instance.inAnimation == false) {
             GameManager.instance.isInChangeColor = false;
 
@@ -86,12 +90,13 @@ public class CustomButton : MonoBehaviour {
 			GameManager.instance.backParticle.SetActive (false);
 			descriptionButton = thisButton;
 			Texture2D img = new Texture2D(10,10);
+
 			if (customType == CustomType.TextureColor && !UIManager.instance.isPaintBarOut) {
 				UIManager.instance.PaintBarAnimation (true);
 				img = Resources.Load (descriptionButton.Icon + "b") as Texture2D;
 				thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 				GameManager.instance.CameraGoBack ();
-                UIManager.instance.ChangeDescriptionButtons(false, false, false);
+                
                 //UIManager.instance.nowSelectedButton = null;
                 GameManager.instance.isInChangeColor = true;
                 UIManager.instance.paintUI = gameObject.GetComponent<Image>();
@@ -176,7 +181,15 @@ public class CustomButton : MonoBehaviour {
 					return;
 				}
 			}
+			if (customType == CustomType.TextureColor) {
+				UIManager.instance.ChangeDescriptionButtons(false, false, false);
+			}
 		}
+
+		if (isPaint) {
+			GameManager.instance.isInChangeColor = true;
+		}
+		DoorColorChange.instance.ChangeColor ();
 	}
 
 

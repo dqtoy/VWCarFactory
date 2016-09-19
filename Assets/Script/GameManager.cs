@@ -272,6 +272,9 @@ public class GameManager : MonoBehaviour {
 			item.SetTexture("_Cube",cubeMapMats[id]);
 		}
 		selectedBG = id;
+		if (Scene1_UI.CarSeleted == "Passat") {
+			DoorColorChange.instance.ChangeColor ();
+		}
 	}
 
 	void InitCarPart()
