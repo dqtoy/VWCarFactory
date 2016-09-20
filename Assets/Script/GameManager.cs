@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour {
 		//		Debug.Log(string.Format("截屏了一张图片: {0}", filename));  
 
 		screenShot.SaveToAlbum();
-		UIManager.instance.gameObject.SetActive (true);
+		UIManager.instance.gameObject.SetActive (true); 
 	}
 
 	public void ChangeBGFunc(int id)
