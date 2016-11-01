@@ -6,7 +6,7 @@ using UnityEngine.iOS;
 
 
 public class AutoLayoutMainPanel : MonoBehaviour {
-    public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link, about, titl;
+    public RectTransform car1, car2, tools, meunButtons, CompanyProfile, link, about, titl, qcode;
     public UnityEngine.UI.GridLayoutGroup grid;
     public Scene1_UI sceneUI;
 
@@ -146,6 +146,8 @@ public class AutoLayoutMainPanel : MonoBehaviour {
 
         about.sizeDelta = new Vector2(-150, 0);
         about.anchoredPosition = new Vector2(75, 0);
+
+        qcode.anchoredPosition = new Vector2(-188, -25);
 
     }
 }

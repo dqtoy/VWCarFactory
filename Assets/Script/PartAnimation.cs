@@ -36,9 +36,9 @@ public class PartAnimation : MonoBehaviour {
 			string tmpName = partName.Split ('_')[0];
 			string isBack = partName.Split ('_')[1];
 			nowBack = isBack;
-			//Debug.Log ("RecieveSettingAnimation " + tmpName + " , " + isBack);
-
-			if (thisName == tmpName) {
+            //Debug.Log ("RecieveSettingAnimation " + tmpName + " , " + isBack);
+            Debug.Log("name of part " + thisName);
+            if (thisName == tmpName) {
 				PlayAnimation (thisName,isBack);
 			}
 		}
@@ -78,14 +78,15 @@ public class PartAnimation : MonoBehaviour {
 			switch (partName) {
 			case "电动踏板":
 				{
-					if (isDoor) {
+                    
+                    if (isDoor) {
 						if (isLeft && !GameManager.instance.isDoorOpen) {
 							DoorLopen ();
 						} else if(!GameManager.instance.isDoorOpen) {
 							DoorRopen ();
 						}
 					} else {
-						GameManager.instance.epDown = true;
+                        GameManager.instance.epDown = true;
 						if (isLeft) {
 							EPLdown ();
 						} else {
@@ -114,7 +115,6 @@ public class PartAnimation : MonoBehaviour {
 							DoorRclose ();
 						}
 					} else {
-						Debug.Log ("epBack");
 						GameManager.instance.epDown = false;
 						if (isLeft) {
 							
@@ -163,7 +163,7 @@ public class PartAnimation : MonoBehaviour {
 
 	public void EPRup(){
         //transform.localPosition = new Vector3 (transform.localPosition.x + 0.1f, transform.localPosition.y - 0.05f, transform.localPosition.z);
-        transform.DOLocalMove(new Vector3(transform.localPosition.x - 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase(Ease.Linear);//.OnComplete (RemovePart );
+        transform.DOLocalMove(new Vector3(transform.localPosition.x - 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase(Ease.Linear).OnComplete(AnimationBackOver);
 	}
 
 	public void EPRupDontRemove()
@@ -176,6 +176,7 @@ public class PartAnimation : MonoBehaviour {
 	}
 
 	public void EPLdown(){
+        
 		inAnimation = true;
 		GameManager.instance.inAnimation = true;
 		//transform.localPosition = new Vector3 (transform.localPosition.x + 0.1f, transform.localPosition.y + 0.05f, transform.localPosition.z);
@@ -198,7 +199,7 @@ public class PartAnimation : MonoBehaviour {
 		
 	public void EPLup(){
         //transform.localPosition = new Vector3 (transform.localPosition.x - 0.1f, transform.localPosition.y - 0.05f, transform.localPosition.z);
-        transform.DOLocalMove(new Vector3(transform.localPosition.x + 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase(Ease.Linear);//.OnComplete (RemovePart);
+        transform.DOLocalMove(new Vector3(transform.localPosition.x + 0.05f, transform.localPosition.y + 0.03f, transform.localPosition.z), 1.5f).SetEase(Ease.Linear).OnComplete (AnimationBackOver);
 	}
 
 	public void EPLupDontRemove()
@@ -209,8 +210,8 @@ public class PartAnimation : MonoBehaviour {
 	public void Backopne(){
 		inAnimation = true;
 		GameManager.instance.inAnimation = true;
-
-		Debug.Log ("开启 " + gameObject.name);
+        GameManager.instance.isBackOpen = true;
+        Debug.Log ("开启 " + gameObject.name);
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.x + backDoorValue.x , transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (AnimationStartOver);
 		//后盖开启
 	}
@@ -218,7 +219,8 @@ public class PartAnimation : MonoBehaviour {
 	public void Backclose(){
 		inAnimation = true;
 		GameManager.instance.inAnimation = true;
-		Debug.Log ("关闭 " + gameObject.name);
+        GameManager.instance.isBackOpen = false;
+        Debug.Log ("关闭 " + gameObject.name);
 		//transform.localRotation = Quaternion.Euler (new Vector3 (transform.localRotation.x +12.0f, transform.localRotation.y, transform.localRotation.z));
 		transform.DOLocalRotate (new Vector3 (transform.localRotation.x  + backDoorValue.y, transform.localRotation.y, transform.localRotation.z), 2.5f).SetEase (Ease.InOutExpo).OnComplete (RemovePart);
 		//后盖关闭

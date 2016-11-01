@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
     public bool pedalOpen;
 
     public bool isInChangeColor;
-
+    public bool isBackOpen;
 
     void Awake()
 	{
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour {
 			ChangeBGFunc (1);
 			selectedCarID = 0;
 		} else {
-			ChangeBGFunc (2);
+			ChangeBGFunc (1);
 			selectedCarID = 1;
 		}
 	}
@@ -291,7 +291,14 @@ public class GameManager : MonoBehaviour {
 	{
 		iphones [id].SetActive (bo);
 		if (bo) {
-			iphones [id].transform.DOLocalMoveX ( - 0.065f, 0.5f).SetEase (Ease.OutQuad);
+			if (id == 0 ) {
+				iphones [id].transform.DOLocalMoveX ( - 0.065f, 0.5f).SetEase (Ease.OutQuad);
+
+			}
+			else {
+				iphones [id].transform.DOLocalMoveX ( - 0.1119f, 0.5f).SetEase (Ease.OutQuad);
+
+			}
 		} else {
 			iphones [id].transform.DOLocalMoveX (0, 0.5f).SetEase (Ease.OutQuad).OnComplete(iphoneHideComplete);
 		}

@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour {
 	public UIFrom3D[] CoachFloat3DButton;
     public UIFrom3D pedalFloat3DButton;
     public UIFrom3D tiguanBack3DButton;
+	public UIFrom3D airconditionFloat3DButton;
 	public GameObject floatBackButton;
 
 	public IButtonInfo nowSelectedButton;
@@ -53,6 +54,7 @@ public class UIManager : MonoBehaviour {
 
     public Image paintUI;
 
+	public RectTransform floatWindowContent;
 	public bool inSpecialButton;
 	int m_iOrgWidth = 0;
 	int m_iOrgHeight = 0;
@@ -281,6 +283,18 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
+	public void ResetFloatwindowContentsize(float size)
+	{
+		Debug.Log ("text size " + floatWindowText.text.Length);
+		floatWindowContent.SetSizeWithCurrentAnchors (RectTransform.Axis.Vertical,size);
+		floatWindowContent.position = new Vector3 (floatWindowContent.position.x, 0, floatWindowContent.position.z);
+		if (size == 400) {
+			floatWindowText.transform.localPosition = new Vector3 (floatWindowText.transform.localPosition.x, -269.5f, floatWindowText.transform.localRotation.z);
+		} else {
+			floatWindowText.transform.localPosition = new Vector3 (floatWindowText.transform.localPosition.x, -270, floatWindowText.transform.localRotation.z);
+		}
+	}
+
 	public void ChangeScrollBar(bool bo)
 	{
         Debug.Log("is bar open " + bo);
@@ -293,14 +307,14 @@ public class UIManager : MonoBehaviour {
                 Debug.Log("now select button " + nowSelectedButton.Name);
                 if (nowSelectedButton.Tag == "外饰改装" || nowSelectedButton.Tag == "内饰改装")
                 {
-                    ChangeDescriptionButtons(nowSelectedButton.TextureDescription != null, nowSelectedButton.MovieDescription != null, false);
+					ChangeDescriptionButtons(nowSelectedButton.TextureDescription != null, nowSelectedButton.MovieDescription != null, false,nowSelectedButton.MovieDescription != null ? nowSelectedButton.MovieDescription[0]:"null");
                 }
             }
             
         } else {
 			animationScrollBar.transform.DOLocalMoveY (scrollBounds.x, 0.5f).SetEase (Ease.InOutExpo);
 			isBarOpen = false;
-			ChangeDescriptionButtons (false, false, false);
+			ChangeDescriptionButtons (false, false, false,"null");
 		}
 		buttonBarContent.transform.localPosition = new Vector3 (0, buttonBarContent.transform.localPosition.y, buttonBarContent.transform.localPosition.z);
 	}
@@ -400,10 +414,13 @@ public class UIManager : MonoBehaviour {
         samplePhotoContent.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, samplePhotoContentHeight + samplePhotoContentHeight * line);
     }
 
-	public void ChangeDescriptionButtons(bool bo0,bool bo1,bool bo2)
+	public void ChangeDescriptionButtons(bool bo0,bool bo1,bool bo2,string movieName)
 	{
 		descriptionButtons [0].SetActive(bo0);
 		descriptionButtons [1].SetActive(bo1); 
+		if (bo1) {
+			InitSampleVideo (movieName);
+		}
 		//descriptionButtons [2].SetActive(bo2);
 	}
 
@@ -424,6 +441,7 @@ public class UIManager : MonoBehaviour {
 			GameManager.instance.inCoach = false;
 			ShowCoachFloatButton (false);
             ShowPedalFloat3DButton(false);
+			ShowAirconditionFloat3DButton (false);
             CarStudio.CloseStudio ();
 			CarStudio.LoadCustum (Scene1_UI.CarSeleted + "save");
 		}
@@ -437,6 +455,7 @@ public class UIManager : MonoBehaviour {
 		if (GameManager.instance.inCoach == true) {
 			ShowCoachFloatButton (false);
             ShowPedalFloat3DButton(false);
+			ShowAirconditionFloat3DButton (false);
         }
         floatWindowName.text = nam;
 		floatWindowImage.sprite = Sprite.Create(img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
@@ -453,12 +472,16 @@ public class UIManager : MonoBehaviour {
 				ShowCNGFloatButton (true);
 				ShowCoachFloatButton (false);
                 ShowPedalFloat3DButton(false);
+				ShowAirconditionFloat3DButton (false);
             }
 		}
 		if (GameManager.instance.inCoach == true) {
 			ShowCoachFloatButton (true);
 			ShowCNGFloatButton (false);
             ShowPedalFloat3DButton(false);
+			ShowAirconditionFloat3DButton (false);
+			GameManager.instance.CameraGoBack ();
+			ShowCoachFloatButton (true);
         }
 		floatBackButton.SetActive (false);
 		if (!GameManager.instance.inCameraPosition) {
@@ -469,7 +492,7 @@ public class UIManager : MonoBehaviour {
 
 	public void InitSampleVideo(string url)
 	{
-		videoContent.m_strFileName = url;
+		videoContent.m_strFileName = url + ".mp4";
 	}
 
 	public void PlaySampleVideo()
@@ -567,6 +590,11 @@ public class UIManager : MonoBehaviour {
         tiguanBack3DButton.gameObject.SetActive(bo);
     }
 
+	public void ShowAirconditionFloat3DButton(bool bo)
+	{
+		airconditionFloat3DButton.gameObject.SetActive (bo);
+	}
+
 
     public void ShowSaveImageUI()
 	{
@@ -592,6 +620,7 @@ public class UIManager : MonoBehaviour {
         }
         pedalFloat3DButton.gameObject.SetActive(false);
         tiguanBack3DButton.gameObject.SetActive(false);
+		airconditionFloat3DButton.gameObject.SetActive (false);
     }
 
 	public void SaveImage()

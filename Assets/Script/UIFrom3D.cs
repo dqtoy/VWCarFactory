@@ -11,6 +11,7 @@ public class UIFrom3D : MonoBehaviour {
 	public GameObject thisTarget;
 	public string targetName;
 	public IButtonInfo buttonInfo;
+	public float contentHeight;
 
 	// Use this for initialization
 	void Start () {
@@ -96,6 +97,7 @@ public class UIFrom3D : MonoBehaviour {
             */
             Texture2D img = Resources.Load(AppData.GetSamples(buttonInfo.Description).Icon) as Texture2D;
             UIManager.instance.ShowFloatWindow(img, buttonInfo.Name, AppData.GetSamples(buttonInfo.Description).Description, true);
+			UIManager.instance.ResetFloatwindowContentsize (contentHeight);
         }
 	}
 
@@ -118,11 +120,13 @@ public class UIFrom3D : MonoBehaviour {
                 if (GameManager.instance.pedalOpen == false)
                 {
                     GameManager.instance.pedalOpen = true;
+                    GameManager.instance.isDoorOpen = false;
                     AnimationPlay("电动踏板_play");
                 }
                 else
                 {
                     GameManager.instance.pedalOpen = false;
+                    GameManager.instance.isDoorOpen = true;
                     AnimationPlay("电动踏板_playback");
                     UIManager.instance.float3DButton.gameObject.SetActive(true);
                 }
@@ -153,6 +157,7 @@ public class UIFrom3D : MonoBehaviour {
                 Texture2D img = Resources.Load(Icon) as Texture2D;
                 UIManager.instance.ShowFloatWindow(img, targetName, description, false);
             }
+			UIManager.instance.ResetFloatwindowContentsize (contentHeight);
         }
     }
 

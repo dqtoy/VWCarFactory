@@ -80,6 +80,7 @@ public class CustomButton : MonoBehaviour {
 		UIManager.instance.ShowCoachFloatButton (false);
 		UIManager.instance.ShowPedalFloat3DButton (false);
 		UIManager.instance.ShowTiguanBackFloat3DButton (false);
+		UIManager.instance.ShowAirconditionFloat3DButton (false);
 		if (!isTag && GameManager.instance.inAnimation == false) {
             GameManager.instance.isInChangeColor = false;
 
@@ -114,7 +115,8 @@ public class CustomButton : MonoBehaviour {
 				}
 
 				if (!isPaint) {
-					UIManager.instance.ChangeDescriptionButtons(descriptionButton.TextureDescription!=null,descriptionButton.MovieDescription!=null,string.IsNullOrEmpty(descriptionButton.PdfDescription));
+					
+					UIManager.instance.ChangeDescriptionButtons(descriptionButton.TextureDescription!=null,descriptionButton.MovieDescription!=null,string.IsNullOrEmpty(descriptionButton.PdfDescription),descriptionButton.MovieDescription != null ? descriptionButton.MovieDescription[0]:"null");
 					UIManager.instance.nowSelectedButton = thisButton;
 					//ChangeButtonColor (img);
 				} 
@@ -137,7 +139,14 @@ public class CustomButton : MonoBehaviour {
 						CameraGoto (int.Parse(descriptionButton.Type));
 					}
 					if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat") {
-						GameManager.instance.backParticle.SetActive (true);
+                        if (GameManager.instance.isBackOpen == true)
+                        {
+                            GameManager.instance.backParticle.SetActive(false);
+                        }
+                        else
+                        {
+                            GameManager.instance.backParticle.SetActive(true);
+                        }
 					}
 
 				}
@@ -182,14 +191,17 @@ public class CustomButton : MonoBehaviour {
 				}
 			}
 			if (customType == CustomType.TextureColor) {
-				UIManager.instance.ChangeDescriptionButtons(false, false, false);
+				UIManager.instance.ChangeDescriptionButtons(false, false, false,"null");
 			}
 		}
 
 		if (isPaint) {
 			GameManager.instance.isInChangeColor = true;
 		}
-		DoorColorChange.instance.ChangeColor ();
+        if (Scene1_UI.CarSeleted == "Passat")
+        {
+            DoorColorChange.instance.ChangeColor();
+        }
 	}
 
 
@@ -237,7 +249,7 @@ public class CustomButton : MonoBehaviour {
 			thisImage.sprite = Sprite.Create (img, new Rect (0, 0, img.width, img.height), new Vector2 (0, 0));
 			//CarStudio.LoadTemplate(AppData.GetCarDataByName(Scene1_UI.CarSeleted).CNG);
 		} else {
-           
+			UIManager.instance.HideFloatWindow ();
             if (CarStudio.Exists(thisButton.Name)) {
                 if (thisButton.Name != "电动踏板")
                     StartSettingAnimation("_playback");
@@ -288,6 +300,11 @@ public class CustomButton : MonoBehaviour {
 				else
 				{
 					GameManager.instance.iphoneHideComplete ();
+				}
+
+				if (thisButton.Name == "空气净化器") {
+					
+					UIManager.instance.ShowAirconditionFloat3DButton (true);
 				}
 			}
 			if (thisButton.Name == "后盖开启" && Scene1_UI.CarSeleted == "Passat") {

@@ -10,12 +10,17 @@ public class DragDropUI : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointe
 
 	public void OnDrag(PointerEventData eventData)
 	{
-        subUI.position = transform.position;
+        //subUI.position = transform.position;
 
         GetComponent<RectTransform>().pivot.Set(0,0);
-		if (transform.localPosition.y <= UIManager.instance.scrollBounds.y) {
-			transform.position = new Vector3 (transform.position.x, Input.mousePosition.y, transform.position.z);
+        Debug.Log("transform.localPosition.y " + transform.parent.position.y + " UIManager.instance.scrollBounds.y " + UIManager.instance.scrollBounds.y);
+		if (transform.parent.position.y <= 180) {//UIManager.instance.scrollBounds.y) {
+			transform.parent.position = new Vector3 (transform.parent.position.x, Input.mousePosition.y, transform.parent.position.z);
 		}
+       // else
+       // {
+            //transform.position = new Vector3(transform.position.x, 180, transform.position.z);
+       // }
 	}
 
 	public void OnPointerDown(PointerEventData eventData)
